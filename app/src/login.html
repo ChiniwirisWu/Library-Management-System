@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" class="w-[100%] h-[100%]">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Login</title>
+</head>
+<body class="w-[100%] h-[100%] flex bg-[#f2f2f2] border-t-[30px] border-[#303F9F] ">
+    <div class="max-w-[500px] w-[90%] h- p-[40px] m-auto bg-white rounded-sm shadow-sm shadow-[grey]">
+        <header class="mb-6">
+            <h1 class="text-center font-thin text-3xl">Inicio de Sesion</h1>
+        </header>
+
+        <section class="text-xl flex flex-col ">
+            <div class="flex flex-col">
+                <label for="user" class="text-lg mb-2">Usuario:</label>
+                <input type="text" name="user" id="user" class="text-base p-2 border-b-2 border-b-[#303F9F] mb-8 focus:outline-none">
+
+                <label for="password" class="text-lg mb-2">Contraseña:</label>
+                <input type="password" name="password" id="password" class="text-base p-2 border-b-2 border-b-[#303F9F] mb-8 focus:outline-none">
+            </div>
+
+            <button class="border-1 rounded-md text-[#303F9F] hover:text-blue-300 transition-all mb-4">Iniciar Sesion</button>
+
+            <div class="flex flex-col text-nowrap">
+                <a href="" class="w-min text-sm underline text-[#303F9F] hover:text-blue-300 transition-all mb-2"><h6>¿Olvidó su contraseña?</h6></a>
+                <a href="" class="w-min text-sm underline text-[#303F9F] hover:text-blue-300 transition-all"><h6 >Solicitud de registro</h6></a>
+            </div>
+            
+        </section>
+    </div>
+</body>
+</html>
