@@ -1,9 +1,9 @@
-/* import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export function PrimaryButton({title}) {
   return (
-      <button className="text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 w-1/3 h-1/3 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none">{title}</button>
+      <button className="w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none">{title}</button>
   );
 }
 
@@ -22,8 +22,12 @@ export function Title() {
 export function ButtonsWrapper() {
   return (
     <section className="h-[175px] w-[100%] flex items-center place-content-evenly">
-    <PrimaryButton title = {"Trabajador"} />
-    <PrimaryButton title = {"Cliente"} />
+      <Link className="w-[25%] h-[30%]" to = "/login">
+          <PrimaryButton title = {"Trabajador"} />
+      </Link>
+      <Link className="w-[25%] h-[30%]" to = "/">
+          <PrimaryButton title = {"Cliente"} />
+      </Link>
     </section>
   );
 }
@@ -45,10 +49,10 @@ function Content() {
   );
 }
 
-function App() {
+const Welcome = () => {
   return (
       <BackgroundLibraryImage content = <Content /> />
   );
 }
 
-export default App; */
+export default Welcome;
