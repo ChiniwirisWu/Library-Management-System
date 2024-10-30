@@ -20,7 +20,7 @@ function ButtonsWrapper() {
             <Link className="w-[25%] h-[30%]" to="/login">
                 <PrimaryButton title={"Trabajador"} />
             </Link>
-            <Link className="w-[25%] h-[30%]" to="/">
+            <Link className="w-[25%] h-[30%]" to="/ficha">
                 <PrimaryButton title={"Cliente"} />
             </Link>
         </section>
