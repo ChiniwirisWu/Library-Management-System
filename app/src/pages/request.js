@@ -14,10 +14,10 @@ function Content() {
     );
 }
 
-const SignUp = () => {
+const Request = ({title}) => {
     return (
-        <Form title="Solicitud de Registro" className="max-w-[500px] w-[90%]" content = <Content /> />
+        <Form title={title} className="max-w-[500px] w-[90%]" content = <Content /> />
     );
 }
 
-export default SignUp;
+export default Request;

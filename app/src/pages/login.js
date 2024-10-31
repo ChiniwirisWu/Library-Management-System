@@ -11,8 +11,8 @@ function Content() {
             <LabeledInput type="text" text="Contrasena" />
             <TransparentButton text="Iniciar Sesión" />
             <div class="flex flex-col text-nowrap">
-                <TextLink text="¿Olvidó su contraseña?" href="/" />
-                <TextLink text="Solicitud de registro" href="/signup" />
+                <TextLink text="¿Olvidó su contraseña?" href="/password-request" />
+                <TextLink text="Solicitud de registro" href="/signup-request" />
             </div>
         </div>
     );
