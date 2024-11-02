@@ -2,7 +2,9 @@ import React from "react";
 
 export function PrimaryButton({ title }) {
     return (
-        <button className="w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none">{title}</button>
+        <button className="w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none">
+            {title}
+        </button>
     );
 }
 
@@ -62,5 +64,49 @@ export const Form = ({content, title, className}) => {
                 {content}
             </div>
          }/>
+    );
+}
+
+export function NavButton({title, isActive = false}) {
+    
+    let bg_color = (isActive) ? "bg-blue-600" : "bg-white"
+    let text_color = (isActive) ? "text-white" : "text-blue-600"
+    let hover_bg_color = "hover:bg-blue-600"
+    let hover_text_color = "hover:text-white"
+    
+    return (
+        <button className={`w-[100%] h-[100%] text-lg ${text_color} ${bg_color} cursor-pointer outline-none ${hover_bg_color} ${hover_text_color} py-2 font-semibold transition-all duration-[0.25s]`}>
+            {title}
+        </button>
+    );
+}
+
+export function NavBar({accountType, currentPage}) {
+    
+    let sections = ["Inicio", "Libros", "Préstamos"];
+
+    if (accountType != "Cliente")
+        sections.push("Agregar");
+
+    if (accountType == "Admin")
+        sections.push("Usuarios")
+
+    sections.push("Salir");
+    
+    return(
+        <nav className = "flex w-[100%]">
+            {sections.map( option =>
+                <NavButton title = {option} isActive= {option == currentPage} />
+            )}
+        </nav>
+    );
+}
+
+export const MainPage = ({content, section}) => {
+    return(
+        <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
+            <NavBar accountType="Cliente" currentPage={section}/>
+            {content}
+        </div>
     );
 }
