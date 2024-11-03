@@ -101,7 +101,7 @@ export function NavBar({accountType, currentPage}) {
 export const MainPage = ({content, section}) => {
     return(
         <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
-            <NavBar accountType="employee" currentPage={section}/>
+            <NavBar accountType="admin" currentPage={section}/>
             {content}
         </div>
     );

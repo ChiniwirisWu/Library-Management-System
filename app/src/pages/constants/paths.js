@@ -5,6 +5,7 @@ export const PagePaths = {
     'Home': '/inicio',
     'Signup': '/solicitud-registro',
     'Password Change': 'solicitud-contrasena',
+    'Books': '/libros'
 };
 
-export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Ficha'], PagePaths['Welcome']];
+export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Books'], PagePaths['Ficha'], PagePaths['Welcome']];
