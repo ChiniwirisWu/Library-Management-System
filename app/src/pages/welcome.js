@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PrimaryButton } from "./components/reusables";
+import { PagePaths } from "./constants/paths";
 
 export function Title() {
     return (
@@ -17,10 +18,10 @@ export function Title() {
 function ButtonsWrapper() {
     return (
         <section className="h-[175px] w-[100%] flex items-center place-content-evenly">
-            <Link className="w-[25%] h-[30%]" to="/login">
+            <Link className="w-[25%] h-[30%]" to={ PagePaths['Login'] }>
                 <PrimaryButton title={"Trabajador"} />
             </Link>
-            <Link className="w-[25%] h-[30%]" to="/home">
+            <Link className="w-[25%] h-[30%]" to={ PagePaths['Home'] }>
                 <PrimaryButton title={"Cliente"} />
             </Link>
         </section>

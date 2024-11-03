@@ -2,7 +2,6 @@ import React from "react";
 import { FormBackground } from "./components/reusables";
 import { LabeledInput } from "./components/reusables";
 
-
 function Content () {
     return (
         <div className="bg-white max-w-[800px] w-[100%] max-h-[95%] mx-auto mt-3 p-[40px] rounded-sm shadow-sm shadow-[grey]">

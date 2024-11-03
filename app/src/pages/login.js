@@ -3,6 +3,7 @@ import { TextLink } from "./components/reusables";
 import { LabeledInput } from "./components/reusables";
 import { TransparentButton } from "./components/reusables";
 import { Form } from "./components/reusables";
+import { PagePaths } from "./constants/paths";
 
 function Content() {
     return (
@@ -11,8 +12,8 @@ function Content() {
             <LabeledInput type="text" text="Contraseña" />
             <TransparentButton text="Iniciar Sesión" />
             <div class="flex flex-col text-nowrap">
-                <TextLink text="¿Olvidó su contraseña?" href="/password-request" />
-                <TextLink text="Solicitud de registro" href="/signup-request" />
+                <TextLink text="¿Olvidó su contraseña?" href={ PagePaths["Password Change"] } />
+                <TextLink text="Solicitud de registro" href={ PagePaths["Signup"] } />
             </div>
         </div>
     );
