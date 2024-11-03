@@ -6,9 +6,9 @@ import { TransparentButton } from "./components/reusables";
 function Content() {    
     return (
         <div className="text-xl flex flex-col justify-center">
-            <LabeledInput text={"Nombre de Usuario"} />
-            <LabeledInput text={"Contraseña"} />
-            <LabeledInput text={"Repetir Contraseña"} />
+            <LabeledInput text = {"Nombre de Usuario"} />
+            <LabeledInput text = {"Contraseña"} />
+            <LabeledInput text = {"Repetir Contraseña"} />
             <TransparentButton text="Enviar" />
         </div>
     );

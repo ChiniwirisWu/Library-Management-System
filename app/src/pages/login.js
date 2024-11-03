@@ -8,7 +8,7 @@ function Content() {
     return (
         <div class="text-xl flex flex-col ">
             <LabeledInput type="text" text="Usuario" />
-            <LabeledInput type="text" text="Contrasena" />
+            <LabeledInput type="text" text="Contraseña" />
             <TransparentButton text="Iniciar Sesión" />
             <div class="flex flex-col text-nowrap">
                 <TextLink text="¿Olvidó su contraseña?" href="/password-request" />
