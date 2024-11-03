@@ -20,7 +20,8 @@ class Page {
     constructor(path, component, title = null, roles = allRoles) {
         this.path = path;
         this.component = component;
-        this.roles = roles;        
+        this.title = title;
+        this.roles = roles;     
     }
 }
 
@@ -42,3 +43,7 @@ const MainPagesArray = PagesList.filter( page => {
 export const MainPagesList = MainPagesArray.sort((firstPage, nextPage) => {
     return PathNavBarOrder.indexOf(firstPage.path) - PathNavBarOrder.indexOf(nextPage.path);
 })
+
+export function GetPathTitle(path) {
+    return MainPagesList.find(page => page.path === path).title;
+}

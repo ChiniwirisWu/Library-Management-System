@@ -7,4 +7,4 @@ export const PagePaths = {
     'Password Change': 'solicitud-contrasena',
 };
 
-export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Ficha'], PagePaths['Welcome']]
+export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Ficha'], PagePaths['Welcome']];

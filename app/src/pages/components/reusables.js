@@ -1,4 +1,6 @@
 import React from "react";
+import { MainPagesList } from "../constants/pages";
+import { Link } from "react-router-dom";
 
 export function PrimaryButton({ title }) {
     return (
@@ -82,21 +84,15 @@ export function NavButton({title, isActive = false}) {
 }
 
 export function NavBar({accountType, currentPage}) {
-    
-    let sections = ["Inicio", "Libros", "Préstamos"];
 
-    if (accountType != "Cliente")
-        sections.push("Agregar");
-
-    if (accountType == "Admin")
-        sections.push("Usuarios")
-
-    sections.push("Salir");
+    const sections = MainPagesList.filter( page => page.roles.includes(accountType) );
     
     return(
         <nav className = "flex w-[100%]">
-            {sections.map( option =>
-                <NavButton title = {option} isActive= {option == currentPage} />
+            {sections.map( page =>
+                <Link className="w-[100%] h-[100%]" to={ page.path }>
+                    <NavButton title = {page.title} isActive={page.title === currentPage} />
+                </Link>
             )}
         </nav>
     );
@@ -105,7 +101,7 @@ export function NavBar({accountType, currentPage}) {
 export const MainPage = ({content, section}) => {
     return(
         <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
-            <NavBar accountType="Cliente" currentPage={section}/>
+            <NavBar accountType="employee" currentPage={section}/>
             {content}
         </div>
     );
