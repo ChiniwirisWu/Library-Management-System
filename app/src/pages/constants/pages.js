@@ -5,6 +5,8 @@ import Home from "../home";
 import Request from "../request";
 import Ficha from "../ficha";
 import Books from "../books";
+import Users from "../users";
+import Loans from "../loans";
 import { PagePaths } from "./paths";
 import { PathNavBarOrder } from "./paths";
 
@@ -34,18 +36,17 @@ export const PagesList = [
     new Page(PagePaths['Signup'], <Request title= "Solicitud de Registro" />),
     new Page(PagePaths['Password Change'], <Request title= "Solicitud de Cambio de Contraseña" />),
     new Page(PagePaths['Books'], <Books />, "Ver Libros"),
+    new Page(PagePaths['Users'], <Users />, "Usuarios", userRoles['admin']),
+    new Page(PagePaths['Loans'], <Loans />, "Préstamos", libraryRoles)
 ];
 
-const MainPagesArray = PagesList.filter( page => {
-    return  page.path === PagePaths['Welcome'] 
-    ||      page.path === PagePaths['Ficha']
-    ||      page.path === PagePaths['Home']
-    ||      page.path === PagePaths['Books']
-});
-
-export const MainPagesList = MainPagesArray.sort((firstPage, nextPage) => {
-    return PathNavBarOrder.indexOf(firstPage.path) - PathNavBarOrder.indexOf(nextPage.path);
-})
+export const MainPagesList = PagesList
+    .filter( page => { 
+        return PathNavBarOrder.includes(page.path); 
+    })
+    .sort((firstPage, nextPage) => {
+        return PathNavBarOrder.indexOf(firstPage.path) - PathNavBarOrder.indexOf(nextPage.path);
+    });
 
 export function GetPathTitle(path) {
     return MainPagesList.find(page => page.path === path).title;
