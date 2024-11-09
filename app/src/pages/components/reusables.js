@@ -31,10 +31,10 @@ export function TransparentButton({ text }) {
 export function LabeledInput({ text }, { type }) {
     return (
         <div className="flex flex-col">
-            <label for="user" class="text-lg mb-2">
+            <label for={text} class="text-lg mb-2">
                 {`${text}:`}
             </label>
-            <input type={type} name="user" id="user" class="text-base p-2 border-b-2 border-b-[#303F9F] mb-8 focus:outline-none focus:border-b-blue-300 transition-colors duration-300" />
+            <input type={type} name={text} id="user" class="text-base p-2 border-b-2 border-b-[#303F9F] mb-8 focus:outline-none focus:border-b-blue-300 transition-colors duration-300" />
         </div>
     );
 }
