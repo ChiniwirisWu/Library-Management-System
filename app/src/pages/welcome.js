@@ -22,7 +22,7 @@ function ButtonsWrapper() {
                 <PrimaryButton title={"Trabajador"} />
             </Link>
             <Link className="w-[25%] h-[30%]" to={ PagePaths['Home'] }>
-                <PrimaryButton title={"Cliente"} />
+                <PrimaryButton title={"Lector"} />
             </Link>
         </section>
     );

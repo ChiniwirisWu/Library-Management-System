@@ -1,6 +1,7 @@
 import React from "react";
 import { MainPagesList } from "../constants/pages";
 import { Link } from "react-router-dom";
+import SearchImage from "res/search.svg"
 
 export function PrimaryButton({ title }) {
     return (
@@ -44,6 +45,27 @@ export function TextLink({ text, href }) {
         <a href={href} className="w-min text-sm underline text-[#303F9F] hover:text-blue-300 transition-all mb-2 hover:cursor-pointer">
             <p>{text}</p>
         </a>
+    );
+}
+
+export function IconLink({src, alt, path}) {
+    return (
+        <Link className="flex align-middle" to={ path }>
+            <button className="my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200">
+                <img src={src} alt={alt} height="40px" width="40px" className="object-contain"></img>
+            </button>
+        </Link>
+    );
+}
+
+export function SearchBar({placeholder}) {
+    return(
+        <div className="w-[100%] flex space-x-5">
+            <input type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
+            <button className="border-2 my-auto size-[45px] p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200">
+                <img src={SearchImage} alt="search" height="40px" width="40px" className="object-contain"></img>
+            </button>
+        </div>
     );
 }
 
