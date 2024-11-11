@@ -10,4 +10,4 @@ export const PagePaths = {
     'Loans': '/gestion-de-prestamos',
 };
 
-export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Books'], PagePaths['Loans'], PagePaths['Users'], PagePaths['Ficha'], PagePaths['Welcome']];
+export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Books'], PagePaths['Loans'], PagePaths['Users'], PagePaths['Welcome']];

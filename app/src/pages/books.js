@@ -4,26 +4,39 @@ import { PagePaths } from "./constants/paths";
 import { GetPathTitle } from "./constants/pages";
 import { limitString } from "../functions/strings";
 import { IconLink } from "./components/reusables";
-import { SearchBar } from "./components/reusables";
+import { SearchAndAddBar } from "./components/reusables";
+import { Entry } from "./components/reusables";
 import LoanImage from "res/handshake.svg"
 import InfoImage from "res/info.svg"
 import EditImage from "res/edit.svg"
 
-function BookEntry({title, category, author, room}) {
+function BookEntryInfo({title, category, author, room}) {
     const size = 50;
 
     return (
-        <div className="flex content-center place-content-between w-[100%] mb-5 border-[0.5px] text-left p-4 bg-gray-50">
-            <div className="flex flex-col">
-                <h6 className="font-bold">{limitString(title, size)}</h6>
-                <p className="text-gray-600 font-light">{limitString(author.concat(' • ').concat(category).concat(' • ').concat(room), size)}</p>
-            </div>
-            <div className="flex space-x-5">
-                <IconLink src={LoanImage} alt="préstamo" path={ PagePaths['Ficha'] } />
-                <IconLink src={EditImage} alt="edit" path={ PagePaths['Ficha'] } />
-                <IconLink src={InfoImage} alt="info" path={ PagePaths['Ficha'] } />
-            </div>
-        </div>
+        <>
+            <h6 className="font-bold">{limitString(title, size)}</h6>
+            <p className="text-gray-600 font-light">{limitString(author.concat(' • ').concat(category).concat(' • ').concat(room), size)}</p>
+        </>
+    );
+}
+
+function BookEntryIcons() {
+    return (
+        <>
+            <IconLink src={LoanImage} alt="préstamo" path={ PagePaths['Ficha'] } />
+            <IconLink src={EditImage} alt="edit" path={ PagePaths['Ficha'] } />
+            <IconLink src={InfoImage} alt="info" path={ PagePaths['Ficha'] } />
+        </>
+    );
+}
+
+function BookEntry({title, category, author, room}) {
+    return (
+        <Entry 
+            info = <BookEntryInfo title={title} category={category} author={author} room={room} />
+            icons = <BookEntryIcons />
+        />
     );
 }
 
@@ -44,7 +57,7 @@ function Content() {
 
     return(
         <div className="flex flex-col w-[75%] self-center">
-            <SearchBar placeholder='Buscar Libros'/>
+            <SearchAndAddBar placeholder='Buscar Libros' AddPath={ PagePaths['Ficha'] }/>
             <div className="flex flex-col w-[100%] self-center">
                 {books.map(book => <BookEntry title={book[0]} category={book[1]} author={book[2]} room={book[3]} />)}
             </div> 

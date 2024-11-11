@@ -31,7 +31,7 @@ class Page {
 export const PagesList = [
     new Page(PagePaths['Welcome'], <Welcome />, "Salir"),
     new Page(PagePaths['Login'], <Login />),
-    new Page(PagePaths['Ficha'], <Ficha />, "Añadir Ficha", libraryRoles),
+    new Page(PagePaths['Ficha'], <Ficha />, libraryRoles),
     new Page(PagePaths['Home'], <Home />, "Inicio"),
     new Page(PagePaths['Signup'], <Request title= "Solicitud de Registro" />),
     new Page(PagePaths['Password Change'], <Request title= "Solicitud de Cambio de Contraseña" />),

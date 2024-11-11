@@ -19,7 +19,7 @@ function Content () {
                     <LabeledInput text={"Autor"} />
                 </div>
                 <div className="w-[45%]">
-                    <LabeledInput text={"Edicion"} />
+                    <LabeledInput text={"Edición"} />
                 </div>
             </div>
             <br></br>
@@ -31,7 +31,7 @@ function Content () {
                     <LabeledInput text={"Ciudad"} />
                 </div>
                 <div className="w-[12%]">
-                    <LabeledInput text={"Ano"} />
+                    <LabeledInput text={"Año"} />
                 </div>
             </div>
             <br></br>

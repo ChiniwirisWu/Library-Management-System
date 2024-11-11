@@ -1,7 +1,8 @@
 import React from "react";
 import { MainPagesList } from "../constants/pages";
 import { Link } from "react-router-dom";
-import SearchImage from "res/search.svg"
+import SearchIcon from "res/search.svg";
+import AddIcon from "res/add.svg";
 
 export function PrimaryButton({ title }) {
     return (
@@ -48,23 +49,45 @@ export function TextLink({ text, href }) {
     );
 }
 
-export function IconLink({src, alt, path}) {
+export function IconButton({src, alt, borderless = true}) {
+    let buttonClass = (borderless) 
+        ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200" 
+        : "my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";
+    
+    return (
+        <button className={ buttonClass }>
+            <img src={src} alt={alt} height="40px" width="40px" className="object-contain"></img>
+        </button>
+    );
+}
+
+export function IconLink({src, alt, path, borderless = true}) {
     return (
         <Link className="flex align-middle" to={ path }>
-            <button className="my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200">
-                <img src={src} alt={alt} height="40px" width="40px" className="object-contain"></img>
-            </button>
+            <IconButton src={ src } alt={ alt } borderless={ borderless } />
         </Link>
     );
 }
 
-export function SearchBar({placeholder}) {
+export function SearchAndAddBar({placeholder, AddPath}) {
     return(
         <div className="w-[100%] flex space-x-5">
             <input type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
-            <button className="border-2 my-auto size-[45px] p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200">
-                <img src={SearchImage} alt="search" height="40px" width="40px" className="object-contain"></img>
-            </button>
+            <IconButton src={SearchIcon} alt="Search" borderless = {false} />
+            <IconLink src={AddIcon} alt="add" borderless = {false} path={AddPath} />
+        </div>
+    );
+}
+
+export const Entry = ({info, icons}) => {
+    return(
+        <div className="flex content-center place-content-between w-[100%] mb-5 border-[0.5px] text-left p-4 bg-gray-50">
+            <div className="flex flex-col">
+                {info}
+            </div>
+            <div className="flex space-x-5">
+                {icons}
+            </div>
         </div>
     );
 }
