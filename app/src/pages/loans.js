@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { MainPage } from "./components/reusables";
 import { GetPathTitle } from "./constants/pages";
 import { PagePaths } from "./constants/paths";
@@ -6,6 +7,7 @@ import { Entry } from "./components/reusables";
 import { limitString } from "../functions/strings";
 import { IconLink } from "./components/reusables";
 import { IconButton } from "./components/reusables";
+import { TabButtons } from "./components/reusables";
 import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import InfoImage from "res/info.svg"
@@ -79,19 +81,37 @@ function LoansTable({data}) {
 
 function Content() {
 
-    let data = [
+    const loanRequests = [
+        ["El Principito", "Gloria Velázquez", "1234567890", 3, "Barcelona"]
+    ];
+
+    const ongoingLoans = [
         ["El hobbit", "Marta Jiménez", "LuisAlb56", "19-11-23", "3 días", "43.235.761", "111222333", "2223331112", "Puerto la Cruz"],
         ["Harry Potter y la piedra filosofal", "Luis Dominguez", "LuisAlb56", "29-10-24", "2 días", "89.111.223", "5555555555", "8888888888", "Barcelona"]
     ];
 
+    const tabs = {
+        'requests': 'Solicitudes',
+        'ongoing': 'Vigentes'
+    };
 
+    let [content, setContent] = useState(tabs['requests']);
+
+    function getContent() {
+
+        return (content === tabs['ongoing']) 
+            ? (<LoansTable data={ongoingLoans} />)
+            : (loanRequests.map(loan => <LoanEntry title={loan[0]} reader={loan[1]} phone={loan[2]} days={loan[3]} address={loan[4]} />));
+
+    }
+
+    const setRequestsTab = () => { setContent(tabs['requests']); };
+    const setOngoingTab = () => { setContent(tabs['ongoing']); };
 
     return (
         <div className="flex flex-col w-[75%] self-center pt-5">
-
-            <LoanEntry title="El Principito" reader="Gloria Velázquez" phone="1234567890" days={3} address="Barcelona" />
-            <LoansTable data={data}/>
-
+            <TabButtons first_title={tabs['requests']} second_title={tabs['ongoing']} onFirst={setRequestsTab} onSecond={setOngoingTab} />
+            {getContent()}
         </div>
     );
 }

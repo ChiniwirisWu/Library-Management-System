@@ -8,7 +8,6 @@ import { TabButtons } from "./components/reusables";
 import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import EraseIcon from "res/erase.svg"
-import { tab } from "@testing-library/user-event/dist/tab";
 
 function RequestEntryInfo({username, isNewAccount = true, isAdminAccount = false}) {
 
@@ -93,6 +92,7 @@ function Content() {
         return (content === tabs['users']) 
             ? (users.map(user => <UserEntry username={user[0]} accountType={user[1]} />))
             : (requests.map(request => <RequestEntry username={request[0]} isNewAccount={request[1]} isAdminAccount={request[2]} />));
+
     }
 
     const setRequestsTab = () => { setContent(tabs['requests']); };
@@ -100,7 +100,7 @@ function Content() {
 
     return (
         <div className="flex flex-col w-[75%] self-center pt-5">
-            <TabButtons first_title="Solicitudes" second_title="Cuentas" onFirst={setRequestsTab} onSecond={setUsersTab} />
+            <TabButtons first_title={tabs['requests']} second_title={tabs['users']} onFirst={setRequestsTab} onSecond={setUsersTab} />
             {getContent()}
         </div>
     );
