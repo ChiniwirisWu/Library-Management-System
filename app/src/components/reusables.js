@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from 'react';
 import { MainPagesList } from "../constants/pages";
 import { Link } from "react-router-dom";
+import { restrictTo } from "../functions/permissions";
 import SearchIcon from "res/search.svg";
 import AddIcon from "res/add.svg";
+import { libraryRoles, userRoles } from "../constants/roles";
 
 export function PrimaryButton({ title }) {
     return (
@@ -75,7 +77,7 @@ export function SearchAndAddBar({placeholder, AddPath}) {
         <div className="w-[100%] flex space-x-5">
             <input type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
             <IconButton src={SearchIcon} alt="Search" borderless = {false} />
-            <IconLink src={AddIcon} alt="add" borderless = {false} path={AddPath} />
+            {restrictTo(<IconLink src={AddIcon} alt="add" borderless = {false} path={AddPath} />, libraryRoles)}
         </div>
     );
 }
@@ -176,7 +178,7 @@ export function NavBar({accountType, currentPage}) {
 export const MainPage = ({content, section}) => {
     return(
         <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
-            <NavBar accountType="admin" currentPage={section}/>
+            <NavBar accountType={userRoles['client']} currentPage={section}/>
             {content}
         </div>
     );

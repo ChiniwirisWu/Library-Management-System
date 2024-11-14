@@ -1,8 +1,8 @@
 import React from "react";
-import { MainPage } from "./components/reusables";
+import { MainPage } from "../components/reusables";
 import booksImage from "res/reading-book.png";
-import { PagePaths } from "./constants/paths";
-import { GetPathTitle } from "./constants/pages";
+import { PagePaths } from "../constants/paths";
+import { GetPathTitle } from "../constants/pages";
 
 function Content({username = "estimado lector"}) {
     return (

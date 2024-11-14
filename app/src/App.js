@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { PagesList } from './pages/constants/pages';
+import { PagesList } from './constants/pages';
 
 function App() {
   return (

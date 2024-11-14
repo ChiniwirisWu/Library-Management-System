@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { MainPage } from "./components/reusables";
-import { GetPathTitle } from "./constants/pages";
-import { PagePaths } from "./constants/paths";
-import { Entry } from "./components/reusables";
-import { IconButton } from "./components/reusables";
-import { TabButtons } from "./components/reusables";
+import { MainPage } from "../components/reusables";
+import { GetPathTitle } from "../constants/pages";
+import { PagePaths } from "../constants/paths";
+import { Entry } from "../components/reusables";
+import { IconButton } from "../components/reusables";
+import { TabButtons } from "../components/reusables";
 import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import EraseIcon from "res/erase.svg"

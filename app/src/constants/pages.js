@@ -1,28 +1,23 @@
 import React from "react";
-import Welcome from "../welcome";
-import Login from "../login";
-import Home from "../home";
-import Request from "../request";
-import Ficha from "../ficha";
-import Books from "../books";
-import Users from "../users";
-import Loans from "../loans";
+import Welcome from "../pages/welcome";
+import Login from "../pages/login";
+import Home from "../pages/home";
+import Request from "../pages/request";
+import Ficha from "../pages/ficha";
+import Books from "../pages/books";
+import Users from "../pages/users";
+import Loans from "../pages/loans";
 import { PagePaths } from "./paths";
 import { PathNavBarOrder } from "./paths";
-
-export const userRoles = {
-    'admin': 'admin',
-    'employee': 'employee',
-    'client': 'client',
-}
-
-export const allRoles = Object.values(userRoles) 
-export const libraryRoles = allRoles.filter(role => { return role !== userRoles['client']} );
+import { userRoles } from "./roles";
+import { libraryRoles } from "./roles";
+import { allRoles } from "./roles";
+import { restrictPageTo } from "../functions/permissions";
 
 class Page {
     constructor(path, component, title = null, roles = allRoles) {
         this.path = path;
-        this.component = component;
+        this.component = restrictPageTo(component, roles);
         this.title = title;
         this.roles = roles;     
     }

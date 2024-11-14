@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PrimaryButton } from "./components/reusables";
-import { PagePaths } from "./constants/paths";
+import { PrimaryButton } from "../components/reusables";
+import { PagePaths } from "../constants/paths";
 
 export function Title() {
     return (

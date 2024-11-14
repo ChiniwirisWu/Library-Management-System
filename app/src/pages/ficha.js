@@ -1,6 +1,6 @@
 import React from "react";
-import { FormBackground } from "./components/reusables";
-import { LabeledInput } from "./components/reusables";
+import { FormBackground } from "../components/reusables";
+import { LabeledInput } from "../components/reusables";
 
 function Content () {
     return (

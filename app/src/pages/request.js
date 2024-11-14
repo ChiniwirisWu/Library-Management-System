@@ -1,7 +1,7 @@
 import React from "react";
-import { Form } from "./components/reusables";
-import { LabeledInput } from "./components/reusables";
-import { TransparentButton } from "./components/reusables";
+import { Form } from "../components/reusables";
+import { LabeledInput } from "../components/reusables";
+import { TransparentButton } from "../components/reusables";
 
 function Content() {    
     return (

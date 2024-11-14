@@ -1,14 +1,16 @@
 import React from "react";
-import { MainPage } from "./components/reusables";
-import { PagePaths } from "./constants/paths";
-import { GetPathTitle } from "./constants/pages";
+import { MainPage } from "../components/reusables";
+import { PagePaths } from "../constants/paths";
+import { GetPathTitle } from "../constants/pages";
 import { limitString } from "../functions/strings";
-import { IconLink } from "./components/reusables";
-import { SearchAndAddBar } from "./components/reusables";
-import { Entry } from "./components/reusables";
+import { IconLink } from "../components/reusables";
+import { SearchAndAddBar } from "../components/reusables";
+import { Entry } from "../components/reusables";
+import { restrictTo } from "../functions/permissions";
 import LoanImage from "res/handshake.svg"
 import InfoImage from "res/info.svg"
 import EditImage from "res/edit.svg"
+import { libraryRoles } from "../constants/roles";
 
 function BookEntryInfo({title, category, author, room}) {
     const size = 50;
@@ -24,8 +26,8 @@ function BookEntryInfo({title, category, author, room}) {
 function BookEntryIcons() {
     return (
         <>
-            <IconLink src={LoanImage} alt="préstamo" path={ PagePaths['Ficha'] } />
-            <IconLink src={EditImage} alt="edit" path={ PagePaths['Ficha'] } />
+            {restrictTo(<IconLink src={LoanImage} alt="préstamo" path={ PagePaths['Ficha'] } />, libraryRoles)} 
+            {restrictTo(<IconLink src={EditImage} alt="edit" path={ PagePaths['Ficha']} />, libraryRoles)}
             <IconLink src={InfoImage} alt="info" path={ PagePaths['Ficha'] } />
         </>
     );

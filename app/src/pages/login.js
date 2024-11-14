@@ -1,9 +1,9 @@
 import React from "react";
-import { TextLink } from "./components/reusables";
-import { LabeledInput } from "./components/reusables";
-import { TransparentButton } from "./components/reusables";
-import { Form } from "./components/reusables";
-import { PagePaths } from "./constants/paths";
+import { TextLink } from "../components/reusables";
+import { LabeledInput } from "../components/reusables";
+import { TransparentButton } from "../components/reusables";
+import { Form } from "../components/reusables";
+import { PagePaths } from "../constants/paths";
 
 function Content() {
     return (
