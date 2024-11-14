@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from 'react';
 import { MainPagesList } from "../constants/pages";
 import { Link } from "react-router-dom";
 import SearchIcon from "res/search.svg";
@@ -111,6 +112,35 @@ export const Form = ({content, title, className}) => {
                 {content}
             </div>
          }/>
+    );
+}
+
+export function TabButtons({first_title, second_title, onFirst, onSecond}) {
+    const onButtonClass = "border-2 rounded-md bg-gray-50 font-bold px-16 py-1 transiton-colors duration-[50ms]";
+    const offButtonClass = "rounded-md bg-[#e7e7e7] text-gray-400 font-bold px-16 py-1 transiton-colors duration-[50ms]";
+
+    let [firstClass, setFirstClass] = useState(onButtonClass);
+    let [secondClass, setSecondClass] = useState(offButtonClass);
+
+    let onFirstClick = () => {
+        setFirstClass(onButtonClass);
+        setSecondClass(offButtonClass);
+        onFirst();
+    }
+
+    let onSecondClick = () => {
+        setFirstClass(offButtonClass);
+        setSecondClass(onButtonClass);
+        onSecond();
+    }
+
+    return (
+        <div className="h-[75px] w-[100%] flex place-content-center">
+            <div className="my-4 bg-[#e7e7e7] p-1 rounded-md inline-block self-center">
+                <button class={firstClass} onClick={onFirstClick}>{first_title}</button>
+                <button class={secondClass} onClick={onSecondClick}>{second_title}</button>
+            </div>
+        </div>
     );
 }
 

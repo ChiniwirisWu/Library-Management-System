@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { MainPage } from "./components/reusables";
 import { GetPathTitle } from "./constants/pages";
 import { PagePaths } from "./constants/paths";
 import { Entry } from "./components/reusables";
 import { IconButton } from "./components/reusables";
+import { TabButtons } from "./components/reusables";
 import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import EraseIcon from "res/erase.svg"
+import { tab } from "@testing-library/user-event/dist/tab";
 
 function RequestEntryInfo({username, isNewAccount = true, isAdminAccount = false}) {
 
@@ -62,7 +64,7 @@ function UserEntry({username, accountType = 'Employee'}) {
 }
 
 function Content() {
-    
+
     const requests = [
         ["Juan David", false, false],
         ["Juliana P.", true, true],
@@ -79,11 +81,27 @@ function Content() {
     users.push(users[1]);
     users.push(users[1]);
 
-    
+    const tabs = {
+        'requests': 'Solicitudes',
+        'users': 'Usuarios'
+    };
+
+    let [content, setContent] = useState(tabs['requests']);
+
+    function getContent() {
+
+        return (content === tabs['users']) 
+            ? (users.map(user => <UserEntry username={user[0]} accountType={user[1]} />))
+            : (requests.map(request => <RequestEntry username={request[0]} isNewAccount={request[1]} isAdminAccount={request[2]} />));
+    }
+
+    const setRequestsTab = () => { setContent(tabs['requests']); };
+    const setUsersTab = () => { setContent(tabs['users']); };
+
     return (
         <div className="flex flex-col w-[75%] self-center pt-5">
-            {requests.map(request => <RequestEntry username={request[0]} isNewAccount={request[1]} isAdminAccount={request[2]} />)}
-            {users.map(user => <UserEntry username={user[0]} accountType={user[1]} />)}
+            <TabButtons first_title="Solicitudes" second_title="Cuentas" onFirst={setRequestsTab} onSecond={setUsersTab} />
+            {getContent()}
         </div>
     );
 }
