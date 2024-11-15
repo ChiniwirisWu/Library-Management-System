@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from 'react';
 import { MainPagesList } from "../constants/pages";
 import { Link } from "react-router-dom";
@@ -6,6 +6,8 @@ import { restrictTo } from "../functions/permissions";
 import SearchIcon from "res/search.svg";
 import AddIcon from "res/add.svg";
 import { libraryRoles, userRoles } from "../constants/roles";
+import AppSession, { SessionContext } from "../session/session";
+import { PagePaths } from "../constants/paths";
 
 export function PrimaryButton({ title }) {
     return (
@@ -25,12 +27,20 @@ export function Title({ text }) {
     );
 }
 
-export function TransparentButton({ text }) {
+export function TransparentButton({ text, onClick }) {
     return (
-        <button class="border-1 rounded-md text-[#303F9F] hover:text-blue-300 transition-all mb-4 w-min text-nowrap m-auto">
+        <button class="border-1 rounded-md text-[#303F9F] hover:text-blue-300 transition-all mb-4 w-min text-nowrap m-auto" onClick={onClick}>
             {text}
         </button>
     );
+}
+
+export function TitleLink({text, path, onClick}) {
+    return (
+        <Link className="flex place-content-center" to={ path }>
+            <TransparentButton text={text} onClick={onClick} />
+        </Link>
+    )
 }
 
 export function LabeledInput({ text }, { type }) {
@@ -146,7 +156,7 @@ export function TabButtons({first_title, second_title, onFirst, onSecond}) {
     );
 }
 
-export function NavButton({title, isActive = false}) {
+export function NavButton({title, isActive = false, onClickk}) {
     
     let bg_color = (isActive) ? "bg-blue-600" : "bg-white"
     let text_color = (isActive) ? "text-white" : "text-blue-600"
@@ -154,7 +164,7 @@ export function NavButton({title, isActive = false}) {
     let hover_text_color = "hover:text-white"
     
     return (
-        <button className={`w-[100%] h-[100%] text-lg ${text_color} ${bg_color} cursor-pointer outline-none ${hover_bg_color} ${hover_text_color} py-2 font-semibold transition-all duration-[0.25s]`}>
+        <button className={`w-[100%] h-[100%] text-lg ${text_color} ${bg_color} cursor-pointer outline-none ${hover_bg_color} ${hover_text_color} py-2 font-semibold transition-all duration-[0.25s]`} onClick={onClickk}>
             {title}
         </button>
     );
@@ -168,7 +178,7 @@ export function NavBar({accountType, currentPage}) {
         <nav className = "flex w-[100%]">
             {sections.map( page =>
                 <Link className="w-[100%] h-[100%]" to={ page.path }>
-                    <NavButton title = {page.title} isActive={page.title === currentPage} />
+                    <NavButton title = {page.title} isActive={page.title === currentPage} onClick={ (page === PagePaths['Welcome']) ? AppSession.reset() : null } />
                 </Link>
             )}
         </nav>
@@ -176,9 +186,14 @@ export function NavBar({accountType, currentPage}) {
 }
 
 export const MainPage = ({content, section}) => {
+
+    let session = useContext(SessionContext).session;
+
+    console.log(session);
+
     return(
         <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
-            <NavBar accountType={userRoles['client']} currentPage={section}/>
+            <NavBar accountType={ session.accountType } currentPage={section}/>
             {content}
         </div>
     );
