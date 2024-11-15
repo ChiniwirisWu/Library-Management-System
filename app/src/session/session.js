@@ -1,7 +1,9 @@
+import React from "react";
+import { useState } from "react";
 import { createContext } from "react";
 import { userRoles } from "../constants/roles";
 
-class Session {
+export class Session {
     constructor(accountType = userRoles['client']) {
         this.accountType = accountType;
     }
@@ -11,6 +13,16 @@ class Session {
     }
 }
 
-export const SessionContext = createContext(null);
+const SessionContext = createContext(new Session());
 
-export default Session;
+export const ContextWrapper = ({content}) => {
+    const [session, setSession] = useState(new Session(userRoles['admin']));
+    
+    return(
+        <SessionContext.Provider value={{session, setSession}}>
+            {content}
+        </SessionContext.Provider>
+    );
+};
+
+export default SessionContext;

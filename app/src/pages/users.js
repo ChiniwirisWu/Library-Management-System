@@ -9,10 +9,10 @@ import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import EraseIcon from "res/erase.svg"
 
-function RequestEntryInfo({username, isNewAccount = true, isAdminAccount = false}) {
+function RequestEntryInfo({ username, isNewAccount = true, isAdminAccount = false }) {
 
     const accountType = (isAdminAccount) ? "Administrador" : "Trabajador";
-    
+
     const requestText = (isNewAccount)
         ? `Solicita una cuenta de ${accountType}`
         : "Solicita un cambio de Contraseña";
@@ -34,20 +34,20 @@ function RequestEntryIcons() {
     );
 }
 
-function RequestEntry({username, isNewAccount = true, isAdminAccount = false}) {
+function RequestEntry({ username, isNewAccount = true, isAdminAccount = false }) {
     return (
         <Entry
-            info = <RequestEntryInfo username={username} isNewAccount={isNewAccount} isAdminAccount={isAdminAccount} />
-            icons = <RequestEntryIcons />
+            info=<RequestEntryInfo username={username} isNewAccount={isNewAccount} isAdminAccount={isAdminAccount} />
+            icons=<RequestEntryIcons />
         />
     );
 }
 
-function UserEntry({username, accountType = 'Employee'}) {
-    
+function UserEntry({ username, accountType = 'Employee' }) {
+
     const type = (accountType === 'Employee') ? "Trabajador" : "Administrador";
 
-    const info = ( 
+    const info = (
         <>
             <h6 className="font-bold">{username}</h6>
             <p className="text-gray-600 font-light">{type}</p>
@@ -55,9 +55,9 @@ function UserEntry({username, accountType = 'Employee'}) {
     );
 
     return (
-        <Entry 
-            info = {info}
-            icons = <IconButton src={EraseIcon} alt="erase" />
+        <Entry
+            info={info}
+            icons=<IconButton src={EraseIcon} alt="erase" />
         />
     );
 }
@@ -89,7 +89,7 @@ function Content() {
 
     function getContent() {
 
-        return (content === tabs['users']) 
+        return (content === tabs['users'])
             ? (users.map(user => <UserEntry username={user[0]} accountType={user[1]} />))
             : (requests.map(request => <RequestEntry username={request[0]} isNewAccount={request[1]} isAdminAccount={request[2]} />));
 

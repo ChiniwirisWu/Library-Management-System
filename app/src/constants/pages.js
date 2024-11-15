@@ -12,12 +12,12 @@ import { PathNavBarOrder } from "./paths";
 import { userRoles } from "./roles";
 import { libraryRoles } from "./roles";
 import { allRoles } from "./roles";
-import { restrictPageTo } from "../functions/permissions";
+import { RestrictedPage } from "../functions/permissions";
 
 class Page {
     constructor(path, component, title = null, roles = allRoles) {
         this.path = path;
-        this.component = restrictPageTo(component, roles);
+        this.component = <RestrictedPage page={component} permissions={roles} />;
         this.title = title;
         this.roles = roles;     
     }

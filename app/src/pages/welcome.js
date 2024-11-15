@@ -18,10 +18,10 @@ export function Title() {
 function ButtonsWrapper() {
     return (
         <section className="h-[175px] w-[100%] flex items-center place-content-evenly">
-            <Link className="w-[25%] h-[30%]" to={ PagePaths['Login'] }>
+            <Link className="w-[25%] h-[30%]" to={PagePaths['Login']}>
                 <PrimaryButton title={"Trabajador"} />
             </Link>
-            <Link className="w-[25%] h-[30%]" to={ PagePaths['Home'] }>
+            <Link className="w-[25%] h-[30%]" to={PagePaths['Home']}>
                 <PrimaryButton title={"Lector"} />
             </Link>
         </section>

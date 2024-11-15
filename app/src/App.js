@@ -1,5 +1,4 @@
 import './styles/App.css';
-import { useState } from 'react';
 
 import {
   BrowserRouter as Router,
@@ -8,23 +7,23 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import { ContextWrapper } from './session/session';
 import { PagesList } from './constants/pages';
-import Session from './session/session';
-import { SessionContext } from './session/session';
 
 function App() {
 
-  const [session, setSession] = useState(new Session());
 
-  return (
-    <SessionContext.Provider value={{session, setSession}}>
-        <Router>
-          <Routes>
+  const pagination = (
+    <Router>
+        <Routes>
             <Route exact path = "/*" element = { <Navigate to="/" /> } />
             { PagesList.map((page) => ( <Route path={page.path} element={page.component} /> ))}
-          </Routes>
-        </Router>
-    </SessionContext.Provider>
+        </Routes>
+    </Router>
+  );
+
+  return (
+    <ContextWrapper content={pagination} />
   );
 }
 

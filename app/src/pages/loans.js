@@ -13,7 +13,7 @@ import DenyIcon from "res/deny.svg";
 import InfoImage from "res/info.svg"
 
 
-function LoanEntryInfo({title, reader, phone, days, address}) {
+function LoanEntryInfo({ title, reader, phone, days, address }) {
     const size = 50;
 
     return (
@@ -29,54 +29,54 @@ function LoanEntryInfo({title, reader, phone, days, address}) {
 function LoanEntryIcons() {
     return (
         <>
-            <IconLink src={AcceptIcon} alt="accept" path={ PagePaths['Ficha'] } />
-            <IconLink src={DenyIcon} alt="deny" path={ PagePaths['Ficha'] } />
-            <IconLink src={InfoImage} alt="info" path={ PagePaths['Ficha'] } />
+            <IconLink src={AcceptIcon} alt="accept" path={PagePaths['Ficha']} />
+            <IconLink src={DenyIcon} alt="deny" path={PagePaths['Ficha']} />
+            <IconLink src={InfoImage} alt="info" path={PagePaths['Ficha']} />
         </>
     );
 }
 
-function LoanEntry({title, reader, phone, days, address}) {
+function LoanEntry({ title, reader, phone, days, address }) {
     return (
-        <Entry 
-            info = <LoanEntryInfo title={title} reader={reader} phone={phone} days={days} address={address} />
-            icons = <LoanEntryIcons />
+        <Entry
+            info=<LoanEntryInfo title={title} reader={reader} phone={phone} days={days} address={address} />
+            icons=<LoanEntryIcons />
         />
     );
 }
 
-function LoansTable({data}) {
+function LoansTable({ data }) {
 
     const th_style = "py-2 px-4 border-b border-gray-200 text-base font-semibold text-gray-700 text-center";
     const td_style = "text-sm px-1 py-1 text-black text-center";
 
     let columns = ["Título", "Prestatario", "Encargado", "Fecha", "Duración", "Cédula", "Teléfono", "Teléfono Vecino", "Dirección"];
 
-    return(
+    return (
         <table className="min-w-full bg-white border border-gray-200 ">
-                <thead className="bg-gray-100">
-                    <tr>
-                        { columns.map( (column) => ( <th className={th_style}>{column}</th>) ) }
-                        <th className={th_style}>Terminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map( (record) => (
-                            <tr className="hover:bg-gray-100 transition-all">
-                                { record.map( (field) => <td className={td_style}>{field}</td>) }
-                                <td className={td_style}>
-                                    <IconButton src={DenyIcon} alt="end" />
-                                </td>
-                            </tr>
-                        ))
-                    }
-                    <tr className="hover:bg-gray-100 transition-all">
-                    </tr>
-                    
-                </tbody>
-            </table>
-    );  
+            <thead className="bg-gray-100">
+                <tr>
+                    {columns.map((column) => (<th className={th_style}>{column}</th>))}
+                    <th className={th_style}>Terminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    data.map((record) => (
+                        <tr className="hover:bg-gray-100 transition-all">
+                            {record.map((field) => <td className={td_style}>{field}</td>)}
+                            <td className={td_style}>
+                                <IconButton src={DenyIcon} alt="end" />
+                            </td>
+                        </tr>
+                    ))
+                }
+                <tr className="hover:bg-gray-100 transition-all">
+                </tr>
+
+            </tbody>
+        </table>
+    );
 }
 
 function Content() {
@@ -99,7 +99,7 @@ function Content() {
 
     function getContent() {
 
-        return (content === tabs['ongoing']) 
+        return (content === tabs['ongoing'])
             ? (<LoansTable data={ongoingLoans} />)
             : (loanRequests.map(loan => <LoanEntry title={loan[0]} reader={loan[1]} phone={loan[2]} days={loan[3]} address={loan[4]} />));
 

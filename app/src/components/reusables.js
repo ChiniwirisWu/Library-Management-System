@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { useState } from 'react';
 import { MainPagesList } from "../constants/pages";
 import { Link } from "react-router-dom";
-import { restrictTo } from "../functions/permissions";
+import { RestrictedComponent } from "../functions/permissions";
 import SearchIcon from "res/search.svg";
 import AddIcon from "res/add.svg";
-import { libraryRoles, userRoles } from "../constants/roles";
-import AppSession, { SessionContext } from "../session/session";
+import { libraryRoles } from "../constants/roles";
+import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
 export function PrimaryButton({ title }) {
@@ -35,9 +35,9 @@ export function TransparentButton({ text, onClick }) {
     );
 }
 
-export function TitleLink({text, path, onClick}) {
+export function TitleLink({ text, path, onClick }) {
     return (
-        <Link className="flex place-content-center" to={ path }>
+        <Link className="flex place-content-center" to={path}>
             <TransparentButton text={text} onClick={onClick} />
         </Link>
     )
@@ -55,45 +55,45 @@ export function LabeledInput({ text }, { type }) {
 }
 
 export function TextLink({ text, href }) {
-    return (        
+    return (
         <a href={href} className="w-min text-sm underline text-[#303F9F] hover:text-blue-300 transition-all mb-2 hover:cursor-pointer">
             <p>{text}</p>
         </a>
     );
 }
 
-export function IconButton({src, alt, borderless = true}) {
-    let buttonClass = (borderless) 
-        ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200" 
+export function IconButton({ src, alt, borderless = true }) {
+    let buttonClass = (borderless)
+        ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200"
         : "my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";
-    
+
     return (
-        <button className={ buttonClass }>
+        <button className={buttonClass}>
             <img src={src} alt={alt} height="40px" width="40px" className="object-contain"></img>
         </button>
     );
 }
 
-export function IconLink({src, alt, path, borderless = true}) {
+export function IconLink({ src, alt, path, borderless = true }) {
     return (
-        <Link className="flex align-middle" to={ path }>
-            <IconButton src={ src } alt={ alt } borderless={ borderless } />
+        <Link className="flex align-middle" to={path}>
+            <IconButton src={src} alt={alt} borderless={borderless} />
         </Link>
     );
 }
 
-export function SearchAndAddBar({placeholder, AddPath}) {
-    return(
+export function SearchAndAddBar({ placeholder, AddPath }) {
+    return (
         <div className="w-[100%] flex space-x-5">
             <input type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
-            <IconButton src={SearchIcon} alt="Search" borderless = {false} />
-            {restrictTo(<IconLink src={AddIcon} alt="add" borderless = {false} path={AddPath} />, libraryRoles)}
+            <IconButton src={SearchIcon} alt="Search" borderless={false} />
+            <RestrictedComponent component=<IconLink src={AddIcon} alt="add" borderless={false} path={AddPath} /> permissions={libraryRoles} />
         </div>
     );
 }
 
-export const Entry = ({info, icons}) => {
-    return(
+export const Entry = ({ info, icons }) => {
+    return (
         <div className="flex content-center place-content-between w-[100%] mb-5 border-[0.5px] text-left p-4 bg-gray-50">
             <div className="flex flex-col">
                 {info}
@@ -116,18 +116,18 @@ export const FormBackground = ({ content }) => {
     );
 }
 
-export const Form = ({content, title, className}) => {
-    return(
-        <FormBackground content = {
-            <div className = {`${className} bg-white p-[40px] rounded-sm shadow-sm shadow-[grey]`}>
+export const Form = ({ content, title, className }) => {
+    return (
+        <FormBackground content={
+            <div className={`${className} bg-white p-[40px] rounded-sm shadow-sm shadow-[grey]`}>
                 <Title text={title} />
                 {content}
             </div>
-         }/>
+        } />
     );
 }
 
-export function TabButtons({first_title, second_title, onFirst, onSecond}) {
+export function TabButtons({ first_title, second_title, onFirst, onSecond }) {
     const onButtonClass = "border-2 rounded-md bg-gray-50 font-bold px-16 py-1 transiton-colors duration-[50ms]";
     const offButtonClass = "rounded-md bg-[#e7e7e7] text-gray-400 font-bold px-16 py-1 transiton-colors duration-[50ms]";
 
@@ -156,13 +156,13 @@ export function TabButtons({first_title, second_title, onFirst, onSecond}) {
     );
 }
 
-export function NavButton({title, isActive = false, onClickk}) {
-    
+export function NavButton({ title, isActive = false, onClickk }) {
+
     let bg_color = (isActive) ? "bg-blue-600" : "bg-white"
     let text_color = (isActive) ? "text-white" : "text-blue-600"
     let hover_bg_color = "hover:bg-blue-600"
     let hover_text_color = "hover:text-white"
-    
+
     return (
         <button className={`w-[100%] h-[100%] text-lg ${text_color} ${bg_color} cursor-pointer outline-none ${hover_bg_color} ${hover_text_color} py-2 font-semibold transition-all duration-[0.25s]`} onClick={onClickk}>
             {title}
@@ -170,30 +170,28 @@ export function NavButton({title, isActive = false, onClickk}) {
     );
 }
 
-export function NavBar({accountType, currentPage}) {
+export function NavBar({ accountType, currentPage }) {
 
-    const sections = MainPagesList.filter( page => page.roles.includes(accountType) );
-    
-    return(
-        <nav className = "flex w-[100%]">
-            {sections.map( page =>
-                <Link className="w-[100%] h-[100%]" to={ page.path }>
-                    <NavButton title = {page.title} isActive={page.title === currentPage} onClick={ (page === PagePaths['Welcome']) ? AppSession.reset() : null } />
+    const sections = MainPagesList.filter(page => page.roles.includes(accountType));
+
+    return (
+        <nav className="flex w-[100%]">
+            {sections.map(page =>
+                <Link className="w-[100%] h-[100%]" to={page.path}>
+                    <NavButton title={page.title} isActive={page.title === currentPage} onClick={(page === PagePaths['Welcome']) ? null : null} />
                 </Link>
             )}
         </nav>
     );
 }
 
-export const MainPage = ({content, section}) => {
+export const MainPage = ({ content, section }) => {
 
     let session = useContext(SessionContext).session;
 
-    console.log(session);
-
-    return(
+    return (
         <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
-            <NavBar accountType={ session.accountType } currentPage={section}/>
+            <NavBar accountType={session.accountType} currentPage={section} />
             {content}
         </div>
     );

@@ -6,13 +6,13 @@ import { limitString } from "../functions/strings";
 import { IconLink } from "../components/reusables";
 import { SearchAndAddBar } from "../components/reusables";
 import { Entry } from "../components/reusables";
-import { restrictTo } from "../functions/permissions";
+import { RestrictedComponent } from "../functions/permissions";
 import LoanImage from "res/handshake.svg"
 import InfoImage from "res/info.svg"
 import EditImage from "res/edit.svg"
 import { libraryRoles } from "../constants/roles";
 
-function BookEntryInfo({title, category, author, room}) {
+function BookEntryInfo({ title, category, author, room }) {
     const size = 50;
 
     return (
@@ -26,24 +26,24 @@ function BookEntryInfo({title, category, author, room}) {
 function BookEntryIcons() {
     return (
         <>
-            {restrictTo(<IconLink src={LoanImage} alt="préstamo" path={ PagePaths['Ficha'] } />, libraryRoles)} 
-            {restrictTo(<IconLink src={EditImage} alt="edit" path={ PagePaths['Ficha']} />, libraryRoles)}
-            <IconLink src={InfoImage} alt="info" path={ PagePaths['Ficha'] } />
+            <RestrictedComponent component=<IconLink src={LoanImage} alt="préstamo" path={PagePaths['Ficha']} /> permissions={libraryRoles} />
+            <RestrictedComponent component=<IconLink src={EditImage} alt="edit" path={PagePaths['Ficha']} /> permissions={libraryRoles} />
+            <IconLink src={InfoImage} alt="info" path={PagePaths['Ficha']} />
         </>
     );
 }
 
-function BookEntry({title, category, author, room}) {
+function BookEntry({ title, category, author, room }) {
     return (
-        <Entry 
-            info = <BookEntryInfo title={title} category={category} author={author} room={room} />
-            icons = <BookEntryIcons />
+        <Entry
+            info=<BookEntryInfo title={title} category={category} author={author} room={room} />
+            icons=<BookEntryIcons />
         />
     );
 }
 
 function Content() {
-    
+
     const books = [
         ["El Principito", "Literatura Infantil", "Antoine de Saint-Exupéry", "Sala de Niños"],
         ["Frankenstein o El moderno Prometeo", "Horror Gótico", "Mary Shelley", "Sala de Literatura"],
@@ -57,12 +57,12 @@ function Content() {
     books.push(books[0]);
     books.push(books[0]);
 
-    return(
+    return (
         <div className="flex flex-col w-[75%] self-center">
-            <SearchAndAddBar placeholder='Buscar Libros' AddPath={ PagePaths['Ficha'] }/>
+            <SearchAndAddBar placeholder='Buscar Libros' AddPath={PagePaths['Ficha']} />
             <div className="flex flex-col w-[100%] self-center">
                 {books.map(book => <BookEntry title={book[0]} category={book[1]} author={book[2]} room={book[3]} />)}
-            </div> 
+            </div>
         </div>
     );
 }
