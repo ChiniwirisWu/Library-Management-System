@@ -40,6 +40,7 @@ app.post('/login', Worker.login);
 app.get('/workers', isAuthorized, Worker.getAllWorkers);
 app.get('/worker/:nombre', isAuthorized, Worker.getWorkerBynombre);
 app.put('/worker/:nombre', isAuthorized, Worker.updateWorkerBynombre);
+app.put('/worker/validateWorker/:nombre', isAuthorized, Worker.validateWorker);
 app.delete('/worker/:nombre', isAuthorized, Worker.deleteWorkerBynombre);
 
 //endpoints para los prestamos
