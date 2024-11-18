@@ -51,19 +51,19 @@ INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Oscar"
 INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Carmen", "trabajador", "kfas08342-@jfa", "jf89345^jldaf", 1);
 INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Jorge", "administrador", "kfasfjk#$jkfasd", "kfir84jf3", 0);
 
-CREATE TABLE lector(
-	cedula VARCHAR (20) NOT NULL UNIQUE,
-	nombre VARCHAR (20) NOT NULL,
-	apellido VARCHAR (20) NOT NULL,
-	direccion VARCHAR (50) NOT NULL, 
-	telefono VARCHAR (20) NOT NULL,
-	telefonoVecino VARCHAR (20) NOT NULL,
-	PRIMARY KEY (cedula)
-);
+-- CREATE TABLE lector(
+	-- cedula VARCHAR (20) NOT NULL UNIQUE,
+	-- nombre VARCHAR (20) NOT NULL,
+	-- apellido VARCHAR (20) NOT NULL,
+	-- direccion VARCHAR (50) NOT NULL, 
+	-- telefono VARCHAR (20) NOT NULL,
+	-- telefonoVecino VARCHAR (20) NOT NULL,
+	-- PRIMARY KEY (cedula)
+-- );
 
-INSERT INTO lector (cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342");
-INSERT INTO lector (cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("28785934", "Agustin", "Perez", "Lecheria", "041278496546", "04168974535");
-INSERT INTO lector (cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("31867485", "Julina", "Moros", "Puerto la cruz", "0412847364", "04249382736");
+-- INSERT INTO lector (cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342");
+-- INSERT INTO lector (cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("28785934", "Agustin", "Perez", "Lecheria", "041278496546", "04168974535");
+-- INSERT INTO lector (cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("31867485", "Julina", "Moros", "Puerto la cruz", "0412847364", "04249382736");
 
 
 
@@ -77,7 +77,7 @@ CREATE TABLE prestamo(
 	PRIMARY KEY (id),
 	FOREIGN KEY (fk_trabajador) REFERENCES trabajador (nombre) ON DELETE CASCADE,
 	FOREIGN KEY (fk_isbn) REFERENCES ficha (isbn) ON DELETE CASCADE,
-	FOREIGN KEY (fk_cedula) REFERENCES lector (cedula) ON DELETE CASCADE 
+	-- FOREIGN KEY (fk_cedula) REFERENCES lector (cedula) ON DELETE CASCADE 
 );
 
 INSERT INTO prestamo (fk_cedula, fk_isbn, fk_trabajador, fecha_inicio, fecha_final) VALUES ("30859232", "321790423", "Oscar","2024-10-1", "2024-10-3"); 
