@@ -26,8 +26,6 @@ const assignWorker = async (req, res, next)=>{
 }
 const isAuthorized = express.Router().use(validateJwt, assignWorker)
 
-app.post('/register', Worker.register);
-app.post('/login', Worker.login);
 
 //endpoints para las fichas.
 //app.get('/cards', isAuthorized, Card.getAllCards);
@@ -37,11 +35,12 @@ app.post('/login', Worker.login);
 //app.delete('/card/:id', isAuthorized, Card.deleteCardById);
 
 //endpoints para los clientes.
-//app.get('/clients', isAuthorized, Client.getAllClients);
-//app.get('/client/:id', isAuthorized, Client.getClientById);
-//app.post('/client', isAuthorized, Client.register);
-//app.put('/client/:id', isAuthorized, Client.updateClientById);
-//app.delete('/client/:id', isAuthorized, Client.deleteClientById);
+app.post('/register', Worker.register);
+app.post('/login', Worker.login);
+app.get('/workers', isAuthorized, Worker.getAllWorkers);
+app.get('/worker/:nombre', isAuthorized, Worker.getWorkerBynombre);
+app.put('/worker/:nombre', isAuthorized, Worker.updateWorkerBynombre);
+app.delete('/worker/:nombre', isAuthorized, Worker.deleteWorkerBynombre);
 
 //endpoints para los prestamos
 //app.get('/borrowed', isAuthorized, Borrowed.getAllBorrowed);

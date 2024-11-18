@@ -88,7 +88,7 @@ const Worker = {
 			if (clients.length > 0){
 				const salt = await bcrypt.genSalt();
 				const hash = await bcrypt.hash(body.contrasena, salt);
-				const [rows, columns] = await pool.execute('UPDATE trabajador SET nombre = ?, rol = ?, contrasena = ?, salt = ?, validado = ? WHERE nombre = ?', [body.nombre, body.rol, hash, salt, nombre, body.validated]);
+				const [rows, columns] = await pool.execute('UPDATE trabajador SET nombre = ?, rol = ?, contrasena = ?, salt = ?, validado = ? WHERE nombre = ?', [body.nombre, body.rol, hash, salt, body.validado, nombre]);
 				if(rows.affectedRows > 0){
 					res.status(200).send('Cliente actualizado con éxito.');
 				} else{
