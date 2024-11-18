@@ -30,7 +30,7 @@ INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, colecci
 -- sala --
 create table sala(
 	dewey VARCHAR(20) not null,
-	nombre VARCHAR(50) not null,
+	nombre VARCHAR(50) not null
 );
 
 INSERT INTO sala (dewey, nombre) VALUES ("000","Ciencia y Computacion"); 
@@ -69,17 +69,23 @@ INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Jorge"
 
 CREATE TABLE prestamo(
 	id INT NOT NULL AUTO_INCREMENT,
-	fk_cedula VARCHAR (20) NOT NULL,
 	fk_isbn VARCHAR(50) NOT NULL,
 	fk_trabajador VARCHAR (50) NOT NULL,
 	fecha_inicio DATETIME NOT NULL,
 	fecha_final DATETIME NOT NULL,
+	dias INT NOT NULL,
+	cedula VARCHAR (20) NOT NULL UNIQUE,
+	nombre VARCHAR (20) NOT NULL,
+	apellido VARCHAR (20) NOT NULL,
+	direccion VARCHAR (50) NOT NULL, 
+	telefono VARCHAR (20) NOT NULL,
+	telefonoVecino VARCHAR (20) NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (fk_trabajador) REFERENCES trabajador (nombre) ON DELETE CASCADE,
-	FOREIGN KEY (fk_isbn) REFERENCES ficha (isbn) ON DELETE CASCADE,
+	FOREIGN KEY (fk_isbn) REFERENCES ficha (isbn) ON DELETE CASCADE
 	-- FOREIGN KEY (fk_cedula) REFERENCES lector (cedula) ON DELETE CASCADE 
 );
 
-INSERT INTO prestamo (fk_cedula, fk_isbn, fk_trabajador, fecha_inicio, fecha_final) VALUES ("30859232", "321790423", "Oscar","2024-10-1", "2024-10-3"); 
-INSERT INTO prestamo (fk_cedula, fk_isbn, fk_trabajador, fecha_inicio, fecha_final) VALUES ("28785934", "409234803", "Carmen","2024-10-5", "2024-10-8"); 
-INSERT INTO prestamo (fk_cedula, fk_isbn, fk_trabajador, fecha_inicio, fecha_final) VALUES ("31867485", "789543754", "Jorge","2024-09-20", "2024-09-23"); 
+INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("321790423", "Oscar","2024-10-1", "2024-10-3", 3, "30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342"); 
+INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("409234803", "Carmen","2024-10-5", "2024-10-8", 3, "28785934", "Agustin", "Perez", "Lecheria", "041278496546", "04168974535"); 
+INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES ("789543754", "Jorge","2024-09-20", "2024-09-23", 2, "31867485", "Julina", "Moros", "Puerto la cruz", "0412847364", "04249382736"); 

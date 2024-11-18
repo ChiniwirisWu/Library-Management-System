@@ -27,7 +27,7 @@ const Worker = {
 			if (rows.length < 1){
 				const salt = await bcrypt.genSalt();
 				const hashed = await bcrypt.hash(body.contrasena, salt);
-				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'worker', hashed, salt, 0]);
+				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'admin', hashed, salt, 1]);
 				if (response[0].affectedRows == 1) {
 					const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
 					res.status(200).send('Se ha enviado su solicitud de registro exitosamente.');

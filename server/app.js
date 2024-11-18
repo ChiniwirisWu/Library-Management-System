@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import { expressjwt } from 'express-jwt';
 import Worker from './worker.controller.js';
 import Card from './card.controller.js';
+import Loan from './loan.controller.js';
 dotenv.config();
 
 //middlewares 
@@ -45,11 +46,11 @@ app.put('/worker/validateWorker/:nombre', isAuthorized, Worker.validateWorker);
 app.delete('/worker/:nombre', isAuthorized, Worker.deleteWorkerBynombre);
 
 //endpoints para los prestamos
-//app.get('/borrowed', isAuthorized, Borrowed.getAllBorrowed);
-//app.get('/borrowed/:id', isAuthorized, Borrowed.getBorrowedById);
-//app.post('/borrowed', isAuthorized, Borrowed.createBorrowed);
-//app.put('/borrowed/:id', isAuthorized, Borrowed.updateBorrowedById);
-//app.delete('/borrowed/:id', isAuthorized, Borrowed.deleteBorrowedById);
+app.get('/loans', isAuthorized, Loan.getAllLoans);
+app.get('/loan/:id', isAuthorized, Loan.getLoanById);
+app.post('/loan', isAuthorized, Loan.createLoan);
+app.put('/loan/:id', isAuthorized, Loan.updateLoanById);
+app.delete('/loan/:id', isAuthorized, Loan.deleteLoanById);
 
 app.listen(9090, ()=>{
 	console.log('server running on port 9090');

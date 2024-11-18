@@ -39,7 +39,9 @@ const Loan = {
 	createLoan: async (req, res)=>{
 		try {
 			const { body } = req;
-			const [rows, columns] = await pool.execute('INSERT INTO Loan (id_card, email_client) VALUES (?, ?)', [body.id_card, body.email_client]);
+			console.log('hi')
+			console.log(body)
+			const [rows, columns] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.trabajador, body.fecha_inicio, body.fecha_final, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Préstamo creado con éxito.');
 			} else{
@@ -53,7 +55,7 @@ const Loan = {
 		try {
 			const { id } = req.params;
 			const { body } = req;
-			const [rows, columns] = await pool.execute('UPDATE Loan SET id_card = ?, email_client = ?', [body.id_card, body.email_client]);
+			const [rows, columns] = await pool.execute('UPDATE prestamo SET fk_isbn = ?, fk_trabajador = ?, fecha_inicio = ?, fecha_final = ?, dias = ?, cedula = ?, nombre = ?, apellido = ?, direccion = ?, telefono = ?, telefonoVecino = ? WHERE id = ?', [body.isbn, body.trabajador, body.fecha_inicio, body.fecha_final, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, id]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Préstamo actualizado con éxito.');
 			} else{
@@ -68,7 +70,7 @@ const Loan = {
 			const { id } = req.params;
 			const response = await getLoanById_handler(req, res);
 			if(response.length > 0){
-				const [rows, columns] = await pool.execute('DELETE FROM Loan WHERE id = ?', [id]);
+				const [rows, columns] = await pool.execute('DELETE FROM prestamo WHERE id = ?', [id]);
 				if(rows.affectedRows > 0) {
 					res.status(200).send('Eliminado con exito.');
 				} else {
