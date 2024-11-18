@@ -14,7 +14,7 @@ function Content() {
     let setSession = useContext(SessionContext).setSession;
 
     return (
-        <div class="text-xl flex flex-col ">
+        <div class="text-xl flex flex-col">
             <LabeledInput type="text" text="Usuario" />
             <LabeledInput type="text" text="Contraseña" />
             <TitleLink text="Iniciar Sesión" path={PagePaths['Home']} onClick={() => { setSession(new Session(userRoles['admin'])) } } />

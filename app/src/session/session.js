@@ -16,7 +16,7 @@ export class Session {
 const SessionContext = createContext(new Session());
 
 export const ContextWrapper = ({content}) => {
-    const [session, setSession] = useState(new Session(userRoles['admin']));
+    const [session, setSession] = useState(new Session());
     
     return(
         <SessionContext.Provider value={{session, setSession}}>

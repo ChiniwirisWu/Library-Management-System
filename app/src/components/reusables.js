@@ -9,12 +9,70 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryButton({ title }) {
-    return (
-        <button className="w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none">
+export function PrimaryInput({ type = "text", title, is_disabled = false }) {
+
+    let input = (is_disabled)
+        ? <input type={type} name={title} placeholder={title} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        : <input type={type} name={title} placeholder={title} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
+
+    return(input);
+}
+
+export function FormTitle({ title, is_required = false }) {
+    
+    let required_asterisk = (is_required) ?  <h3 className="text-red-600">*</h3> : null;
+    
+    return(
+        <div className="flex">
+            <h2 className="font-semibold text-xl text-gray-500">■ {title}</h2>
+            {required_asterisk}
+        </div>
+    );
+}
+
+export function Checkbox({ title, onClick = null, is_disabled = false }) {
+    
+    let [status, setStatus] = useState(false);
+
+    let buttonStyle = (status) 
+        ? (is_disabled) 
+            ? "w-4 h-4 bg-gray-500 rounded-sm border-[1px] border-blue-300 text-center transition-all hover:bg-gray-600"
+            : "w-4 h-4 bg-blue-500 rounded-sm border-[1px] border-blue-300 text-center transition-all hover:bg-blue-600"
+        : (is_disabled) 
+            ? "w-4 h-4 bg-gray-300 rounded-sm border-[1px] hover:bg-gray-400 text-center" 
+            : "w-4 h-4 bg-gray-50 rounded-sm border-[1px] hover:bg-blue-100 text-center";
+
+    let character = (status) ? '✓' : '';
+
+    let onChecked = () => {
+        if (!is_disabled)
+            setStatus(!status);
+
+        if (onClick)
+            onClick(status);
+    }
+
+    return(
+        <div className="flex place-items-center space-x-2">
+            <p className="font-semibold text-gray-500">{title}</p>
+            <button class={buttonStyle} onClick={onChecked}>
+                <p class="text-[75%] text-white font-extrabold relative bottom-[2px]">{character}</p>
+            </button>
+        </div>
+    );
+}
+
+export function PrimaryButton({ title, onClick = null, path = null }) {
+
+    const style = "w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none";
+
+    const button = (
+        <button className="w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none" onClick={onClick}>
             {title}
         </button>
     );
+
+    return (path) ? <Link to={path}>{button}</Link> : button;
 }
 
 export function Title({ text }) {
@@ -37,7 +95,7 @@ export function TransparentButton({ text, onClick }) {
 
 export function TitleLink({ text, path, onClick }) {
     return (
-        <Link className="flex place-content-center" to={path}>
+        <Link className="mx-auto" to={path}>
             <TransparentButton text={text} onClick={onClick} />
         </Link>
     )
@@ -109,7 +167,7 @@ export const FormBackground = ({ content }) => {
     return (
         <div className="w-[100%] h-[100%] flex flex-col bg-[#f2f2f2]">
             <div className="w-[100%] h-[5%] bg-[#303F9F]"></div>
-            <div className="w-[100%] h-[95%] flex place-items-center justify-center">
+            <div className="w-[100%] h-[95%] flex place-items-center justify-center p-5 overflow-auto">
                 {content}
             </div>
         </div>
@@ -119,7 +177,7 @@ export const FormBackground = ({ content }) => {
 export const Form = ({ content, title, className }) => {
     return (
         <FormBackground content={
-            <div className={`${className} bg-white p-[40px] rounded-sm shadow-sm shadow-[grey]`}>
+            <div className={`${className} my-auto bg-white p-[40px] rounded-sm shadow-sm shadow-[grey]`}>
                 <Title text={title} />
                 {content}
             </div>
