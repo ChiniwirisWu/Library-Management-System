@@ -16,16 +16,16 @@ create table ficha(
 	coleccion int not null,
 	ca int not null,
 	volumen int not null,
-	ejemplar varchar(50) not null,
-	prestable boolean not null,
+	ejemplar int not null,
+	esReferencia boolean not null,
 	dewey varchar(20) not null,
 	cutter varchar(20) not null,
 	primary key (isbn)
 );
 
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, prestable, dewey, cutter) VALUES ("321790423", "David Gutierrez", "Pikachu rojo", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "200.34", "e34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, prestable, dewey, cutter) VALUES ("409234803", "Maria de la Cruz", "Agua dulce", 1, "Puerto la cruz", "Girasol", 2003, 1, 12, 2, 3, 1, "300.34", "d34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, prestable, dewey, cutter) VALUES ("789543754", "Ozamu Dazai", "No longer human", 1, "Barcelona", "Kioto Books", 1980, 1, 13, 1, 3, 1, "400.34", "i34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, esReferencia, dewey, cutter) VALUES ("321790423", "David Gutierrez", "Pikachu rojo", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "200.34", "e34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, esReferencia, dewey, cutter) VALUES ("409234803", "Maria de la Cruz", "Agua dulce", 1, "Puerto la cruz", "Girasol", 2003, 1, 12, 2, 3, 1, "300.34", "d34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, esReferencia, dewey, cutter) VALUES ("789543754", "Ozamu Dazai", "No longer human", 1, "Barcelona", "Kioto Books", 1980, 1, 13, 1, 3, 1, "400.34", "i34");
 
 -- sala --
 create table sala(
