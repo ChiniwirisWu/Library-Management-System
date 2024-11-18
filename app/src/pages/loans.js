@@ -29,9 +29,9 @@ function LoanEntryInfo({ title, reader, phone, days, address }) {
 function LoanEntryIcons() {
     return (
         <>
-            <IconLink src={AcceptIcon} alt="accept" path={PagePaths['Ficha']} />
-            <IconLink src={DenyIcon} alt="deny" path={PagePaths['Ficha']} />
-            <IconLink src={InfoImage} alt="info" path={PagePaths['Ficha']} />
+            <IconLink src={AcceptIcon} alt="accept" path={PagePaths['Record']} />
+            <IconLink src={DenyIcon} alt="deny" path={PagePaths['Record']} />
+            <IconLink src={InfoImage} alt="info" path={PagePaths['Record']} />
         </>
     );
 }

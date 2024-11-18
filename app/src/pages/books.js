@@ -26,9 +26,9 @@ function BookEntryInfo({ title, category, author, room }) {
 function BookEntryIcons() {
     return (
         <>
-            <RestrictedComponent component=<IconLink src={LoanImage} alt="préstamo" path={PagePaths['Ficha']} /> permissions={libraryRoles} />
-            <RestrictedComponent component=<IconLink src={EditImage} alt="edit" path={PagePaths['Ficha']} /> permissions={libraryRoles} />
-            <IconLink src={InfoImage} alt="info" path={PagePaths['Ficha']} />
+            <RestrictedComponent component=<IconLink src={LoanImage} alt="préstamo" path={PagePaths['Record']} /> permissions={libraryRoles} />
+            <RestrictedComponent component=<IconLink src={EditImage} alt="edit" path={PagePaths['Record']} /> permissions={libraryRoles} />
+            <IconLink src={InfoImage} alt="info" path={PagePaths['Record']} />
         </>
     );
 }
@@ -59,7 +59,7 @@ function Content() {
 
     return (
         <div className="flex flex-col w-[75%] self-center">
-            <SearchAndAddBar placeholder='Buscar Libros' AddPath={PagePaths['Ficha']} />
+            <SearchAndAddBar placeholder='Buscar Libros' AddPath={PagePaths['Record']} />
             <div className="flex flex-col w-[100%] self-center">
                 {books.map(book => <BookEntry title={book[0]} category={book[1]} author={book[2]} room={book[3]} />)}
             </div>

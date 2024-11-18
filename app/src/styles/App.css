@@ -5,3 +5,17 @@
 body > #root > div {
   height: 100vh;
 }
+
+html {
+  user-select: none;
+}
+
+::-moz-selection {
+  color: #f1f1f1;
+  background: #8fe1f0;
+}
+
+::selection {
+  color: #f1f1f1;
+  background: #8fe1f0;
+}
