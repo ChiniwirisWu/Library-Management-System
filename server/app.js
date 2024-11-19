@@ -47,10 +47,11 @@ app.delete('/worker/:nombre', isAuthorized, Worker.deleteWorkerBynombre);
 
 //endpoints para los prestamos
 app.get('/loans', isAuthorized, Loan.getAllLoans);
-app.get('/loan/:id', isAuthorized, Loan.getLoanById);
+app.get('/loan/:isbn/:cedula', isAuthorized, Loan.getLoan);
 app.post('/loan', isAuthorized, Loan.createLoan);
-app.put('/loan/:id', isAuthorized, Loan.updateLoanById);
-app.delete('/loan/:id', isAuthorized, Loan.deleteLoanById);
+app.put('/loan/:isbn/:cedula', isAuthorized, Loan.updateLoan);
+app.put('/loan/validateLoan/:isbn/:cedula', isAuthorized, Loan.validateLoan);
+app.delete('/loan/:isbn/:cedula', isAuthorized, Loan.deleteLoan);
 
 app.listen(9090, ()=>{
 	console.log('server running on port 9090');
