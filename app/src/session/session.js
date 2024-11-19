@@ -4,12 +4,17 @@ import { createContext } from "react";
 import { userRoles } from "../constants/roles";
 
 export class Session {
-    constructor(accountType = userRoles['client']) {
+    constructor(accountType = userRoles['client'], token) {
         this.accountType = accountType;
+        this.token = token;
     }
     
     getAccountType() {
         return this.accountType;
+    }
+
+    getToken(){
+        return this.token;
     }
 }
 

@@ -50,7 +50,7 @@ const Worker = {
 				if(rows[0].validado){
 					if(isMatch){
 						const token = signToken(rows[0].nombre);
-						res.status(200).send(token);
+						res.status(200).send({token: `Bearer ${token}`, worker: {nombre: rows[0].nombre, rol: rows[0].rol}});
 					} else{
 						res.status(400).send('Contraseña incorrecta.')
 					}

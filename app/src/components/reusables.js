@@ -93,21 +93,21 @@ export function TransparentButton({ text, onClick }) {
     );
 }
 
-export function TitleLink({ text, path, onClick }) {
+export function TitleLink({ text, onClick }) {
     return (
-        <Link className="mx-auto" to={path}>
-            <TransparentButton text={text} onClick={onClick} />
-        </Link>
-    )
+        <button class="border-1 rounded-md text-[#303F9F] hover:text-blue-300 transition-all mb-4 w-min text-nowrap m-auto" onClick={onClick}>
+            {text}
+        </button>
+    );
 }
 
-export function LabeledInput({ text }, { type }) {
+export function LabeledInput({ text, name }, { type }) {
     return (
         <div className="flex flex-col">
             <label for={text} class="text-lg mb-2">
                 {`${text}:`}
             </label>
-            <input type={type} name={text} id="user" class="text-base p-2 border-b-2 border-b-[#303F9F] mb-8 focus:outline-none focus:border-b-blue-300 transition-colors duration-300" />
+            <input type={type} name={name} id="user" class="text-base p-2 border-b-2 border-b-[#303F9F] mb-8 focus:outline-none focus:border-b-blue-300 transition-colors duration-300" />
         </div>
     );
 }
