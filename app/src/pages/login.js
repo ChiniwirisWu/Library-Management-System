@@ -7,6 +7,7 @@ import { TextLink } from "../components/reusables";
 import { LabeledInput } from "../components/reusables";
 import { Form } from "../components/reusables";
 import { PagePaths } from "../constants/paths";
+import { host } from "../constants/host_ip";
 import { TitleLink } from "../components/reusables";
 import { userRoles } from "../constants/roles";
 import {useNavigate} from "react-router-dom";
@@ -14,7 +15,7 @@ import {useNavigate} from "react-router-dom";
 async function loginHandler(e, setSession, navigate){
     e.preventDefault();
     const data = listFromForm(e);
-    const response = simpleFetch("http://10.42.0.1:9090/login", "post", data)   
+    const response = simpleFetch(`${host}/login`, "post", data)   
     response.then(res => res.json())
             .then(res => {
                 setSession(new Session(res.worker.rol, res.token));

@@ -5,6 +5,7 @@ import { PagePaths } from "../constants/paths";
 import { GetPathTitle } from "../constants/pages";
 import { limitString } from "../functions/strings";
 import { simpleFetch } from "../functions/forms";
+import { host } from "../constants/host_ip";
 import { IconLink } from "../components/reusables";
 import { SearchAndAddBar } from "../components/reusables";
 import { Entry } from "../components/reusables";
@@ -50,7 +51,7 @@ function Content() {
 
     useEffect(()=>{
         const getAllBooks = async function(){
-            const response = fetch("http://10.42.0.1:9090/cards");
+            const response = fetch(`${host}/cards`);
             response.then(res=>res.json())
                     .then(res=> setBooks(res))
                     .catch(err=>console.error(err));

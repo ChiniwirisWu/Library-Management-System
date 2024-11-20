@@ -2,6 +2,7 @@ import React from "react";
 import { Form } from "../components/reusables";
 import { LabeledInput } from "../components/reusables";
 import { TransparentButton } from "../components/reusables";
+import { host } from "../constants/host_ip";
 import { listFromForm, simpleFetch } from "../functions/forms";
 import {useNavigate} from "react-router-dom";
 
@@ -9,7 +10,7 @@ async function requestHandler(e, navigate){
     e.preventDefault();
     const data = await listFromForm(e);
     if(data.contrasena == data.contrasena_repetida){
-        const response = simpleFetch("http://10.42.0.1:9090/register", "post", data);
+        const response = simpleFetch(`${host}/register`, "post", data);
         response.then(res=>res.text())
                 .then(res=>console.log(res))
                 .catch(err => console.error(err));
