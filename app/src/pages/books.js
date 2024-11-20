@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MainPage } from "../components/reusables";
+import { dewey_codes, salas } from "../constants/rooms_and_dewey";
 import { PagePaths } from "../constants/paths";
 import { GetPathTitle } from "../constants/pages";
 import { limitString } from "../functions/strings";
+import { simpleFetch } from "../functions/forms";
+import { host } from "../constants/host_ip";
 import { IconLink } from "../components/reusables";
 import { SearchAndAddBar } from "../components/reusables";
 import { Entry } from "../components/reusables";
@@ -44,24 +47,23 @@ function BookEntry({ title, category, author, room }) {
 
 function Content() {
 
-    const books = [
-        ["El Principito", "Literatura Infantil", "Antoine de Saint-Exupéry", "Sala de Niños"],
-        ["Frankenstein o El moderno Prometeo", "Horror Gótico", "Mary Shelley", "Sala de Literatura"],
-        ["The C Programming Language", "Computación", "	Brian Kernighan, Dennis Ritchie", "Sala de Ciencias"],
-        ["Breve historia del tiempo: del Big Bang a los agujeros negros", "Divulgación Científica", "Stephen Hawking", "Sala de Ciencias"]
-    ]
+    const [books, setBooks] = useState([]);
 
-    books.push(books[0]);
-    books.push(books[0]);
-    books.push(books[0]);
-    books.push(books[0]);
-    books.push(books[0]);
+    useEffect(()=>{
+        const getAllBooks = async function(){
+            const response = fetch(`${host}/cards`);
+            response.then(res=>res.json())
+                    .then(res=> setBooks(res))
+                    .catch(err=>console.error(err));
+        }   
+        getAllBooks();
+    }, [])
 
     return (
         <div className="flex flex-col w-[75%] self-center">
             <SearchAndAddBar placeholder='Buscar Libros' AddPath={PagePaths['Record']} />
             <div className="flex flex-col w-[100%] self-center">
-                {books.map(book => <BookEntry title={book[0]} category={book[1]} author={book[2]} room={book[3]} />)}
+                {books.map(book => <BookEntry title={book.titulo} category={dewey_codes[book.dewey.substring(0, 3)]} author={book.autor} room={salas[book.dewey.substring(0, 3)]} />)}
             </div>
         </div>
     );
