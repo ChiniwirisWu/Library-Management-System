@@ -9,7 +9,7 @@ async function requestHandler(e, navigate){
     e.preventDefault();
     const data = await listFromForm(e);
     if(data.contrasena == data.contrasena_repetida){
-        const response = simpleFetch("http://localhost:9090/register", "post", data);
+        const response = simpleFetch("http://10.42.0.1:9090/register", "post", data);
         response.then(res=>res.text())
                 .then(res=>console.log(res))
                 .catch(err => console.error(err));

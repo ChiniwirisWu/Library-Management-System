@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import SessionContext, { Session } from "../session/session";
+import React, { useEffect, useState } from "react";
 import { MainPage } from "../components/reusables";
 import { dewey_codes, salas } from "../constants/rooms_and_dewey";
 import { PagePaths } from "../constants/paths";
@@ -48,11 +47,10 @@ function BookEntry({ title, category, author, room }) {
 function Content() {
 
     const [books, setBooks] = useState([]);
-    const session = useContext(SessionContext).session;
 
     useEffect(()=>{
         const getAllBooks = async function(){
-            const response = fetch("http://localhost:9090/cards");
+            const response = fetch("http://10.42.0.1:9090/cards");
             response.then(res=>res.json())
                     .then(res=> setBooks(res))
                     .catch(err=>console.error(err));

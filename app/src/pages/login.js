@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 async function loginHandler(e, setSession, navigate){
     e.preventDefault();
     const data = listFromForm(e);
-    const response = simpleFetch("http://localhost:9090/login", "post", data)   
+    const response = simpleFetch("http://10.42.0.1:9090/login", "post", data)   
     response.then(res => res.json())
             .then(res => {
                 setSession(new Session(res.worker.rol, res.token));
