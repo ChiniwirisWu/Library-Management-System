@@ -24,6 +24,22 @@ const Loan = {
 			res.status(500).send(e.message);
 		}
 	},
+	getAllRequestedLoans: async (req, res)=>{
+		try {
+			const [rows, columns] = await pool.execute('SELECT p.id, f.isbn, p.cedula, p.nombre, p.fk_trabajador, p.fecha_inicio, p.dias, p.telefono, p.direccion, p.telefonoVecino, f.titulo FROM prestamo p LEFT JOIN ficha f ON p.fk_isbn = f.isbn WHERE p.estado=0');
+			res.status(200).send(rows);
+		} catch(e){
+			res.status(500).send(e.message);
+		}
+	},
+	getAllOngoingLoans: async (req, res)=>{
+		try {
+			const [rows, columns] = await pool.execute('SELECT p.id, f.isbn, p.cedula, p.nombre, p.fk_trabajador, p.fecha_inicio, p.dias, p.telefono, p.direccion, p.telefonoVecino, f.titulo FROM prestamo p LEFT JOIN ficha f ON p.fk_isbn = f.isbn WHERE p.estado=1');
+			res.status(200).send(rows);
+		} catch(e){
+			res.status(500).send(e.message);
+		}
+	},
 	getLoan: async (req, res)=>{
 		try{
 			const Loan = await getLoan_handler(req, res);

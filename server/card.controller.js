@@ -19,7 +19,7 @@ async function getCardByISBN_handler(req, res){
 const Card = {
 	getAllCards: async (req, res)=>{
 		try {
-			const [rows, columns] = await pool.execute('SELECT * FROM ficha');
+			const [rows, columns] = await pool.execute('select f.isbn, f.autor, f.titulo, f.edicion, f.ciudad, f.editorial, f.ano, f.coleccion, f.ca, f.volumen, f.ejemplares, f.esReferencia, f.dewey, f.cutter, c.nombre as categoria, s.nombre as sala from ficha f left join categoria c on substring(f.dewey, 1, 3)=c.dewey left join sala s on c.dewey=s.dewey');
 			res.status(200).send(rows);
 		} catch(e){
 			res.status(500).send(e.message);

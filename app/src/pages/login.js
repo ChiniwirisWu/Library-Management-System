@@ -21,7 +21,10 @@ async function loginHandler(e, setSession, navigate){
                 setSession(new Session(res.worker.rol, res.token));
                 navigate(PagePaths['Home']);
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err)
+                navigate(PagePaths['Login']);
+            });
 }
 
 function Content() {

@@ -27,7 +27,7 @@ const Worker = {
 			if (rows.length < 1){
 				const salt = await bcrypt.genSalt();
 				const hashed = await bcrypt.hash(body.contrasena, salt);
-				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'user', hashed, salt, 0]);
+				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'employee', hashed, salt, 0]);
 				if (response[0].affectedRows == 1) {
 					const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
 					res.status(200).send('Se ha enviado su solicitud de registro exitosamente.');
@@ -66,9 +66,27 @@ const Worker = {
 		}
 	},
 	getAllWorkers: async (req, res)=>{
-		if(roles.includes(req.worker.rol)) return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
+		if(req.worker.rol != 'admin') return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
 		try {
 			const [rows, columns] = await pool.execute('SELECT * FROM trabajador');
+			res.status(200).send(rows);
+		} catch(e){
+			res.status(500).send(e.message);
+		}
+	},
+	getAllValidatedWorkers: async (req, res)=>{
+		if(req.worker.rol != 'admin') return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
+		try {
+			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE validado=1');
+			res.status(200).send(rows);
+		} catch(e){
+			res.status(500).send(e.message);
+		}
+	},
+	getAllRequests: async (req, res)=>{
+		if(req.worker.rol != 'admin') return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
+		try {
+			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE validado=0');
 			res.status(200).send(rows);
 		} catch(e){
 			res.status(500).send(e.message);
