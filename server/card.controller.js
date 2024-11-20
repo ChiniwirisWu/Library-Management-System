@@ -1,7 +1,7 @@
 import mysql2 from 'mysql2/promise';
 import dotenv from 'dotenv';
 dotenv.config();
-const roles = ['admin', 'worker']
+const roles = ['admin', 'employee']
 
 const pool = mysql2.createPool({
 	host: process.env.MYSQL_HOST,
@@ -18,7 +18,6 @@ async function getCardByISBN_handler(req, res){
 
 const Card = {
 	getAllCards: async (req, res)=>{
-		if(!roles.includes(req.worker.rol)) return res.status(401).send('No tienes permiso para realizar ésta acción');
 		try {
 			const [rows, columns] = await pool.execute('SELECT * FROM ficha');
 			res.status(200).send(rows);
@@ -27,7 +26,6 @@ const Card = {
 		}
 	},
 	getCardByISBN: async (req, res)=>{
-		if(!roles.includes(req.worker.rol)) return res.status(401).send('No tienes permiso para realizar ésta acción');
 		try{
 			const card = await getCardByISBN_handler(req, res);
 			if(card.length > 0){

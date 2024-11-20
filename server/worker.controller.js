@@ -27,7 +27,7 @@ const Worker = {
 			if (rows.length < 1){
 				const salt = await bcrypt.genSalt();
 				const hashed = await bcrypt.hash(body.contrasena, salt);
-				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'admin', hashed, salt, 1]);
+				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'user', hashed, salt, 0]);
 				if (response[0].affectedRows == 1) {
 					const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
 					res.status(200).send('Se ha enviado su solicitud de registro exitosamente.');
@@ -47,12 +47,13 @@ const Worker = {
 			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
 			if(rows.length > 0){
 				const isMatch = await bcrypt.compare(body.contrasena, rows[0].contrasena);	
+				console.log(isMatch)
 				if(rows[0].validado){
 					if(isMatch){
 						const token = signToken(rows[0].nombre);
 						res.status(200).send({token: `Bearer ${token}`, worker: {nombre: rows[0].nombre, rol: rows[0].rol}});
 					} else{
-						res.status(400).send('Contraseña incorrecta.')
+						res.status(400).send('Contrasena incorrecta.')
 					}
 				} else {
 					res.status(401).send('Trabajador no está validado.')
@@ -65,7 +66,7 @@ const Worker = {
 		}
 	},
 	getAllWorkers: async (req, res)=>{
-		if(req.worker.rol != 'admin') return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
+		if(roles.includes(req.worker.rol)) return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
 		try {
 			const [rows, columns] = await pool.execute('SELECT * FROM trabajador');
 			res.status(200).send(rows);

@@ -17,7 +17,7 @@ async function loginHandler(e, setSession, navigate){
     const response = simpleFetch("http://localhost:9090/login", "post", data)   
     response.then(res => res.json())
             .then(res => {
-                setSession(new Session(res.worker.rol, res.worker.token));
+                setSession(new Session(res.worker.rol, res.token));
                 navigate(PagePaths['Home']);
             })
             .catch(err => console.error(err));

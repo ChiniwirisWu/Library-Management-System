@@ -30,8 +30,8 @@ const isAuthorized = express.Router().use(validateJwt, assignWorker)
 
 
 //endpoints para las fichas.
-app.get('/cards', isAuthorized, Card.getAllCards);
-app.get('/card/:isbn', isAuthorized, Card.getCardByISBN);
+app.get('/cards', Card.getAllCards);
+app.get('/card/:isbn', Card.getCardByISBN);
 app.post('/card', isAuthorized, Card.createCard);
 app.put('/card/:isbn', isAuthorized, Card.updateCardByISBN);
 app.delete('/card/:isbn', isAuthorized, Card.deleteCardByISBN);

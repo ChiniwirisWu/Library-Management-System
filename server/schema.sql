@@ -8,7 +8,7 @@ USE biblioteca;
 create table ficha(
 	isbn varchar(50) not null unique,
 	autor varchar(50) not null,
-	titulo varchar(50) not null,
+	titulo varchar(100) not null,
 	edicion int not null,
 	ciudad varchar(50) not null,
 	editorial varchar(50) not null,
@@ -23,19 +23,11 @@ create table ficha(
 	primary key (isbn)
 );
 
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("321790423", "David Gutierrez", "Pikachu rojo", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "200.34", "e34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("409234803", "Maria de la Cruz", "Agua dulce", 1, "Puerto la cruz", "Girasol", 2003, 1, 12, 2, 3, 1, "300.34", "d34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("789543754", "Ozamu Dazai", "No longer human", 1, "Barcelona", "Kioto Books", 1980, 1, 13, 1, 3, 1, "400.34", "i34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("321790423", "Antoine de Saint-Exupéry", "El Principito", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "800.34", "e34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("849234244", "Mary Shelley", "Frankenstein o El moderno Prometeo", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "800.34", "e34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("905850234", "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "000.34", "e34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("905850234", "Stephen Hawking", "Breve historia del tiempo: del Big Bang a los agujeros negros", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "600.34", "e34");
 
--- sala --
-create table sala(
-	dewey VARCHAR(20) not null,
-	nombre VARCHAR(50) not null
-);
-
-INSERT INTO sala (dewey, nombre) VALUES ("000","Ciencia y Computacion"); 
-INSERT INTO sala (dewey, nombre) VALUES ("100","Filosofia y Psicologia"); 
-INSERT INTO sala (dewey, nombre) VALUES ("800","Literatura"); 
 
 -- usuarios (bibliotecario, administradores, lectores)
 CREATE TABLE trabajador(
@@ -48,9 +40,7 @@ CREATE TABLE trabajador(
 );
 
 INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("admin", "admin", "$2b$10$7BCY3G90BNE1wvFWLXCl2ekiccTTcVdQKdCiKUUOHVEdvvqizVple", "$2b$10$7BCY3G90BNE1wvFWLXCl2e", 1);
-INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Oscar", "trabajador", "ieaf3433_jfadsfasd", "jfi2318bfasd_#", 1);
-INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Carmen", "trabajador", "kfas08342-@jfa", "jf89345^jldaf", 1);
-INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Jorge", "administrador", "kfasfjk#$jkfasd", "kfir84jf3", 0);
+INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("employee", "employee", "$2b$10$9YjkfEd/e3NK3WJBrlLCzejxCbLCkXDWlojQfX7nwjhbZR8r7pkq6", "$2b$10$KX/NL075vjDRgxXZ17eGGe", 1);
 
 -- CREATE TABLE lector(
 	-- cedula VARCHAR (20) NOT NULL UNIQUE,
@@ -88,6 +78,5 @@ CREATE TABLE prestamo(
 	-- FOREIGN KEY (fk_cedula) REFERENCES lector (cedula) ON DELETE CASCADE 
 );
 
-INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("321790423", "Oscar","2024-10-1", "2024-10-3", 3, "30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 1); 
-INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("409234803", "Carmen","2024-10-5", "2024-10-8", 3, "28785934", "Agustin", "Perez", "Lecheria", "041278496546", "04168974535", 1); 
-INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("789543754", "Jorge","2024-09-20", "2024-09-23", 2, "31867485", "Julina", "Moros", "Puerto la cruz", "0412847364", "04249382736", 0); 
+INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("321790423", "admin","2024-10-1", "2024-10-3", 3, "30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 1); 
+INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("849234244", "employee","2024-10-1", "2024-10-3", 3, "30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 1); 

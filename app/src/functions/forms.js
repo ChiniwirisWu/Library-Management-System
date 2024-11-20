@@ -5,7 +5,7 @@ export function listFromForm(e){
     return data;
 } 
 
-export function simpleFetch(url, method, data){
+export function simpleFetch(url, method, data = {}){
     let response = fetch(url, {
         method,
         body: JSON.stringify(data),
