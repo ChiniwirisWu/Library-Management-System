@@ -120,13 +120,13 @@ export function TextLink({ text, href }) {
     );
 }
 
-export function IconButton({ src, alt, borderless = true }) {
+export function IconButton({ src, alt, borderless = true, onClickHandler}) {
     let buttonClass = (borderless)
         ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200"
         : "my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";
 
     return (
-        <button className={buttonClass}>
+        <button className={buttonClass} onClick={()=> onClickHandler()} >
             <img src={src} alt={alt} height="40px" width="40px" className="object-contain"></img>
         </button>
     );
@@ -140,11 +140,11 @@ export function IconLink({ src, alt, path, borderless = true }) {
     );
 }
 
-export function SearchAndAddBar({ placeholder, AddPath }) {
+export function SearchAndAddBar({ placeholder, AddPath, findMatches, updateVisibleBooks }) {
     return (
         <div className="w-[100%] flex space-x-5">
-            <input type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
-            <IconButton src={SearchIcon} alt="Search" borderless={false} />
+            <input onChange={(e)=> findMatches(e.target.value)} type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
+            <IconButton onClickHandler={updateVisibleBooks} src={SearchIcon} alt="Search" borderless={false} />
             <RestrictedComponent component=<IconLink src={AddIcon} alt="add" borderless={false} path={AddPath} /> permissions={libraryRoles} />
         </div>
     );
