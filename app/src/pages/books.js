@@ -72,6 +72,7 @@ function Content() {
             response.then(res=>res.json())
                     .then(res=> {
                         const books = setSearchableStrings(res);
+                        console.log(books)
                         setBooks(books);
                         setVisibleBooks(books);
                     })
