@@ -120,7 +120,7 @@ export function TextLink({ text, href }) {
     );
 }
 
-export function IconButton({ src, alt, borderless = true, onClickHandler}) {
+export function IconButton({ src, alt, borderless = true, onClickHandler=function(){}}) {
     let buttonClass = (borderless)
         ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200"
         : "my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";

@@ -56,7 +56,6 @@ function setSearchableStrings(books = []){
         }
         books[i].searchableString = searchableString.toLowerCase();
     }
-    console.log(books);
     return books;
 }
 
