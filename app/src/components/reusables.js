@@ -9,11 +9,11 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryInput({ type = "text", title, is_disabled = false }) {
+export function PrimaryInput({ type = "text", title, is_disabled = false, name }) {
 
     let input = (is_disabled)
-        ? <input type={type} name={title} placeholder={title} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
-        : <input type={type} name={title} placeholder={title} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
+        ? <input type={type} name={name} placeholder={title} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        : <input type={type} name={name} placeholder={title} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
 
     return(input);
 }
@@ -30,7 +30,7 @@ export function FormTitle({ title, is_required = false }) {
     );
 }
 
-export function Checkbox({ title, onClick = null, is_disabled = false }) {
+export function Checkbox({ title, onClick = null, is_disabled = false, name }) {
     
     let [status, setStatus] = useState(false);
 
@@ -55,8 +55,9 @@ export function Checkbox({ title, onClick = null, is_disabled = false }) {
     return(
         <div className="flex place-items-center space-x-2">
             <p className="font-semibold text-gray-500">{title}</p>
-            <button class={buttonStyle} onClick={onChecked}>
+            <button form="none" class={buttonStyle} onClick={onChecked}>
                 <p class="text-[75%] text-white font-extrabold relative bottom-[2px]">{character}</p>
+                <input type="hidden" name={name} value={status ? 1 : 0} />
             </button>
         </div>
     );

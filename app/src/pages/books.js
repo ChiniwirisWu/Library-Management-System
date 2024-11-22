@@ -5,7 +5,7 @@ import { PagePaths } from "../constants/paths";
 import { GetPathTitle } from "../constants/pages";
 import { limitString } from "../functions/strings";
 import { simpleFetch } from "../functions/forms";
-import { host } from "../constants/host_ip";
+import { host_ip } from "../constants/host_ip";
 import { IconLink } from "../components/reusables";
 import { SearchAndAddBar } from "../components/reusables";
 import { Entry } from "../components/reusables";
@@ -68,7 +68,7 @@ function Content() {
     // peticion inicial para llenar las listas de libros.
     useEffect(()=>{
         const getAllBooks = async function(){
-            const response = fetch(`${host}/cards`);
+            const response = fetch(`${host_ip}/cards`);
             response.then(res=>res.json())
                     .then(res=> {
                         const books = setSearchableStrings(res);

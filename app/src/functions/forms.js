@@ -14,3 +14,15 @@ export function simpleFetch(url, method, data = {}){
     return response;
 }
 
+
+export function fetchWithAuthorization(url, method, data = {}, token){
+    let response = fetch(url, {
+        method,
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type":"application/json",
+            "Authorization": token
+        }
+    });
+    return response;
+}

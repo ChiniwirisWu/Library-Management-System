@@ -7,6 +7,7 @@ import Record from "../pages/record";
 import Books from "../pages/books";
 import Users from "../pages/users";
 import Loans from "../pages/loans";
+import Info from "../pages/info";
 import { PagePaths } from "./paths";
 import { PathNavBarOrder } from "./paths";
 import { userRoles } from "./roles";
@@ -26,6 +27,7 @@ class Page {
 export const PagesList = [
     new Page(PagePaths['Welcome'], <Welcome />, "Salir"),
     new Page(PagePaths['Login'], <Login />),
+    new Page(PagePaths['Info'], <Info />),
     new Page(PagePaths['Record'], <Record />, libraryRoles),
     new Page(PagePaths['Home'], <Home />, "Inicio"),
     new Page(PagePaths['Signup'], <Request title= "Solicitud de Registro" />),
