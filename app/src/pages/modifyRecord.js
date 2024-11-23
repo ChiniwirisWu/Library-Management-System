@@ -7,7 +7,7 @@ import { listFromForm, fetchWithAuthorization } from "../functions/forms";
 import { Checkbox } from "../components/reusables";
 import { PagePaths } from "../constants/paths";
 import { useLocation } from "react-router-dom";
-import { default_with_zero, default_with_string } from "../functions/forms";
+import { default_with_zero, default_with_string } from "../functions/objects";
 
 
 function Content() {

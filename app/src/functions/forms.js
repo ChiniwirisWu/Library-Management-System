@@ -13,6 +13,14 @@ export function simpleFetch(url, method, data = {}){
     return response;
 }
 
+export function fetchWithAuthorizationGet(url, token){
+    let response = fetch(url, {
+        method: "get",
+        headers: { "Authorization": token }
+    })
+    return response;
+}
+
 
 export function fetchWithAuthorization(url, method, data = {}, token){
     let response = fetch(url, {
@@ -27,20 +35,3 @@ export function fetchWithAuthorization(url, method, data = {}, token){
 }
 
 
-export function default_with_zero(data, properties){
-    for(const property in data){
-        if(data[property] == "" && properties.includes(property)){
-            data[property] = 0
-        }
-    }
-    return data;
-}
-
-export function default_with_string(data, properties){
-    for(const property in data){
-        if(data[property] == 0 && properties.includes(property)){
-            data[property] = ""
-        }
-    }
-    return data;
-}
