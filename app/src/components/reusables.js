@@ -9,12 +9,15 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="" }) {
+export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="", is_required=false }) {
 
     let input = (is_disabled)
         ? <input type={type} name={name} placeholder={title} value={value} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
-        : <input type={type} name={name} placeholder={title}  defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
-
+        : (is_required ? (
+             <input type={type} name={name} required placeholder={title} defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        ) : (
+             <input type={type} name={name} placeholder={title} defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        ))
     return(input);
 }
 

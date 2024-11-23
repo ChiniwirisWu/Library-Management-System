@@ -6,27 +6,31 @@ import { FormTitle } from "../components/reusables";
 import { listFromForm, fetchWithAuth } from "../functions/forms";
 import { Checkbox } from "../components/reusables";
 import { PagePaths } from "../constants/paths";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { default_with_zero, default_with_string } from "../functions/objects";
+import { is_fields_empty } from "../functions/objects";
 
 
 function Content() {
     const location = useLocation();
     const book = default_with_string(location.state, ['ejemplares', 'ca', 'volumen', 'coleccion']);
+    const navigate = useNavigate();
     console.log(book)
     const { session } = useContext(SessionContext);
     
     async function update_record(isbn){
         const form = document.querySelector('form');
         let data = listFromForm(form);
-        data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-        console.log(data);
-        fetchWithAuth(`${host_ip}/card/${isbn}`, "put", data, session.token)
-            .then(res=>{
-                if(res.status == 200){
-                    console.log('Se actualizó el libro con éxito');
-                }})
-            .catch(err => console.error(err));
+        if(!is_fields_empty(data, ['ejemplares', 'ca', 'volumen', 'coleccion'])){
+            data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
+            console.log(data);
+            fetchWithAuth(`${host_ip}/card/${isbn}`, "put", data, session.token)
+                .then(res=>{
+                    if(res.status == 200){
+                        alert('Se actualizó la ficha con éxito')
+                    }})
+                .catch(err => console.error(err));
+        }
     }
 
 
@@ -35,7 +39,7 @@ function Content() {
             fetchWithAuth(`${host_ip}/card/${isbn}`, 'delete', {}, session.token)
                 .then(res=> {
                     if(res.status == 200){
-                        console.log('Se eliminó el registro con éxito');
+                        alert('Se eliminó el registro con éxito')
                     }})
                 .catch(err => console.log(err));
         }
@@ -45,21 +49,21 @@ function Content() {
         <form onSubmit={(e)=> e.preventDefault()} className="flex flex-col space-y-4 bg-white max-w-[400px] w-[100%] my-auto mx-auto p-[40px] rounded-sm shadow-sm shadow-[grey]">
 
             <FormTitle title="Identificación de la Obra" is_required={true} />
-            <PrimaryInput title="Título" name="titulo" value={book.titulo} />
-            <PrimaryInput title="ISNB" name="isbn" value={book.isbn} />
-            <PrimaryInput title="Autor(es)" name="autor" value={book.autor} />
+            <PrimaryInput title="Título" name="titulo" value={book.titulo} is_required={true} />
+            <PrimaryInput title="ISNB" name="isbn" value={book.isbn} is_required={true} />
+            <PrimaryInput title="Autor(es)" name="autor" value={book.autor} is_required={true} />
             
             <FormTitle title="Clasificación" is_required={true} />
-            <Checkbox title="Es Referencia" name="esReferencia" value={book.esReferencia} /> 
-            <PrimaryInput title="Dewey" name="dewey" value={book.dewey} />
-            <PrimaryInput title="Cutter" name="cutter" value={book.cutter} />
+            <Checkbox title="Es Referencia" name="esReferencia" value={book.esReferencia} is_required={true} /> 
+            <PrimaryInput title="Dewey" name="dewey" value={book.dewey} is_required={true} />
+            <PrimaryInput title="Cutter" name="cutter" value={book.cutter} is_required={true} />
 
 
             <FormTitle title="Datos de Edición" is_required={true} />
-            <PrimaryInput title="Editorial" name="editorial" value={book.editorial} />
-            <PrimaryInput title="Edición" name="edicion" value={book.edicion} />
-            <PrimaryInput title="Ciudad" name="ciudad" value={book.ciudad} />
-            <PrimaryInput title="Año" name="ano" value={book.ano} />
+            <PrimaryInput title="Editorial" name="editorial" value={book.editorial} is_required={true} />
+            <PrimaryInput title="Edición" name="edicion" value={book.edicion} is_required={true} />
+            <PrimaryInput title="Ciudad" name="ciudad" value={book.ciudad} is_required={true} />
+            <PrimaryInput title="Año" name="ano" value={book.ano} is_required={true} />
 
 
             <FormTitle title="Datos de Registro" is_required={false} />

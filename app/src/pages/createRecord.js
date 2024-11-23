@@ -6,6 +6,7 @@ import { FormTitle } from "../components/reusables";
 import { listFromForm, fetchWithAuth } from "../functions/forms";
 import { Checkbox } from "../components/reusables";
 import { PagePaths } from "../constants/paths";
+import { is_fields_empty } from "../functions/objects";
 
 function default_with_zero(data, properties){
     console.log(properties)
@@ -23,14 +24,18 @@ function Content() {
     async function add_record(){
         const form = document.querySelector('form');
         let data = listFromForm(form);
-        data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-        console.log(data)
-        fetchWithAuth(`${host_ip}/card`, "post", data, session.token)
-            .then(res=>{
-                if(res.status == 200){
-                    console.log('Se agregó el libro con éxito');
-                }})
-            .catch(err => console.error(err));
+        if(!is_fields_empty(data, ['ejemplares', 'ca', 'volumen', 'coleccion'])){
+            data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
+            console.log(data)
+            fetchWithAuth(`${host_ip}/card`, "post", data, session.token)
+                .then(res=>{
+                    if(res.status == 200){
+                        alert("Se creó correctamente la ficha.");
+                    }})
+                .catch(err => {
+                    console.error(err)
+                });
+        }
     }
 
     function clear_form(){
@@ -44,21 +49,21 @@ function Content() {
         <form onSubmit={(e)=> e.preventDefault()} className="flex flex-col space-y-4 bg-white max-w-[400px] w-[100%] my-auto mx-auto p-[40px] rounded-sm shadow-sm shadow-[grey]">
 
             <FormTitle title="Identificación de la Obra" is_required={true} />
-            <PrimaryInput title="Título" name="titulo" />
-            <PrimaryInput title="ISNB" name="isbn" />
-            <PrimaryInput title="Autor(es)" name="autor" />
+            <PrimaryInput title="Título" name="titulo" is_required={true} />
+            <PrimaryInput title="ISNB" name="isbn" is_required={true} />
+            <PrimaryInput title="Autor(es)" name="autor" is_required={true} />
             
             <FormTitle title="Clasificación" is_required={true} />
-            <Checkbox title="Es Referencia" name="esReferencia" /> 
-            <PrimaryInput title="Dewey" name="dewey" />
-            <PrimaryInput title="Cutter" name="cutter" />
+            <Checkbox title="Es Referencia" name="esReferencia" is_required={true} /> 
+            <PrimaryInput title="Dewey" name="dewey" is_required={true} />
+            <PrimaryInput title="Cutter" name="cutter" is_required={true} />
 
 
             <FormTitle title="Datos de Edición" is_required={true} />
-            <PrimaryInput title="Editorial" name="editorial" />
-            <PrimaryInput title="Edición" name="edicion" />
-            <PrimaryInput title="Ciudad" name="ciudad" />
-            <PrimaryInput title="Año" name="ano" />
+            <PrimaryInput title="Editorial" name="editorial" is_required={true} />
+            <PrimaryInput title="Edición" name="edicion" is_required={true} />
+            <PrimaryInput title="Ciudad" name="ciudad" is_required={true} />
+            <PrimaryInput title="Año" name="ano" is_required={true} />
 
 
             <FormTitle title="Datos de Registro" is_required={false} />
