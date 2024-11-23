@@ -29,13 +29,16 @@ function Content() {
             .catch(err => console.error(err));
     }
 
+
     async function delete_record(isbn){
-        fetchWithAuthorization(`${host_ip}/card/${isbn}`, 'delete', {}, session.token)
-            .then(res=> {
-                if(res.status == 200){
-                    console.log('Se eliminó el registro con éxito');
-                }})
-            .catch(err => console.log(err));
+        if(window.confirm("Seguro de elimar ésta ficha?")){
+            fetchWithAuthorization(`${host_ip}/card/${isbn}`, 'delete', {}, session.token)
+                .then(res=> {
+                    if(res.status == 200){
+                        console.log('Se eliminó el registro con éxito');
+                    }})
+                .catch(err => console.log(err));
+        }
     }
 
     return (
