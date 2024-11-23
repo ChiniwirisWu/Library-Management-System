@@ -13,16 +13,16 @@ export function simpleFetch(url, method, data = {}){
     return response;
 }
 
-export function fetchWithAuthorizationGet(url, token){
+export function fetchEmptyWithAuth(url, method="get", token){
     let response = fetch(url, {
-        method: "get",
+        method,
         headers: { "Authorization": token }
     })
     return response;
 }
 
 
-export function fetchWithAuthorization(url, method, data = {}, token){
+export function fetchWithAuth(url, method="get", data = {}, token){
     let response = fetch(url, {
         method,
         body: JSON.stringify(data),

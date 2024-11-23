@@ -3,7 +3,7 @@ import SessionContext from "../session/session";
 import { host_ip } from "../constants/host_ip";
 import { FormBackground, PrimaryButton, PrimaryInput } from "../components/reusables";
 import { FormTitle } from "../components/reusables";
-import { listFromForm, fetchWithAuthorization } from "../functions/forms";
+import { listFromForm, fetchWithAuth } from "../functions/forms";
 import { Checkbox } from "../components/reusables";
 import { PagePaths } from "../constants/paths";
 
@@ -25,7 +25,7 @@ function Content() {
         let data = listFromForm(form);
         data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
         console.log(data)
-        fetchWithAuthorization(`${host_ip}/card`, "post", data, session.token)
+        fetchWithAuth(`${host_ip}/card`, "post", data, session.token)
             .then(res=>{
                 if(res.status == 200){
                     console.log('Se agregó el libro con éxito');

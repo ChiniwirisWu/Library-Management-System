@@ -13,7 +13,7 @@ import { TabButtons } from "../components/reusables";
 import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import InfoImage from "res/info.svg"
-import {fetchWithAuthorizationGet} from "../functions/forms";
+import {fetchEmptyWithAuth} from "../functions/forms";
 
 
 function LoanEntryInfo({ title, reader, phone, days, address }) {
@@ -28,21 +28,22 @@ function LoanEntryInfo({ title, reader, phone, days, address }) {
     );
 }
 
-function LoanEntryIcons() {
+function LoanEntryIcons({handlers}) {
+    console.log(handlers)
     return (
         <>
-            <IconLink src={AcceptIcon} alt="accept" path={PagePaths['ReadRecord']} />
-            <IconLink src={DenyIcon} alt="deny" path={PagePaths['ReadRecord']} />
+            <IconButton src={AcceptIcon} alt="accept" onClickHandler={handlers.acceptHandler} />
+            <IconButton src={DenyIcon} alt="deny" onClickHandler={handlers.declineHandler} />
             <IconLink src={InfoImage} alt="info" path={PagePaths['ReadRecord']} />
         </>
     );
 }
 
-function LoanEntry({ title, reader, phone, days, address }) {
+function LoanEntry({ title, reader, phone, days, address, handlers }) {
     return (
         <Entry
             info=<LoanEntryInfo title={title} reader={reader} phone={phone} days={days} address={address} />
-            icons=<LoanEntryIcons />
+            icons=<LoanEntryIcons handlers={handlers} />
         />
     );
 }
@@ -86,32 +87,50 @@ function Content() {
     const [ongoingLoans, setOngoingLoans] = useState([]);
     const { session } = useContext(sessionContext)
 
+    async function getAllLoansRequests(){
+        let response = fetchEmptyWithAuth(`${host_ip}/loans/requested`, "get",session.token)
+        .then(res=>res.json())
+        .then(res=>{
+            setLoanRequests(res);
+        })
+        .catch(err=>console.error(err))
+    }   
+    async function getAllLoansOngoing(){
+        let response = fetchEmptyWithAuth(`${host_ip}/loans/ongoing`, "get", session.token)
+        .then(res=>res.json())
+        .then(res=>{
+            setOngoingLoans(listFromObject(res, ['titulo', 'nombre', 'fk_trabajador', 'fecha_inicio', 'dias', 'cedula', 'telefono', 'telefonoVecino', 'direccion']))
+        })
+        .catch(err=>console.error(err))
+    }   
+
+    async function acceptLoanRequest(isbn, cedula){
+        if(window.confirm("Está seguro de validar éste préstamo?")){
+            let response = fetchEmptyWithAuth(`${host_ip}/loan/validateLoan/${isbn}/${cedula}`,"put", session.token)
+            .then(res=>res.text())
+            .then(res=>{
+                getAllLoansRequests();
+            })
+            .catch(err=>console.error(err))
+        }
+    }
+
+    async function declineLoanRequest(isbn, cedula){
+        if(window.confirm("Está seguro de denegar éste préstamo?")){
+            let response = fetchEmptyWithAuth(`${host_ip}/loan/${isbn}/${cedula}`, "delete", session.token)
+            .then(res=>res.text())
+            .then(res=>{
+                getAllLoansRequests();
+            })
+            .catch(err=>console.error(err))
+        }
+    }
 
     useEffect(()=>{
-        const getAllLoansRequests = async function(){
-            let response = fetchWithAuthorizationGet(`${host_ip}/loans/requested`, session.token)
-            .then(res=>res.json())
-            .then(res=>{
-                setLoanRequests(res);
-            })
-            .catch(err=>console.error(err))
-        }   
-        const getAllLoansOngoing = async function(){
-            let response = fetchWithAuthorizationGet(`${host_ip}/loans/ongoing`, session.token)
-            .then(res=>res.json())
-            .then(res=>{
-                setOngoingLoans(listFromObject(res, ['titulo', 'nombre', 'fk_trabajador', 'fecha_inicio', 'dias', 'cedula', 'telefono', 'telefonoVecino', 'direccion']))
-            })
-            .catch(err=>console.error(err))
-        }   
         getAllLoansRequests();
         getAllLoansOngoing();
     }, [])
 
-    //const ongoingLoans = [
-        //["El hobbit", "Marta Jiménez", "LuisAlb56", "19-11-23", "3 días", "43.235.761", "111222333", "2223331112", "Puerto la Cruz"],
-        //["Harry Potter y la piedra filosofal", "Luis Dominguez", "LuisAlb56", "29-10-24", "2 días", "89.111.223", "5555555555", "8888888888", "Barcelona"]
-    //];
 
     const tabs = {
         'requests': 'Solicitudes',
@@ -124,7 +143,7 @@ function Content() {
 
         return (content === tabs['ongoing'])
             ? (<LoansTable data={ongoingLoans} />)
-            : (loanRequests.map(loan => <LoanEntry title={loan.titulo} reader={loan.nombre} phone={loan.telefono} days={loan.dias} address={loan.direccion} />));
+            : (loanRequests.map(loan => <LoanEntry title={loan.titulo} handlers={{acceptHandler: ()=> acceptLoanRequest(loan.isbn, loan.cedula), declineHandler: ()=> declineLoanRequest(loan.isbn, loan.cedula)}} reader={loan.nombre} phone={loan.telefono} days={loan.dias} address={loan.direccion} />));
 
     }
 

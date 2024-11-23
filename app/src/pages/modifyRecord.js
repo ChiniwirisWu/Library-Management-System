@@ -3,7 +3,7 @@ import SessionContext from "../session/session";
 import { host_ip } from "../constants/host_ip";
 import { FormBackground, PrimaryButton, PrimaryInput } from "../components/reusables";
 import { FormTitle } from "../components/reusables";
-import { listFromForm, fetchWithAuthorization } from "../functions/forms";
+import { listFromForm, fetchWithAuth } from "../functions/forms";
 import { Checkbox } from "../components/reusables";
 import { PagePaths } from "../constants/paths";
 import { useLocation } from "react-router-dom";
@@ -21,7 +21,7 @@ function Content() {
         let data = listFromForm(form);
         data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
         console.log(data);
-        fetchWithAuthorization(`${host_ip}/card/${isbn}`, "put", data, session.token)
+        fetchWithAuth(`${host_ip}/card/${isbn}`, "put", data, session.token)
             .then(res=>{
                 if(res.status == 200){
                     console.log('Se actualizó el libro con éxito');
@@ -32,7 +32,7 @@ function Content() {
 
     async function delete_record(isbn){
         if(window.confirm("Seguro de elimar ésta ficha?")){
-            fetchWithAuthorization(`${host_ip}/card/${isbn}`, 'delete', {}, session.token)
+            fetchWithAuth(`${host_ip}/card/${isbn}`, 'delete', {}, session.token)
                 .then(res=> {
                     if(res.status == 200){
                         console.log('Se eliminó el registro con éxito');

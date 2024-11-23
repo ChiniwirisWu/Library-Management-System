@@ -79,7 +79,7 @@ CREATE TABLE prestamo(
 
 INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("321790423", "admin","2024-10-1", 3, "30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 1); 
 INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("849234244", "employee","2024-10-1", 3, "30859232", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 1); 
-INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("849234244", "employee","2024-10-1", 3, "39248923", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 0); 
+INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES ("948329743", "employee","2024-10-1", 3, "39248923", "Guillermo", "Diaz", "Barcelona", "04128437562", "04248957342", 0); 
 
 -- Categorias --
 
