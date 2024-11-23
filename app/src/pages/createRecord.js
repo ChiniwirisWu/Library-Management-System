@@ -71,7 +71,7 @@ function Content() {
 
             <div className="pt-6 flex space-x-4 place-content-around w-[100%]">
                 <PrimaryButton title="Guardar" onClick={add_record} />
-                <PrimaryButton title="Eliminar" onClick={clear_form} />
+                <PrimaryButton title="Borrar" onClick={clear_form} />
             </div>
 
             <PrimaryButton title="Salir" path={PagePaths['Books']} />
@@ -80,10 +80,10 @@ function Content() {
     );
 }
 
-const Record = () => {
+const CreateRecord = () => {
     return (
         <FormBackground content=<Content /> />
     );
 }
 
-export default Record; 
+export default CreateRecord; 

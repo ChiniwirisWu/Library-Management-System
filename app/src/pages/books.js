@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import { MainPage } from "../components/reusables";
-import { dewey_codes, salas } from "../constants/rooms_and_dewey";
 import { PagePaths } from "../constants/paths";
 import { GetPathTitle } from "../constants/pages";
 import { limitString } from "../functions/strings";
@@ -27,21 +26,21 @@ function BookEntryInfo({ title, category, author, room }) {
     );
 }
 
-function BookEntryIcons() {
+function BookEntryIcons({book}) {
     return (
         <>
             <RestrictedComponent component=<IconLink src={LoanImage} alt="préstamo" path={PagePaths['Record']} /> permissions={libraryRoles} />
-            <RestrictedComponent component=<IconLink src={EditImage} alt="edit" path={PagePaths['Record']} /> permissions={libraryRoles} />
-            <IconLink src={InfoImage} alt="info" path={PagePaths['Record']} />
+            <RestrictedComponent component=<IconLink content={book} src={EditImage} alt="edit" path={PagePaths['ModifyRecord']} /> permissions={libraryRoles} />
+            <IconLink src={InfoImage} alt="info" content={book} path={PagePaths['ReadRecord']} />
         </>
     );
 }
 
-function BookEntry({ title, category, author, room }) {
+function BookEntry({ title, category, author, room, book }) {
     return (
         <Entry
             info=<BookEntryInfo title={title} category={category} author={author} room={room} />
-            icons=<BookEntryIcons />
+            icons=<BookEntryIcons book={book} />
         />
     );
 }
@@ -75,6 +74,7 @@ function Content() {
                         console.log(books)
                         setBooks(books);
                         setVisibleBooks(books);
+                        setMatches(books);
                     })
                     .catch(err=>console.error(err));
         }   
@@ -95,9 +95,9 @@ function Content() {
 
     return (
         <div className="flex flex-col w-[75%] self-center">
-            <SearchAndAddBar findMatches={findMatches} updateVisibleBooks={updateVisibleBooks} placeholder='Buscar Libros' AddPath={PagePaths['Record']} />
+            <SearchAndAddBar findMatches={findMatches} updateVisibleBooks={updateVisibleBooks} placeholder='Buscar Libros' AddPath={PagePaths['CreateRecord']} />
             <div className="flex flex-col w-[100%] self-center">
-                {visibleBooks.map(book => <BookEntry title={book.titulo} category={book.categoria} author={book.autor} room={book.sala} />)}
+                {visibleBooks.map(book => <BookEntry title={book.titulo} category={book.categoria} author={book.autor} room={book.sala} book={book} />)}
             </div>
         </div>
     );

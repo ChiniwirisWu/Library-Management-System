@@ -58,7 +58,7 @@ const Card = {
 		try {
 			const { isbn } = req.params;
 			const { body } = req;
-			const [rows, columns] = await pool.execute('UPDATE ficha SET isbn = ?, autor = ?, titulo = ?, edicion = ?, ciudad = ?, editorial = ?, ano = ?, coleccion = ?, ca = ?, volumen = ?, ejemplar = ?, esReferencia = ?, dewey = ?, cutter = ? WHERE isbn = ?', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplar, body.esReferencia, body.dewey, body.cutter, isbn]);
+			const [rows, columns] = await pool.execute('UPDATE ficha SET isbn = ?, autor = ?, titulo = ?, edicion = ?, ciudad = ?, editorial = ?, ano = ?, coleccion = ?, ca = ?, volumen = ?, ejemplares = ?, esReferencia = ?, dewey = ?, cutter = ? WHERE isbn = ?', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplares, body.esReferencia, body.dewey, body.cutter, isbn]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Ficha actualizada con éxito.');
 			} else{

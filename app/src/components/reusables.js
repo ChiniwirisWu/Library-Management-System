@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useState } from 'react';
 import { MainPagesList } from "../constants/pages";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RestrictedComponent } from "../functions/permissions";
 import SearchIcon from "res/search.svg";
 import AddIcon from "res/add.svg";
@@ -9,11 +9,11 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryInput({ type = "text", title, is_disabled = false, name }) {
+export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="" }) {
 
     let input = (is_disabled)
-        ? <input type={type} name={name} placeholder={title} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
-        : <input type={type} name={name} placeholder={title} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
+        ? <input type={type} name={name} placeholder={title} value={value} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        : <input type={type} name={name} placeholder={title}  defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
 
     return(input);
 }
@@ -30,9 +30,9 @@ export function FormTitle({ title, is_required = false }) {
     );
 }
 
-export function Checkbox({ title, onClick = null, is_disabled = false, name }) {
+export function Checkbox({ title, onClick = null, is_disabled = false, name, value=false }) {
     
-    let [status, setStatus] = useState(false);
+    let [status, setStatus] = useState(value);
 
     let buttonStyle = (status) 
         ? (is_disabled) 
@@ -133,11 +133,12 @@ export function IconButton({ src, alt, borderless = true, onClickHandler=functio
     );
 }
 
-export function IconLink({ src, alt, path, borderless = true }) {
+export function IconLink({ src, alt, path, borderless = true, content={}}) {
+    const navigate = useNavigate();
     return (
-        <Link className="flex align-middle" to={path}>
+        <button onClick={()=> navigate(path, {state: content})} className="flex align-middle">
             <IconButton src={src} alt={alt} borderless={borderless} />
-        </Link>
+        </button>
     );
 }
 

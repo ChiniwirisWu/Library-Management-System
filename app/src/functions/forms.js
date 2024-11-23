@@ -25,3 +25,22 @@ export function fetchWithAuthorization(url, method, data = {}, token){
     });
     return response;
 }
+
+
+export function default_with_zero(data, properties){
+    for(const property in data){
+        if(data[property] == "" && properties.includes(property)){
+            data[property] = 0
+        }
+    }
+    return data;
+}
+
+export function default_with_string(data, properties){
+    for(const property in data){
+        if(data[property] == 0 && properties.includes(property)){
+            data[property] = ""
+        }
+    }
+    return data;
+}

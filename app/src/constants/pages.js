@@ -3,11 +3,12 @@ import Welcome from "../pages/welcome";
 import Login from "../pages/login";
 import Home from "../pages/home";
 import Request from "../pages/request";
-import Record from "../pages/record";
+import CreateRecord from "../pages/createRecord";
+import ReadRecord from "../pages/readRecord";
+import ModifyRecord from "../pages/modifyRecord";
 import Books from "../pages/books";
 import Users from "../pages/users";
 import Loans from "../pages/loans";
-import Info from "../pages/info";
 import { PagePaths } from "./paths";
 import { PathNavBarOrder } from "./paths";
 import { userRoles } from "./roles";
@@ -27,8 +28,9 @@ class Page {
 export const PagesList = [
     new Page(PagePaths['Welcome'], <Welcome />, "Salir"),
     new Page(PagePaths['Login'], <Login />),
-    new Page(PagePaths['Info'], <Info />),
-    new Page(PagePaths['Record'], <Record />, libraryRoles),
+    new Page(PagePaths['CreateRecord'], <CreateRecord />, libraryRoles),
+    new Page(PagePaths['ReadRecord'], <ReadRecord />),
+    new Page(PagePaths['ModifyRecord'], <ModifyRecord />, libraryRoles),
     new Page(PagePaths['Home'], <Home />, "Inicio"),
     new Page(PagePaths['Signup'], <Request title= "Solicitud de Registro" />),
     new Page(PagePaths['Password Change'], <Request title= "Solicitud de Cambio de Contraseña" />),
