@@ -41,6 +41,8 @@ CREATE TABLE trabajador(
 
 INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("admin", "admin", "$2b$10$7BCY3G90BNE1wvFWLXCl2ekiccTTcVdQKdCiKUUOHVEdvvqizVple", "$2b$10$7BCY3G90BNE1wvFWLXCl2e", 1);
 INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("employee", "employee", "$2b$10$9YjkfEd/e3NK3WJBrlLCzejxCbLCkXDWlojQfX7nwjhbZR8r7pkq6", "$2b$10$KX/NL075vjDRgxXZ17eGGe", 1);
+INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Gerald", "employee", "$2b$10$9YjkfEd/e3NK3WJBrlLCzejxCbLCkXDWlojQfX7nwjhbZR8r7pkq6", "$2b$10$KX/NL075vjDRgxXZ17eGGe", 0);
+INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES ("Juanita", "employee", "$2b$10$9YjkfEd/e3NK3WJBrlLCzejxCbLCkXDWlojQfX7nwjhbZR8r7pkq6", "$2b$10$KX/NL075vjDRgxXZ17eGGe", 0);
 
 -- CREATE TABLE lector(
 	-- cedula VARCHAR (20) NOT NULL UNIQUE,

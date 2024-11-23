@@ -110,13 +110,14 @@ function Content() {
             .then(res=>res.text())
             .then(res=>{
                 getAllLoansRequests();
+                getAllLoansOngoing();
             })
             .catch(err=>console.error(err))
         }
     }
 
     async function deleteLoan(isbn, cedula){
-        if(window.confirm("Está seguro de denegar éste préstamo?")){
+        if(window.confirm("Está seguro de eliminar éste préstamo?")){
             let response = fetchEmptyWithAuth(`${host_ip}/loan/${isbn}/${cedula}`, "delete", session.token)
             .then(res=>res.text())
             .then(res=>{
