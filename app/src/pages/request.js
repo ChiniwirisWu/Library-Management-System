@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 
 async function requestHandler(e, navigate){
     e.preventDefault();
-    const data = await listFromForm(e);
+    const data = await listFromForm(e.target);
     if(data.contrasena == data.contrasena_repetida){
         const response = simpleFetch(`${host_ip}/register`, "post", data);
         response.then(res=>res.text())

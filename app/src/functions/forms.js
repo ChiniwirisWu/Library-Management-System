@@ -1,5 +1,4 @@
-export function listFromForm(e){
-    const form = e.target;
+export function listFromForm(form){
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     return data;

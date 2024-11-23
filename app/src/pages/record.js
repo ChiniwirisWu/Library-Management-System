@@ -17,25 +17,31 @@ function default_with_zero(data, properties){
     return data;
 }
 
-async function recording_handler(e, session){
-    e.preventDefault();
-    let data = listFromForm(e);
-    data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-    console.log(data)
-    fetchWithAuthorization(`${host_ip}/card`, "post", data, session.token)
-        .then(res=>{
-            if(res.status == 200){
-                console.log('Se agregó el libro con éxito');
-            }})
-        .catch(err => console.error(err));
-
-}
-
 function Content() {
     const { session } = useContext(SessionContext);
+    
+    async function add_record(){
+        const form = document.querySelector('form');
+        let data = listFromForm(form);
+        data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
+        console.log(data)
+        fetchWithAuthorization(`${host_ip}/card`, "post", data, session.token)
+            .then(res=>{
+                if(res.status == 200){
+                    console.log('Se agregó el libro con éxito');
+                }})
+            .catch(err => console.error(err));
+    }
+
+    function clear_form(){
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach((item, index)=>{
+            item.value = "";
+        })
+    }
 
     return (
-        <form onSubmit={(e)=> recording_handler(e, session)} className="flex flex-col space-y-4 bg-white max-w-[400px] w-[100%] my-auto mx-auto p-[40px] rounded-sm shadow-sm shadow-[grey]">
+        <form onSubmit={(e)=> e.preventDefault()} className="flex flex-col space-y-4 bg-white max-w-[400px] w-[100%] my-auto mx-auto p-[40px] rounded-sm shadow-sm shadow-[grey]">
 
             <FormTitle title="Identificación de la Obra" is_required={true} />
             <PrimaryInput title="Título" name="titulo" />
@@ -64,8 +70,8 @@ function Content() {
             <PrimaryInput type="Number" title="Pág. o Vol." name="volumen" />
 
             <div className="pt-6 flex space-x-4 place-content-around w-[100%]">
-                <PrimaryButton title="Guardar" />
-                <PrimaryButton title="Eliminar" />
+                <PrimaryButton title="Guardar" onClick={add_record} />
+                <PrimaryButton title="Eliminar" onClick={clear_form} />
             </div>
 
             <PrimaryButton title="Salir" path={PagePaths['Books']} />

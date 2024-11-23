@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 
 async function loginHandler(e, setSession, navigate){
     e.preventDefault();
-    const data = listFromForm(e);
+    const data = listFromForm(e.target);
     const response = simpleFetch(`${host_ip}/login`, "post", data)   
     response.then(res => res.json())
             .then(res => {
