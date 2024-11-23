@@ -48,7 +48,7 @@ function LoanEntry({ title, reader, phone, days, address, handlers }) {
     );
 }
 
-function LoansTable({ data }) {
+function LoansTable({ data, deleteHandler }) {
 
     const th_style = "py-2 px-4 border-b border-gray-200 text-base font-semibold text-gray-700 text-center";
     const td_style = "text-sm px-1 py-1 text-black text-center";
@@ -69,7 +69,7 @@ function LoansTable({ data }) {
                         <tr className="hover:bg-gray-100 transition-all">
                             {record.map((field) => <td className={td_style}>{field}</td>)}
                             <td className={td_style}>
-                                <IconButton src={DenyIcon} alt="end" />
+                                <IconButton onClickHandler={()=> deleteHandler(record[9], record[5])} src={DenyIcon} alt="end" />
                             </td>
                         </tr>
                     ))
@@ -99,7 +99,7 @@ function Content() {
         let response = fetchEmptyWithAuth(`${host_ip}/loans/ongoing`, "get", session.token)
         .then(res=>res.json())
         .then(res=>{
-            setOngoingLoans(listFromObject(res, ['titulo', 'nombre', 'fk_trabajador', 'fecha_inicio', 'dias', 'cedula', 'telefono', 'telefonoVecino', 'direccion']))
+            setOngoingLoans(listFromObject(res, ['titulo', 'nombre', 'fk_trabajador', 'fecha_inicio', 'dias', 'cedula', 'telefono', 'telefonoVecino', 'direccion', 'isbn']))
         })
         .catch(err=>console.error(err))
     }   
@@ -115,12 +115,13 @@ function Content() {
         }
     }
 
-    async function declineLoanRequest(isbn, cedula){
+    async function deleteLoan(isbn, cedula){
         if(window.confirm("Está seguro de denegar éste préstamo?")){
             let response = fetchEmptyWithAuth(`${host_ip}/loan/${isbn}/${cedula}`, "delete", session.token)
             .then(res=>res.text())
             .then(res=>{
                 getAllLoansRequests();
+                getAllLoansOngoing();
             })
             .catch(err=>console.error(err))
         }
@@ -142,8 +143,8 @@ function Content() {
     function getContent() {
 
         return (content === tabs['ongoing'])
-            ? (<LoansTable data={ongoingLoans} />)
-            : (loanRequests.map(loan => <LoanEntry title={loan.titulo} handlers={{acceptHandler: ()=> acceptLoanRequest(loan.isbn, loan.cedula), declineHandler: ()=> declineLoanRequest(loan.isbn, loan.cedula)}} reader={loan.nombre} phone={loan.telefono} days={loan.dias} address={loan.direccion} />));
+            ? (<LoansTable deleteHandler={deleteLoan} data={ongoingLoans} />)
+            : (loanRequests.map(loan => <LoanEntry title={loan.titulo} handlers={{acceptHandler: ()=> acceptLoanRequest(loan.isbn, loan.cedula), declineHandler: ()=> deleteLoan(loan.isbn, loan.cedula)}} reader={loan.nombre} phone={loan.telefono} days={loan.dias} address={loan.direccion} />));
 
     }
 
