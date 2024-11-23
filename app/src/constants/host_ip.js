@@ -1,1 +1,1 @@
-export const host = 'http://127.0.0.1:9090';
+export const host_ip = 'http://127.0.0.1:9090';

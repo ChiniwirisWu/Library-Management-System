@@ -40,13 +40,17 @@ app.delete('/card/:isbn', isAuthorized, Card.deleteCardByISBN);
 app.post('/register', Worker.register);
 app.post('/login', Worker.login);
 app.get('/workers', isAuthorized, Worker.getAllWorkers);
+app.get('/workers/requests', isAuthorized, Worker.getAllRequests);
+app.get('/workers/validated', isAuthorized, Worker.getAllValidatedWorkers);
 app.get('/worker/:nombre', isAuthorized, Worker.getWorkerBynombre);
-app.put('/worker/:nombre', isAuthorized, Worker.updateWorkerBynombre);
 app.put('/worker/validateWorker/:nombre', isAuthorized, Worker.validateWorker);
+app.put('/worker/:nombre', isAuthorized, Worker.updateWorkerBynombre);
 app.delete('/worker/:nombre', isAuthorized, Worker.deleteWorkerBynombre);
 
 //endpoints para los prestamos
 app.get('/loans', isAuthorized, Loan.getAllLoans);
+app.get('/loans/requested', isAuthorized, Loan.getAllRequestedLoans);
+app.get('/loans/ongoing', isAuthorized, Loan.getAllOngoingLoans);
 app.get('/loan/:isbn/:cedula', isAuthorized, Loan.getLoan);
 app.post('/loan', isAuthorized, Loan.createLoan);
 app.put('/loan/:isbn/:cedula', isAuthorized, Loan.updateLoan);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { MainPage } from "../components/reusables";
 import { GetPathTitle } from "../constants/pages";
 import { PagePaths } from "../constants/paths";
@@ -8,6 +8,10 @@ import { TabButtons } from "../components/reusables";
 import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import EraseIcon from "res/erase.svg"
+import { host_ip } from "../constants/host_ip";
+import {fetchEmptyWithAuth} from "../functions/forms";
+import sessionContext from "../session/session";
+import { listFromObject, translate_roles } from "../functions/objects";
 
 function RequestEntryInfo({ username, isNewAccount = true, isAdminAccount = false }) {
 
@@ -25,27 +29,27 @@ function RequestEntryInfo({ username, isNewAccount = true, isAdminAccount = fals
     );
 }
 
-function RequestEntryIcons() {
+function RequestEntryIcons({handlers}) {
     return (
         <>
-            <IconButton src={AcceptIcon} alt="accept" />
-            <IconButton src={DenyIcon} alt="deny" />
+            <IconButton src={AcceptIcon} alt="accept" onClickHandler={handlers.acceptHandler} />
+            <IconButton src={DenyIcon} alt="deny" onClickHandler={handlers.declineHandler} />
         </>
     );
 }
 
-function RequestEntry({ username, isNewAccount = true, isAdminAccount = false }) {
+function RequestEntry({ username, isNewAccount = true, isAdminAccount = false, handlers }) {
     return (
         <Entry
             info=<RequestEntryInfo username={username} isNewAccount={isNewAccount} isAdminAccount={isAdminAccount} />
-            icons=<RequestEntryIcons />
+            icons=<RequestEntryIcons handlers={handlers} />
         />
     );
 }
 
-function UserEntry({ username, accountType = 'Employee' }) {
+function UserEntry({ username, accountType = 'employee', handlers }) {
 
-    const type = (accountType === 'Employee') ? "Trabajador" : "Administrador";
+    const type = (accountType === 'employee') ? "Trabajador" : "Administrador";
 
     const info = (
         <>
@@ -57,28 +61,56 @@ function UserEntry({ username, accountType = 'Employee' }) {
     return (
         <Entry
             info={info}
-            icons=<IconButton src={EraseIcon} alt="erase" />
+            icons=<IconButton src={EraseIcon} alt="erase" onClickHandler={handlers.deleteHandler} />
         />
     );
 }
 
 function Content() {
+    const { session } = useContext(sessionContext);
+    const [users, setUsers] = useState([]);
+    const [requests, setRequests] = useState([]);
 
-    const requests = [
-        ["Juan David", false, false],
-        ["Juliana P.", true, true],
-        ["José José", true, false],
-    ];
+    async function getAllUsers(url, handler){
+        fetchEmptyWithAuth(url, "get", session.token)
+            .then(res=>res.json())
+            .then(res=>{
+                console.log(listFromObject(res, ["nombre", "rol"]))
+                handler(listFromObject(res, ["nombre", "rol"]));
+            })
+            .catch(err=>console.error(err));
+    }
 
-    const users = [
-        ["María María"],
-        ["MartinezLuis", "Administrador"],
-    ]
+    async function acceptUserRequest(rol, nombre){
+        rol = (rol === "employee") ? "Trabajador" : "Administrador";
+        if(window.confirm(`Está seguro de validar éste usuario como ${rol}?`)){
+            let response = fetchEmptyWithAuth(`${host_ip}/worker/validateWorker/${nombre}`,"put", session.token)
+            .then(res=>res.text())
+            .then(res=>{
+                getAllUsers(`${host_ip}/workers/requests`, setRequests);
+                getAllUsers(`${host_ip}/workers/validated`, setUsers);
+            })
+            .catch(err=>console.error(err))
+        }
+    }
 
-    requests.push(requests[0]);
-    requests.push(requests[0]);
-    users.push(users[1]);
-    users.push(users[1]);
+    async function deleteUser(nombre, mensaje){
+        if(window.confirm(mensaje)){
+            let response = fetchEmptyWithAuth(`${host_ip}/worker/${nombre}`,"delete", session.token)
+            .then(res=>res.text())
+            .then(res=>{
+                getAllUsers(`${host_ip}/workers/validated`, setUsers);
+                getAllUsers(`${host_ip}/workers/requests`, setRequests);
+            })
+            .catch(err=>console.error(err))
+        }
+    }
+
+    useEffect(()=>{
+        getAllUsers(`${host_ip}/workers/validated`, setUsers);
+        getAllUsers(`${host_ip}/workers/requests`, setRequests);
+    }, [])
+
 
     const tabs = {
         'requests': 'Solicitudes',
@@ -90,8 +122,8 @@ function Content() {
     function getContent() {
 
         return (content === tabs['users'])
-            ? (users.map(user => <UserEntry username={user[0]} accountType={user[1]} />))
-            : (requests.map(request => <RequestEntry username={request[0]} isNewAccount={request[1]} isAdminAccount={request[2]} />));
+            ? (users.map(user => <UserEntry handlers={{deleteHandler: ()=> deleteUser(user[0], "Está usted seguro de eliminar ésta solicitud?")}} username={user[0]} accountType={user[1]} />))
+            : (requests.map(request => <RequestEntry handlers={{acceptHandler: ()=> acceptUserRequest(request[1], request[0]), declineHandler: ()=> deleteUser(request[0], "Está usted seguro de eliminar ésta solicitud?")}} username={request[0]} isNewAccount={true} isAdminAccount={request[1] == "admin"} />));
 
     }
 

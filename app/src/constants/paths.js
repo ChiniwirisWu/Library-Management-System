@@ -1,7 +1,9 @@
 export const PagePaths = {
     'Welcome': '/',
     'Login': '/inicio-de-sesion',
-    'Record': '/agregar-ficha',
+    'CreateRecord': '/agregar-ficha',
+    'ReadRecord': '/ver-ficha',
+    'ModifyRecord': '/modificar-ficha',
     'Home': '/inicio',
     'Signup': '/solicitud-registro',
     'Password Change': 'solicitud-contrasena',

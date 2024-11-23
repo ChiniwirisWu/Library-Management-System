@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useState } from 'react';
 import { MainPagesList } from "../constants/pages";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RestrictedComponent } from "../functions/permissions";
 import SearchIcon from "res/search.svg";
 import AddIcon from "res/add.svg";
@@ -9,12 +9,15 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryInput({ type = "text", title, is_disabled = false }) {
+export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="", is_required=false }) {
 
     let input = (is_disabled)
-        ? <input type={type} name={title} placeholder={title} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
-        : <input type={type} name={title} placeholder={title} className="w-[100%] p-2 font-semibold bg-gray-50 border-gray-200 border-2 rounded-md  text-gray-400 focus:bg-blue-50 focus:text-black focus:border-blue-400 outline-none transition-all duration-500 focus:placeholder:opacity-0 placeholder:transition-all placeholder:duration-300"></input>;
-
+        ? <input type={type} name={name} placeholder={title} value={value} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        : (is_required ? (
+             <input type={type} name={name} required placeholder={title} defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        ) : (
+             <input type={type} name={name} placeholder={title} defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+        ))
     return(input);
 }
 
@@ -30,9 +33,9 @@ export function FormTitle({ title, is_required = false }) {
     );
 }
 
-export function Checkbox({ title, onClick = null, is_disabled = false }) {
+export function Checkbox({ title, onClick = null, is_disabled = false, name, value=false }) {
     
-    let [status, setStatus] = useState(false);
+    let [status, setStatus] = useState(value);
 
     let buttonStyle = (status) 
         ? (is_disabled) 
@@ -55,8 +58,9 @@ export function Checkbox({ title, onClick = null, is_disabled = false }) {
     return(
         <div className="flex place-items-center space-x-2">
             <p className="font-semibold text-gray-500">{title}</p>
-            <button class={buttonStyle} onClick={onChecked}>
+            <button form="none" class={buttonStyle} onClick={onChecked}>
                 <p class="text-[75%] text-white font-extrabold relative bottom-[2px]">{character}</p>
+                <input type="hidden" name={name} value={status ? 1 : 0} />
             </button>
         </div>
     );
@@ -120,31 +124,32 @@ export function TextLink({ text, href }) {
     );
 }
 
-export function IconButton({ src, alt, borderless = true }) {
+export function IconButton({ src, alt, borderless = true, onClickHandler=function(){}}) {
     let buttonClass = (borderless)
         ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200"
         : "my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";
 
     return (
-        <button className={buttonClass}>
+        <button className={buttonClass} onClick={()=> onClickHandler()} >
             <img src={src} alt={alt} height="40px" width="40px" className="object-contain"></img>
         </button>
     );
 }
 
-export function IconLink({ src, alt, path, borderless = true }) {
+export function IconLink({ src, alt, path, borderless = true, content={}}) {
+    const navigate = useNavigate();
     return (
-        <Link className="flex align-middle" to={path}>
+        <button onClick={()=> navigate(path, {state: content})} className="flex align-middle">
             <IconButton src={src} alt={alt} borderless={borderless} />
-        </Link>
+        </button>
     );
 }
 
-export function SearchAndAddBar({ placeholder, AddPath }) {
+export function SearchAndAddBar({ placeholder, AddPath, findMatches, updateVisibleBooks }) {
     return (
         <div className="w-[100%] flex space-x-5">
-            <input type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
-            <IconButton src={SearchIcon} alt="Search" borderless={false} />
+            <input onChange={(e)=> findMatches(e.target.value)} type='text' name={placeholder} id={placeholder} placeholder={placeholder} class="w-[100%] outline-none my-5 font-bold text-base p-2 border-2 rounded-lg bg-gray-50  focus:border-gray-300 transition-colors duration-300" />
+            <IconButton onClickHandler={updateVisibleBooks} src={SearchIcon} alt="Search" borderless={false} />
             <RestrictedComponent component=<IconLink src={AddIcon} alt="add" borderless={false} path={AddPath} /> permissions={libraryRoles} />
         </div>
     );

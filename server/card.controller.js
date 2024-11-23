@@ -19,7 +19,7 @@ async function getCardByISBN_handler(req, res){
 const Card = {
 	getAllCards: async (req, res)=>{
 		try {
-			const [rows, columns] = await pool.execute('SELECT * FROM ficha');
+			const [rows, columns] = await pool.execute('select f.isbn, f.autor, f.titulo, f.edicion, f.ciudad, f.editorial, f.ano, f.coleccion, f.ca, f.volumen, f.ejemplares, f.esReferencia, f.dewey, f.cutter, c.nombre as categoria, s.nombre as sala from ficha f left join categoria c on substring(f.dewey, 1, 3)=c.dewey left join sala s on c.dewey=s.dewey');
 			res.status(200).send(rows);
 		} catch(e){
 			res.status(500).send(e.message);
@@ -42,7 +42,8 @@ const Card = {
 		try {
 			const { body } = req;
 			console.log(body)
-			const [rows, columns] = await pool.execute('INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplar, esReferencia, dewey, cutter) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplar, body.esReferencia, body.dewey, body.cutter]);
+			console.log(body)
+			const [rows, columns] = await pool.execute('INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplares, body.esReferencia, body.dewey, body.cutter]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Ficha creada con éxito.');
 			} else{
@@ -57,7 +58,7 @@ const Card = {
 		try {
 			const { isbn } = req.params;
 			const { body } = req;
-			const [rows, columns] = await pool.execute('UPDATE ficha SET isbn = ?, autor = ?, titulo = ?, edicion = ?, ciudad = ?, editorial = ?, ano = ?, coleccion = ?, ca = ?, volumen = ?, ejemplar = ?, esReferencia = ?, dewey = ?, cutter = ? WHERE isbn = ?', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplar, body.esReferencia, body.dewey, body.cutter, isbn]);
+			const [rows, columns] = await pool.execute('UPDATE ficha SET isbn = ?, autor = ?, titulo = ?, edicion = ?, ciudad = ?, editorial = ?, ano = ?, coleccion = ?, ca = ?, volumen = ?, ejemplares = ?, esReferencia = ?, dewey = ?, cutter = ? WHERE isbn = ?', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplares, body.esReferencia, body.dewey, body.cutter, isbn]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Ficha actualizada con éxito.');
 			} else{
