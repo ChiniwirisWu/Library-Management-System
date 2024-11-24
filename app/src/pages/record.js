@@ -97,6 +97,7 @@ function Content({ record_type }) {
     const has_title = (record_type !== record_types['new'] );
 
     const book = (record_type !== record_types['new']) ? default_with_string(location.state, ['ejemplares', 'ca', 'volumen', 'coleccion']) : null;
+    console.log(book)
 
     const { session } = useContext(SessionContext);   
 
@@ -116,7 +117,7 @@ function Content({ record_type }) {
 
             <FormTitle title="Datos de Edición" is_required={true} />
             <PrimaryInput title="Editorial" name="editorial" value={(book) ? book.editorial : null} is_required={true} is_disabled={is_disabled} has_title={has_title}/>
-            <PrimaryInput title="Edición" name="edicion" value={(book) ? book.edicion : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
+            <PrimaryInput type="Number" title="Edición" name="edicion" value={(book) ? book.edicion : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
             <PrimaryInput title="Ciudad" name="ciudad" value={(book) ? book.ciudad : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
             <PrimaryInput title="Año" name="ano" value={(book) ? book.ano : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
 

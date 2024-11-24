@@ -30,11 +30,14 @@ function LoanEntryInfo({ title, reader, phone, days, address }) {
 
 function LoanEntryIcons({handlers}) {
     console.log(handlers)
+
+    //hay que cambiar content={null} a content{objeto de préstamo}
+
     return (
         <>
             <IconButton src={AcceptIcon} alt="accept" onClickHandler={handlers.acceptHandler} />
             <IconButton src={DenyIcon} alt="deny" onClickHandler={handlers.declineHandler} />
-            <IconLink src={InfoImage} alt="info" path={PagePaths['ReadRecord']} />
+            <IconLink src={InfoImage} content={null} alt="info" path={PagePaths['LoanInfo']} />
         </>
     );
 }

@@ -10,6 +10,8 @@ export const PagePaths = {
     'Books': '/libros',
     'Users': '/gestion-de-usuarios',
     'Loans': '/gestion-de-prestamos',
+    'LoanRequest': '/solicitud-de-prestamo',
+    'LoanInfo': '/informacion-de-prestamo',
 };
 
 export const PathNavBarOrder = [PagePaths['Home'], PagePaths['Books'], PagePaths['Loans'], PagePaths['Users'], PagePaths['Welcome']];

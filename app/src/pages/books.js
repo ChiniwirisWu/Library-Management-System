@@ -29,7 +29,7 @@ function BookEntryInfo({ title, category, author, room }) {
 function BookEntryIcons({book}) {
     return (
         <>
-            <RestrictedComponent component=<IconLink src={LoanImage} alt="préstamo" path={PagePaths['Record']} /> permissions={libraryRoles} />
+            <RestrictedComponent component=<IconLink content={book} src={LoanImage} alt="préstamo" path={PagePaths['LoanRequest']} /> permissions={libraryRoles} />
             <RestrictedComponent component=<IconLink content={book} src={EditImage} alt="edit" path={PagePaths['ModifyRecord']} /> permissions={libraryRoles} />
             <IconLink src={InfoImage} alt="info" content={book} path={PagePaths['ReadRecord']} />
         </>
