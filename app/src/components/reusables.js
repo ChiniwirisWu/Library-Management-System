@@ -9,16 +9,26 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="", is_required=false }) {
+export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="", is_required=false, has_title=true }) {
 
-    let input = (is_disabled)
-        ? <input type={type} name={name} placeholder={title} value={value} disabled className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+    const disabledStyle = "w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400";
+    const normalStyle = "w-[100%] p-2 font-semibold bg-gray-100 border-gray-200 border-2 rounded-md  text-gray-400 outline-none focus:border-gray-300 transition-all duration-200";
+
+    let optional_title = (has_title) ? <h6 className="text-sm text-gray-500 font-semibold">{title}</h6> : null; 
+
+    let input = (is_disabled) ? <input type={type} name={name} placeholder={title} value={value} disabled className={disabledStyle}></input> 
         : (is_required ? (
-             <input type={type} name={name} required placeholder={title} defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+             <input type={type} name={name} required placeholder={title} defaultValue={value} className={normalStyle}></input>
         ) : (
-             <input type={type} name={name} placeholder={title} defaultValue={value} className="w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400 "></input>
+             <input type={type} name={name} placeholder={title} defaultValue={value} className={normalStyle}></input>
         ))
-    return(input);
+
+    return(
+        <div>
+            {optional_title}
+            {input}
+        </div>
+    );
 }
 
 export function FormTitle({ title, is_required = false }) {
@@ -105,7 +115,7 @@ export function TitleLink({ text, onClick }) {
     );
 }
 
-export function LabeledInput({ text, name }, { type }) {
+export function LabeledInput({ text, name, type}) {
     return (
         <div className="flex flex-col">
             <label for={text} class="text-lg mb-2">

@@ -15,6 +15,8 @@ import { userRoles } from "./roles";
 import { libraryRoles } from "./roles";
 import { allRoles } from "./roles";
 import { RestrictedPage } from "../functions/permissions";
+import Record from "../pages/record";
+import { record_types } from "../pages/record";
 
 class Page {
     constructor(path, component, title = null, roles = allRoles) {
@@ -28,9 +30,9 @@ class Page {
 export const PagesList = [
     new Page(PagePaths['Welcome'], <Welcome />, "Salir"),
     new Page(PagePaths['Login'], <Login />),
-    new Page(PagePaths['CreateRecord'], <CreateRecord />, libraryRoles),
-    new Page(PagePaths['ReadRecord'], <ReadRecord />),
-    new Page(PagePaths['ModifyRecord'], <ModifyRecord />, libraryRoles),
+    new Page(PagePaths['CreateRecord'], <Record record_type={record_types['new']} />, libraryRoles),
+    new Page(PagePaths['ReadRecord'], <Record record_type={record_types['info']} />),
+    new Page(PagePaths['ModifyRecord'], <Record record_type={record_types['modify']} />, libraryRoles),
     new Page(PagePaths['Home'], <Home />, "Inicio"),
     new Page(PagePaths['Signup'], <Request title= "Solicitud de Registro" />),
     new Page(PagePaths['Password Change'], <Request title= "Solicitud de Cambio de Contraseña" />),
