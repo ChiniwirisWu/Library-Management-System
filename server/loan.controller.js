@@ -57,7 +57,7 @@ const Loan = {
 			const { body } = req;
 			const [f_rows, f_columns] = await pool.execute('SELECT p.fk_isbn, f.titulo, f.ejemplares, count(fk_isbn) as n_prestamos FROM prestamo p LEFT JOIN ficha f ON p.fk_isbn = f.isbn WHERE p.fk_isbn = ?', [body.isbn]);
 			if(f_rows[0].n_prestamos < f_rows[0].ejemplares - 1){
-				const [rows, columns] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.trabajador, body.fecha_inicio, body.fecha_final, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
+				const [rows, columns] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.trabajador, body.fecha_inicio, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
 				if(rows.affectedRows > 0){
 					res.status(200).send('Préstamo creado con éxito.');
 				} else{
@@ -74,7 +74,7 @@ const Loan = {
 		try {
 			const { cedula, isbn } = req.params;
 			const { body } = req;
-			const [rows, columns] = await pool.execute('UPDATE prestamo SET fk_isbn = ?, fk_trabajador = ?, fecha_inicio = ?, fecha_final = ?, dias = ?, cedula = ?, nombre = ?, apellido = ?, direccion = ?, telefono = ?, telefonoVecino = ?, estado = ? WHERE cedula = ? AND fk_isbn = ?', [body.isbn, body.trabajador, body.fecha_inicio, body.fecha_final, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, body.estado, cedula, isbn]);
+			const [rows, columns] = await pool.execute('UPDATE prestamo SET fk_isbn = ?, fk_trabajador = ?, fecha_inicio = ?, dias = ?, cedula = ?, nombre = ?, apellido = ?, direccion = ?, telefono = ?, telefonoVecino = ?, estado = ? WHERE cedula = ? AND fk_isbn = ?', [body.isbn, body.trabajador, body.fecha_inicio, body.fecha_final, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, body.estado, cedula, isbn]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Préstamo actualizado con éxito.');
 			} else{

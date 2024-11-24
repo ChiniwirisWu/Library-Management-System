@@ -97,7 +97,6 @@ function Content({ record_type }) {
     const has_title = (record_type !== record_types['new'] );
 
     const book = (record_type !== record_types['new']) ? default_with_string(location.state, ['ejemplares', 'ca', 'volumen', 'coleccion']) : null;
-    console.log(book)
 
     const { session } = useContext(SessionContext);   
 

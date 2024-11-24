@@ -82,12 +82,12 @@ export function PrimaryButton({ title, onClick = null, path = null }) {
     const style = "w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none";
 
     const button = (
-        <button className="w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none" onClick={onClick}>
+        <button className={style} onClick={onClick}>
             {title}
         </button>
     );
 
-    return (path) ? <Link to={path}>{button}</Link> : button;
+    return (path) ? <Link className="w-[100%]" to={path}>{button}</Link> : button;
 }
 
 export function Title({ text }) {

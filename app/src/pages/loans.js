@@ -28,25 +28,21 @@ function LoanEntryInfo({ title, reader, phone, days, address }) {
     );
 }
 
-function LoanEntryIcons({handlers}) {
-    console.log(handlers)
-
-    //hay que cambiar content={null} a content{objeto de préstamo}
-
+function LoanEntryIcons({loan, handlers}) {
     return (
         <>
             <IconButton src={AcceptIcon} alt="accept" onClickHandler={handlers.acceptHandler} />
             <IconButton src={DenyIcon} alt="deny" onClickHandler={handlers.declineHandler} />
-            <IconLink src={InfoImage} content={null} alt="info" path={PagePaths['LoanInfo']} />
+            <IconLink src={InfoImage} content={loan} alt="info" path={PagePaths['LoanInfo']} />
         </>
     );
 }
 
-function LoanEntry({ title, reader, phone, days, address, handlers }) {
+function LoanEntry({ loan, handlers }) {
     return (
         <Entry
-            info=<LoanEntryInfo title={title} reader={reader} phone={phone} days={days} address={address} />
-            icons=<LoanEntryIcons handlers={handlers} />
+            info=<LoanEntryInfo title={loan.titulo} reader={loan.nombre} phone={loan.telefono} days={loan.dias} address={loan.direccion} />
+            icons=<LoanEntryIcons loan={loan} handlers={handlers} />
         />
     );
 }
@@ -148,7 +144,7 @@ function Content() {
 
         return (content === tabs['ongoing'])
             ? (<LoansTable deleteHandler={deleteLoan} data={ongoingLoans} />)
-            : (loanRequests.map(loan => <LoanEntry title={loan.titulo} handlers={{acceptHandler: ()=> acceptLoanRequest(loan.isbn, loan.cedula), declineHandler: ()=> deleteLoan(loan.isbn, loan.cedula)}} reader={loan.nombre} phone={loan.telefono} days={loan.dias} address={loan.direccion} />));
+            : (loanRequests.map(loan => <LoanEntry loan={loan} handlers={{acceptHandler: ()=> acceptLoanRequest(loan.isbn, loan.cedula), declineHandler: ()=> deleteLoan(loan.isbn, loan.cedula)}} />));
 
     }
 

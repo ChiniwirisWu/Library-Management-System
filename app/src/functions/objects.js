@@ -38,7 +38,7 @@ export function default_with_string(data, properties){
     return data;
 }
 
-export function is_fields_empty(data, exceptions){
+export function is_fields_empty(data, exceptions = []){
     for (const row in data){
         if(exceptions.includes(row)) continue;
         if(data[row] == ""){
