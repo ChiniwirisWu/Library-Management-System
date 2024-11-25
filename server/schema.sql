@@ -64,7 +64,7 @@ CREATE TABLE prestamo(
 	id INT NOT NULL AUTO_INCREMENT UNIQUE,
 	fk_isbn VARCHAR(50) NOT NULL,
 	fk_trabajador VARCHAR (50) NOT NULL,
-	fecha_inicio DATETIME NOT NULL,
+	fecha_inicio DATE NOT NULL,
 	dias INT NOT NULL,
 	cedula VARCHAR (20) NOT NULL,
 	nombre VARCHAR (20) NOT NULL,

@@ -44,7 +44,7 @@ function Content({ loan_type }) {
     const isNew = loan_type === loan_types['new'];
     
     const previousPath = (isNew) ? PagePaths['Books'] : PagePaths['Loans'];
-    const date = ((isNew) ? new Date() :  new Date(entry.fecha_inicio)).toLocaleDateString("es-Ve");
+    const date = ((isNew) ? new Date() :  new Date(entry.fecha_inicio)).toLocaleDateString("en-CA");
     const firstButton = (isNew) ? <PrimaryButton title="Enviar" onClick={ () => add_loan(session) } />: null;
 
     return (
