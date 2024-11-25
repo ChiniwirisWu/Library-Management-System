@@ -44,7 +44,8 @@ app.get('/workers/requests', isAuthorized, Worker.getAllRequests);
 app.get('/workers/validated', isAuthorized, Worker.getAllValidatedWorkers);
 app.get('/worker/:nombre', isAuthorized, Worker.getWorkerBynombre);
 app.put('/worker/validateWorker/:nombre', isAuthorized, Worker.validateWorker);
-app.put('/worker/:nombre', isAuthorized, Worker.updateWorkerBynombre);
+app.put('/worker/updateReplacementPassword', Worker.updateReplacementPassword);
+app.put('/worker/declinePasswordUpdate/:nombre', Worker.declineReplacementPasswordUpdate);
 app.delete('/worker/:nombre', isAuthorized, Worker.deleteWorkerBynombre);
 
 //endpoints para los prestamos

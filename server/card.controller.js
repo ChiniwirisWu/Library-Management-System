@@ -41,8 +41,6 @@ const Card = {
 		if(!roles.includes(req.worker.rol)) return res.status(401).send('No tienes permiso para realizar ésta acción');
 		try {
 			const { body } = req;
-			console.log(body)
-			console.log(body)
 			const [rows, columns] = await pool.execute('INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.autor, body.titulo, body.edicion, body.ciudad, body.editorial, body.ano, body.coleccion, body.ca, body.volumen, body.ejemplares, body.esReferencia, body.dewey, body.cutter]);
 			if(rows.affectedRows > 0){
 				res.status(200).send('Ficha creada con éxito.');

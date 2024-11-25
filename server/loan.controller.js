@@ -56,7 +56,6 @@ const Loan = {
 		try {
 			const { body } = req;
 			const [f_rows] = await pool.execute('SELECT titulo, ejemplares, esReferencia, prestados FROM ficha WHERE isbn = ?', [body.fk_isbn]);
-			console.log(f_rows);
 
 			if(f_rows[0].esReferencia == 1) return res.status(530).send("Un libro de referencia no puede ser prestado.");
 
@@ -64,7 +63,7 @@ const Loan = {
 				const [rows] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.fk_isbn, body.fk_trabajador, body.fecha_inicio, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
 				await pool.execute('UPDATE ficha SET prestados = ? WHERE isbn = ?', [f_rows[0].prestados + 1, body.fk_isbn]);
 				if(rows.affectedRows > 0){
-					res.status(200).send('Préstamo creado con éxito.');
+					res.status(200).send('Préstamo solicitado con éxito.');
 				} else{
 					res.status(500).send('Hubo un error creando el préstamo.');
 				}
@@ -72,7 +71,6 @@ const Loan = {
 				res.status(550).send('No hay ejemplares disponibles.');
 			}
 		} catch (e) {
-			console.log(e.message);
 			res.status(400).send("El préstamo ya ha sido creado.");
 		}
 	},

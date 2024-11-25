@@ -20,7 +20,6 @@ async function add_loan(session){
     const form = document.querySelector('form');
     let data = listFromForm(form);
     if(!is_fields_empty(data)){
-        console.log(data)
         fetchWithAuth(`${host_ip}/loan`, "post", data, session.token)
             .then(res=>res.text())
             .then(res=> alert(res))
@@ -29,8 +28,6 @@ async function add_loan(session){
             });
     }
 }
-
-//fk_isbn, fk_trabajador, fecha_inicio, fecha_final, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino
 
 function Content({ loan_type }) {
 
@@ -44,7 +41,6 @@ function Content({ loan_type }) {
     const previousPath = (isNew) ? PagePaths['Books'] : PagePaths['Loans'];
     const date = ((isNew) ? new Date() :  new Date(entry.fecha_inicio)).toLocaleDateString("en-CA");
     const firstButton = (isNew) ? <PrimaryButton title="Enviar" onClick={ () => add_loan(session) } />: null;
-    console.log(entry.prestados, entry.ejemplares)
     const prestable_msg = (entry.esReferencia == 1) ? "No se puede prestar libros de referencia" : (entry.prestados == entry.ejemplares - 1) ? "No hay ejemplares disponibles" : "";
 
     return (
@@ -56,7 +52,7 @@ function Content({ loan_type }) {
             <PrimaryInput title="ISNB" name="fk_isbn" value={ entry.isbn } is_required={true} is_disabled={!isNew} has_title={true} />
 
             <FormTitle title="Encargado" is_required={true} />
-            <PrimaryInput title="Encargado" name="fk_trabajador" value={"admin"} is_required={true} is_disabled={!isNew} has_title={true} />
+            <PrimaryInput title="Encargado" name="fk_trabajador" value={session.username} is_required={true} is_disabled={!isNew} has_title={true} />
 
             <FormTitle title="Tiempo" is_required={true} />
             <PrimaryInput title="Fecha" name="fecha_inicio" value={date} is_required={true} is_disabled={!isNew} has_title={true} />

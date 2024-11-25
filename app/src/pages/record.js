@@ -32,7 +32,6 @@ async function update_record(isbn, session) {
         let data = listFromForm(form);
         if(!is_fields_empty(data, ['ejemplares', 'ca', 'volumen', 'coleccion'])){
             data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-            console.log(data);
             fetchWithAuth(`${host_ip}/card/${isbn}`, "put", data, session.token)
                 .then(res=>{
                     if(res.status == 200){
@@ -47,7 +46,6 @@ async function add_record(session){
     let data = listFromForm(form);
     if(!is_fields_empty(data, ['ejemplares', 'ca', 'volumen', 'coleccion'])){
         data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-        console.log(data)
         fetchWithAuth(`${host_ip}/card`, "post", data, session.token)
             .then(res=>{
                 if(res.status == 200){

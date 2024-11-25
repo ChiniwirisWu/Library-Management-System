@@ -37,6 +37,9 @@ CREATE TABLE trabajador(
 	contrasena VARCHAR(100) NOT NULL,
 	salt VARCHAR(50) NOT NULL,
 	validado BOOLEAN NOT NULL,
+	cambiar_contrasena BOOLEAN NOT NULL default 0,
+	contrasena_reemplazo VARCHAR(100) NOT NULL default "",
+	salt_reemplazo VARCHAR(100) NOT NULL default "",
 	PRIMARY KEY (nombre)
 );
 

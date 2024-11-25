@@ -66,49 +66,61 @@ function UserEntry({ username, accountType = 'employee', handlers }) {
     );
 }
 
+
+async function getAllUsers(url, setter, session){
+    fetchEmptyWithAuth(url, "get", session.token)
+        .then(res=>res.json())
+        .then(res=>{
+            setter(listFromObject(res, ["nombre", "rol", "cambiar_contrasena"]));
+        })
+        .catch(err=>console.error(err));
+}
+
+async function acceptUserRequest(rol, nombre, setters, session){
+    rol = (rol === "employee") ? "Trabajador" : "Administrador";
+    if(window.confirm(`Está seguro de validar esta solicitud?`)){
+        let response = fetchEmptyWithAuth(`${host_ip}/worker/validateWorker/${nombre}`,"put", session.token)
+        .then(res=>res.text())
+        .then(res=>{
+            getAllUsers(`${host_ip}/workers/requests`, setters.setRequests, session);
+            getAllUsers(`${host_ip}/workers/validated`, setters.setUsers, session);
+        })
+        .catch(err=>console.error(err))
+    }
+}
+
+async function deleteUser(nombre, mensaje, setters, session){
+    if(window.confirm(mensaje)){
+        let response = fetchEmptyWithAuth(`${host_ip}/worker/${nombre}`,"delete", session.token)
+        .then(res=>res.text())
+        .then(res=>{
+            getAllUsers(`${host_ip}/workers/validated`, setters.setUsers, session);
+            getAllUsers(`${host_ip}/workers/requests`, setters.setRequests, session);
+        })
+        .catch(err=>console.error(err))
+    }
+}
+
+async function declinePasswordUpdate(nombre, mensaje, setters, session){
+    if(window.confirm(mensaje)){
+        let response = fetchEmptyWithAuth(`${host_ip}/worker/declinePasswordUpdate/${nombre}`,"put", session.token)
+        .then(res=>res.text())
+        .then(res=>{
+            getAllUsers(`${host_ip}/workers/validated`, setters.setUsers, session);
+            getAllUsers(`${host_ip}/workers/requests`, setters.setRequests, session);
+        })
+        .catch(err=>console.error(err))
+    }
+}
+
 function Content() {
     const { session } = useContext(sessionContext);
     const [users, setUsers] = useState([]);
     const [requests, setRequests] = useState([]);
 
-    async function getAllUsers(url, handler){
-        fetchEmptyWithAuth(url, "get", session.token)
-            .then(res=>res.json())
-            .then(res=>{
-                console.log(listFromObject(res, ["nombre", "rol"]))
-                handler(listFromObject(res, ["nombre", "rol"]));
-            })
-            .catch(err=>console.error(err));
-    }
-
-    async function acceptUserRequest(rol, nombre){
-        rol = (rol === "employee") ? "Trabajador" : "Administrador";
-        if(window.confirm(`Está seguro de validar éste usuario como ${rol}?`)){
-            let response = fetchEmptyWithAuth(`${host_ip}/worker/validateWorker/${nombre}`,"put", session.token)
-            .then(res=>res.text())
-            .then(res=>{
-                getAllUsers(`${host_ip}/workers/requests`, setRequests);
-                getAllUsers(`${host_ip}/workers/validated`, setUsers);
-            })
-            .catch(err=>console.error(err))
-        }
-    }
-
-    async function deleteUser(nombre, mensaje){
-        if(window.confirm(mensaje)){
-            let response = fetchEmptyWithAuth(`${host_ip}/worker/${nombre}`,"delete", session.token)
-            .then(res=>res.text())
-            .then(res=>{
-                getAllUsers(`${host_ip}/workers/validated`, setUsers);
-                getAllUsers(`${host_ip}/workers/requests`, setRequests);
-            })
-            .catch(err=>console.error(err))
-        }
-    }
-
     useEffect(()=>{
-        getAllUsers(`${host_ip}/workers/validated`, setUsers);
-        getAllUsers(`${host_ip}/workers/requests`, setRequests);
+        getAllUsers(`${host_ip}/workers/validated`, setUsers, session);
+        getAllUsers(`${host_ip}/workers/requests`, setRequests, session);
     }, [])
 
 
@@ -122,8 +134,9 @@ function Content() {
     function getContent() {
 
         return (content === tabs['users'])
-            ? (users.map(user => <UserEntry handlers={{deleteHandler: ()=> deleteUser(user[0], "Está usted seguro de eliminar ésta solicitud?")}} username={user[0]} accountType={user[1]} />))
-            : (requests.map(request => <RequestEntry handlers={{acceptHandler: ()=> acceptUserRequest(request[1], request[0]), declineHandler: ()=> deleteUser(request[0], "Está usted seguro de eliminar ésta solicitud?")}} username={request[0]} isNewAccount={true} isAdminAccount={request[1] == "admin"} />));
+            ? (users.map(user => <UserEntry handlers={{deleteHandler: ()=> deleteUser(user[0], "Está usted seguro de eliminar ésta solicitud?", {setUsers, setRequests}, session)}} username={user[0]} accountType={user[1]} />))
+            : (requests.map(request => <RequestEntry handlers={{acceptHandler: ()=> acceptUserRequest(request[1], request[0], {setUsers, setRequests}, session), declineHandler: (request[2] == 1)? ()=>declinePasswordUpdate(request[0], "Está usted seguro de cancelar esta solicitud de cambio de contraseña?", {setUsers, setRequests}, session) : ()=> deleteUser(request[0], "Está usted seguro de eliminar ésta solicitud?", {setUsers, setRequests}, session)}} username={request[0]} isNewAccount={(request[2] == 1)? false : true} isAdminAccount={request[1] == "admin"} />));
+        
 
     }
 
