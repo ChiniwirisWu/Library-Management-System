@@ -55,14 +55,14 @@ const Loan = {
 	createLoan: async (req, res)=>{
 		try {
 			const { body } = req;
-			console.log(body);
-			const [f_rows, f_columns] = await pool.execute('SELECT titulo, ejemplares, esReferencia FROM ficha WHERE isbn = ?', [body.fk_isbn]);
-			const [p_rows, p_columns] = await pool.execute('SELECT COUNT(fk_isbn) as n_prestamos FROM prestamo WHERE fk_isbn = ?', [body.fk_isbn]);
+			const [f_rows] = await pool.execute('SELECT titulo, ejemplares, esReferencia, prestados FROM ficha WHERE isbn = ?', [body.fk_isbn]);
+			console.log(f_rows);
 
-			if(f_rows[0].esReferencia == 1) return res.status(500).send("Un libro de referencia no puede ser prestado.");
+			if(f_rows[0].esReferencia == 1) return res.status(530).send("Un libro de referencia no puede ser prestado.");
 
-			if(p_rows[0].n_prestamos < f_rows[0].ejemplares - 1){
-				const [rows, columns] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.fk_isbn, body.fk_trabajador, body.fecha_inicio, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
+			if(f_rows[0].prestados < f_rows[0].ejemplares - 1){
+				const [rows] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.fk_isbn, body.fk_trabajador, body.fecha_inicio, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
+				await pool.execute('UPDATE ficha SET prestados = ? WHERE isbn = ?', [f_rows[0].prestados + 1, body.fk_isbn]);
 				if(rows.affectedRows > 0){
 					res.status(200).send('Préstamo creado con éxito.');
 				} else{
@@ -72,7 +72,8 @@ const Loan = {
 				res.status(550).send('No hay ejemplares disponibles.');
 			}
 		} catch (e) {
-			res.status(400).send(e.message);
+			console.log(e.message);
+			res.status(400).send("El préstamo ya ha sido creado.");
 		}
 	},
 	updateLoan: async (req, res)=>{

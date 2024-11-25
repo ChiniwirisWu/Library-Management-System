@@ -9,39 +9,42 @@ import { libraryRoles } from "../constants/roles";
 import SessionContext from "../session/session";
 import { PagePaths } from "../constants/paths";
 
-export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="", is_required=false, has_title=false }) {
+export function PrimaryInput({ type = "text", title, is_disabled = false, name, value="", is_required=false, has_title=false, show=true }) {
 
-    const disabledStyle = "w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400";
-    const normalStyle = "w-[100%] p-2 font-semibold bg-gray-100 border-gray-200 border-2 rounded-md  text-gray-400 outline-none focus:border-gray-300 transition-all duration-200";
-    const min = (type === "Number") ? 0 : null;
+    if(show){
+        const disabledStyle = "w-[100%] p-2 font-semibold bg-gray-200 border-gray-300 border-2 rounded-md  text-gray-400";
+        const normalStyle = "w-[100%] p-2 font-semibold bg-gray-100 border-gray-200 border-2 rounded-md  text-gray-400 outline-none focus:border-gray-300 transition-all duration-200";
+        const min = (type === "Number") ? 0 : null;
 
-    let optional_title = (has_title) ? <h6 className="text-sm text-gray-500 font-semibold">{title}</h6> : null; 
+        let optional_title = (has_title) ? <h6 className="text-sm text-gray-500 font-semibold">{title}</h6> : null; 
 
-    let input = (is_disabled) ? <input type={type} min={min} name={name} placeholder={title} value={value} disabled className={disabledStyle}></input> 
-        : (is_required ? (
-             <input type={type} min={min} name={name} required placeholder={title} defaultValue={value} className={normalStyle}></input>
-        ) : (
-             <input type={type} min={min} name={name} placeholder={title} defaultValue={value} className={normalStyle}></input>
-        ))
+        let input = (is_disabled) ? <input type={type} min={min} name={name} placeholder={title} value={value} disabled className={disabledStyle}></input> 
+            : (is_required ? (
+                 <input type={type} min={min} name={name} required placeholder={title} defaultValue={value} className={normalStyle}></input>
+            ) : (
+                 <input type={type} min={min} name={name} placeholder={title} defaultValue={value} className={normalStyle}></input>
+            ))
 
-    return(
-        <div>
-            {optional_title}
-            {input}
-        </div>
-    );
+        return(
+            <div>
+                {optional_title}
+                {input}
+            </div>
+        );
+    }
 }
 
-export function FormTitle({ title, is_required = false }) {
-    
-    let required_asterisk = (is_required) ?  <h3 className="text-red-600">*</h3> : null;
-    
-    return(
-        <div className="flex">
-            <h2 className="font-semibold text-xl text-gray-500">■ {title}</h2>
-            {required_asterisk}
-        </div>
-    );
+export function FormTitle({ title, is_required = false, show=true }) {
+    if(show){
+        let required_asterisk = (is_required) ?  <h3 className="text-red-600">*</h3> : null;
+        
+        return(
+            <div className="flex">
+                <h2 className="font-semibold text-xl text-gray-500">■ {title}</h2>
+                {required_asterisk}
+            </div>
+        );
+    }
 }
 
 export function Checkbox({ title, onClick = null, is_disabled = false, name, value=false }) {
