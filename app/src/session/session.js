@@ -4,9 +4,10 @@ import { createContext } from "react";
 import { userRoles } from "../constants/roles";
 
 export class Session {
-    constructor(accountType = userRoles['client'], token = null) {
+    constructor(accountType = userRoles['client'], token = null, username="reader") {
         this.accountType = accountType;
         this.token = token;
+        this.username = username;
     }
     
     getAccountType() {
@@ -15,6 +16,10 @@ export class Session {
 
     getToken(){
         return this.token;
+    }
+
+    getUsername(){
+        return this.username;
     }
 }
 

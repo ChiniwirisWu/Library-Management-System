@@ -20,13 +20,14 @@ create table ficha(
 	esReferencia boolean not null,
 	dewey varchar(20) not null,
 	cutter varchar(20) not null,
+	prestados int default 0,
 	primary key (isbn)
 );
 
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("321790423", "Antoine de Saint-Exupéry", "El Principito", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "800.34", "e34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("849234244", "Mary Shelley", "Frankenstein o El moderno Prometeo", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "800.34", "e34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("905850234", "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "000.34", "e34");
-INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter) VALUES ("948329743", "Stephen Hawking", "Breve historia del tiempo: del Big Bang a los agujeros negros", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "600.34", "e34");
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter, prestados) VALUES ("321790423", "Antoine de Saint-Exupéry", "El Principito", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "800.34", "e34", 0);
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter, prestados) VALUES ("849234244", "Mary Shelley", "Frankenstein o El moderno Prometeo", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "800.34", "e34", 0);
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter, prestados) VALUES ("905850234", "Brian Kernighan, Dennis Ritchie", "The C Programming Language", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "000.34", "e34", 0);
+INSERT INTO ficha (isbn, autor, titulo, edicion, ciudad, editorial, ano, coleccion, ca, volumen, ejemplares, esReferencia, dewey, cutter, prestados) VALUES ("948329743", "Stephen Hawking", "Breve historia del tiempo: del Big Bang a los agujeros negros", 1, "Puerto la cruz", "Santillana", 2000, 1, 12, 1, 3, 1, "600.34", "e34", 0);
 
 
 -- usuarios (bibliotecario, administradores, lectores)
@@ -36,6 +37,9 @@ CREATE TABLE trabajador(
 	contrasena VARCHAR(100) NOT NULL,
 	salt VARCHAR(50) NOT NULL,
 	validado BOOLEAN NOT NULL,
+	cambiar_contrasena BOOLEAN NOT NULL default 0,
+	contrasena_reemplazo VARCHAR(100) NOT NULL default "",
+	salt_reemplazo VARCHAR(100) NOT NULL default "",
 	PRIMARY KEY (nombre)
 );
 

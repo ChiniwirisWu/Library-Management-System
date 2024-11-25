@@ -32,7 +32,6 @@ async function update_record(isbn, session) {
         let data = listFromForm(form);
         if(!is_fields_empty(data, ['ejemplares', 'ca', 'volumen', 'coleccion'])){
             data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-            console.log(data);
             fetchWithAuth(`${host_ip}/card/${isbn}`, "put", data, session.token)
                 .then(res=>{
                     if(res.status == 200){
@@ -47,7 +46,6 @@ async function add_record(session){
     let data = listFromForm(form);
     if(!is_fields_empty(data, ['ejemplares', 'ca', 'volumen', 'coleccion'])){
         data = default_with_zero(data, ['ejemplares', 'ca', 'volumen', 'coleccion']);
-        console.log(data)
         fetchWithAuth(`${host_ip}/card`, "post", data, session.token)
             .then(res=>{
                 if(res.status == 200){
@@ -97,6 +95,7 @@ function Content({ record_type }) {
     const has_title = (record_type !== record_types['new'] );
 
     const book = (record_type !== record_types['new']) ? default_with_string(location.state, ['ejemplares', 'ca', 'volumen', 'coleccion']) : null;
+    const is_info = (record_type === record_types['info']);
 
     const { session } = useContext(SessionContext);   
 
@@ -129,7 +128,10 @@ function Content({ record_type }) {
             <PrimaryInput type="Number" title="Largo de Carátula" name="ca" value={(book) ? book.ca : null} is_disabled={is_disabled} has_title={has_title}/>
             <PrimaryInput type="Number" title="Pág. o Vol." name="volumen" value={(book) ? book.volumen : null} is_disabled={is_disabled} has_title={has_title}/>
 
-            <RecordButtons record_type={record_type} isbn = {(book) ? book.isbn : null} session={session} />
+            <FormTitle title="Ubicación" show={is_info} is_required={false} />
+            <PrimaryInput value={(book) ? book.sala : null} show={is_info} is_disabled={is_disabled} has_title={has_title}/>
+
+            <RecordButtons record_type={record_type} isbn={(book) ? book.isbn : null} session={session} />
 
             <PrimaryButton title="Salir" path={PagePaths['Books']} />
 

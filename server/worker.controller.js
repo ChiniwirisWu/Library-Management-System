@@ -27,7 +27,7 @@ const Worker = {
 			if (rows.length < 1){
 				const salt = await bcrypt.genSalt();
 				const hashed = await bcrypt.hash(body.contrasena, salt);
-				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado) VALUES (?, ?, ?, ?, ?)', [body.nombre, 'employee', hashed, salt, 0]);
+				const response = await pool.execute('INSERT INTO trabajador (nombre, rol, contrasena, salt, validado, contrasena_reemplazo, salt_reemplazo) VALUES (?, ?, ?, ?, ?, ?, ?)', [body.nombre, 'employee', hashed, salt, 0, hashed, salt]);
 				if (response[0].affectedRows == 1) {
 					const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
 					res.status(200).send('Se ha enviado su solicitud de registro exitosamente.');
@@ -47,7 +47,6 @@ const Worker = {
 			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
 			if(rows.length > 0){
 				const isMatch = await bcrypt.compare(body.contrasena, rows[0].contrasena);	
-				console.log(isMatch)
 				if(rows[0].validado){
 					if(isMatch){
 						const token = signToken(rows[0].nombre);
@@ -64,6 +63,45 @@ const Worker = {
 		} catch (e){
 			res.status(500).send(e.message);
 		}
+	},
+	updateReplacementPassword: async (req, res)=>{
+		try{
+			const { body } = req;
+			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [body.nombre]);
+			if (rows.length > 0){
+				const salt = await bcrypt.genSalt();
+				const hashed = await bcrypt.hash(body.contrasena, salt);
+				const response = await pool.execute('UPDATE trabajador SET contrasena_reemplazo = ?, salt_reemplazo = ?, cambiar_contrasena = 1 WHERE nombre = ?', [hashed, salt, body.nombre]);
+				if (response[0].affectedRows == 1) {
+					res.status(200).send('Se ha enviado su solicitud de cambio de contraseña exitosamente.');
+				} else {
+					res.status(400).send('Ha ocurrido un error con los datos ingresados.');
+				}
+			} else{
+				res.status(400).send('El usuario no existe.')
+			}
+		} catch (e){
+			res.status(500).send(e.message)
+		}
+	},
+	declineReplacementPasswordUpdate: async (req, res)=>{
+		try{
+			const { nombre } = req.params;
+			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE nombre = ?', [nombre]);
+			if (rows.length > 0){
+				const response = await pool.execute('UPDATE trabajador SET cambiar_contrasena = 0 WHERE nombre = ?', [nombre]);
+				if (response[0].affectedRows == 1) {
+					res.status(200).send('Se ha cancelado la solicitud de cambio de contraseña.');
+				} else {
+					res.status(400).send('Ha ocurrido un error con los datos ingresados.');
+				}
+			} else{
+				res.status(400).send('El usuario no existe.')
+			}
+		} catch (e){
+			res.status(500).send(e.message)
+		}
+
 	},
 	getAllWorkers: async (req, res)=>{
 		if(req.worker.rol != 'admin') return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
@@ -86,7 +124,7 @@ const Worker = {
 	getAllRequests: async (req, res)=>{
 		if(req.worker.rol != 'admin') return res.status(401).send('Esta acción solo puede ser realizada por un administrador.');
 		try {
-			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE validado=0');
+			const [rows, columns] = await pool.execute('SELECT * FROM trabajador WHERE validado=0 OR cambiar_contrasena=1');
 			res.status(200).send(rows);
 		} catch(e){
 			res.status(500).send(e.message);
@@ -110,7 +148,7 @@ const Worker = {
 		try{
 			const workers = await getWorkerBynombre_handler(req, res);
 			if(workers.length > 0){
-				const [rows, colums] = await pool.execute('UPDATE trabajador SET validado=1 WHERE nombre = ?', [req.params.nombre]);
+				const [rows, colums] = await pool.execute('UPDATE trabajador SET validado=1, contrasena=contrasena_reemplazo, salt=salt_reemplazo, cambiar_contrasena=0 WHERE nombre = ?', [req.params.nombre]);
 				if(rows.affectedRows > 0){
 					res.status(200).send(`Se valido la cuenta del usuario "${req.params.nombre}".`);
 				} else{

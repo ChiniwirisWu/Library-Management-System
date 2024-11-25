@@ -2,7 +2,7 @@ import React from "react";
 import Welcome from "../pages/welcome";
 import Login from "../pages/login";
 import Home from "../pages/home";
-import Request from "../pages/request";
+import Request, { request_types } from "../pages/request";
 import Books from "../pages/books";
 import Users from "../pages/users";
 import Loans from "../pages/loans";
@@ -32,8 +32,8 @@ export const PagesList = [
     new Page(PagePaths['ReadRecord'], <Record record_type={record_types['info']} />),
     new Page(PagePaths['ModifyRecord'], <Record record_type={record_types['modify']} />, "", libraryRoles),
     new Page(PagePaths['Home'], <Home />, "Inicio"),
-    new Page(PagePaths['Signup'], <Request title= "Solicitud de Registro" />),
-    new Page(PagePaths['Password Change'], <Request title= "Solicitud de Cambio de Contraseña" />),
+    new Page(PagePaths['Signup'], <Request request_type={request_types['register']} title= "Solicitud de Registro" />),
+    new Page(PagePaths['Password Change'], <Request request_type={request_types['change_password']} title= "Solicitud de Cambio de Contraseña" />),
     new Page(PagePaths['Books'], <Books />, "Ver Libros"),
     new Page(PagePaths['Users'], <Users />, "Usuarios", userRoles['admin']),
     new Page(PagePaths['Loans'], <Loans />, "Préstamos", libraryRoles),

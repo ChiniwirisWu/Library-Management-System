@@ -18,11 +18,11 @@ async function loginHandler(e, setSession, navigate){
     const response = simpleFetch(`${host_ip}/login`, "post", data)   
     response.then(res => res.json())
             .then(res => {
-                setSession(new Session(res.worker.rol, res.token));
+                setSession(new Session(res.worker.rol, res.token, res.worker.nombre));
                 navigate(PagePaths['Home']);
             })
             .catch(err => {
-                console.error(err)
+                alert("Usuario y/o Contraseña incorrectos.");
                 navigate(PagePaths['Login']);
             });
 }
