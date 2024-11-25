@@ -55,16 +55,21 @@ const Loan = {
 	createLoan: async (req, res)=>{
 		try {
 			const { body } = req;
-			const [f_rows, f_columns] = await pool.execute('SELECT p.fk_isbn, f.titulo, f.ejemplares, count(fk_isbn) as n_prestamos FROM prestamo p LEFT JOIN ficha f ON p.fk_isbn = f.isbn WHERE p.fk_isbn = ?', [body.isbn]);
-			if(f_rows[0].n_prestamos < f_rows[0].ejemplares - 1){
-				const [rows, columns] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.isbn, body.trabajador, body.fecha_inicio, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
+			console.log(body);
+			const [f_rows, f_columns] = await pool.execute('SELECT titulo, ejemplares, esReferencia FROM ficha WHERE isbn = ?', [body.fk_isbn]);
+			const [p_rows, p_columns] = await pool.execute('SELECT COUNT(fk_isbn) as n_prestamos FROM prestamo WHERE fk_isbn = ?', [body.fk_isbn]);
+
+			if(f_rows[0].esReferencia == 1) return res.status(500).send("Un libro de referencia no puede ser prestado.");
+
+			if(p_rows[0].n_prestamos < f_rows[0].ejemplares - 1){
+				const [rows, columns] = await pool.execute('INSERT INTO prestamo (fk_isbn, fk_trabajador, fecha_inicio, dias, cedula, nombre, apellido, direccion, telefono, telefonoVecino, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [body.fk_isbn, body.fk_trabajador, body.fecha_inicio, body.dias, body.cedula, body.nombre, body.apellido, body.direccion, body.telefono, body.telefonoVecino, 0]);
 				if(rows.affectedRows > 0){
 					res.status(200).send('Préstamo creado con éxito.');
 				} else{
-					res.status(400).send('Hubo un error creando el préstamo.');
+					res.status(500).send('Hubo un error creando el préstamo.');
 				}
 			} else {
-				res.status(200).send('No hay ejemplares disponibles.');
+				res.status(550).send('No hay ejemplares disponibles.');
 			}
 		} catch (e) {
 			res.status(400).send(e.message);
