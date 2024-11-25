@@ -42,6 +42,7 @@ function Content({ loan_type }) {
     const date = ((isNew) ? new Date() :  new Date(entry.fecha_inicio)).toLocaleDateString("en-CA");
     const firstButton = (isNew) ? <PrimaryButton title="Enviar" onClick={ () => add_loan(session) } />: null;
     const prestable_msg = (entry.esReferencia == 1) ? "No se puede prestar libros de referencia" : (entry.prestados == entry.ejemplares - 1) ? "No hay ejemplares disponibles" : "";
+    const encargado = (isNew) ? session.username : entry.fk_trabajador; 
 
     return (
         <form onSubmit={(e)=> e.preventDefault()} className="flex flex-col space-y-4 bg-white max-w-[400px] w-[100%] my-auto mx-auto p-[40px] rounded-sm shadow-sm shadow-[grey]">
@@ -52,7 +53,7 @@ function Content({ loan_type }) {
             <PrimaryInput title="ISNB" name="fk_isbn" value={ entry.isbn } is_required={true} is_disabled={!isNew} has_title={true} />
 
             <FormTitle title="Encargado" is_required={true} />
-            <PrimaryInput title="Encargado" name="fk_trabajador" value={session.username} is_required={true} is_disabled={!isNew} has_title={true} />
+            <PrimaryInput title="Encargado" name="fk_trabajador" value={encargado} is_required={true} is_disabled={!isNew} has_title={true} />
 
             <FormTitle title="Tiempo" is_required={true} />
             <PrimaryInput title="Fecha" name="fecha_inicio" value={date} is_required={true} is_disabled={!isNew} has_title={true} />
