@@ -58,8 +58,6 @@ const Loan = {
 			console.log(body);
 			const [f_rows, f_columns] = await pool.execute('SELECT titulo, ejemplares, esReferencia FROM ficha WHERE isbn = ?', [body.fk_isbn]);
 			const [p_rows, p_columns] = await pool.execute('SELECT COUNT(fk_isbn) as n_prestamos FROM prestamo WHERE fk_isbn = ?', [body.fk_isbn]);
-			console.log(f_rows);
-			console.log(p_rows);
 
 			if(f_rows[0].esReferencia == 1) return res.status(500).send("Un libro de referencia no puede ser prestado.");
 
@@ -68,10 +66,10 @@ const Loan = {
 				if(rows.affectedRows > 0){
 					res.status(200).send('Préstamo creado con éxito.');
 				} else{
-					res.status(400).send('Hubo un error creando el préstamo.');
+					res.status(500).send('Hubo un error creando el préstamo.');
 				}
 			} else {
-				res.status(400).send('No hay ejemplares disponibles.');
+				res.status(550).send('No hay ejemplares disponibles.');
 			}
 		} catch (e) {
 			res.status(400).send(e.message);
