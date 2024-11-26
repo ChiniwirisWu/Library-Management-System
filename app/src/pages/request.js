@@ -35,8 +35,8 @@ function Content({request_type}) {
     return (
         <form onSubmit={(e)=> requestHandler(url, e, navigate, method)} className="text-xl flex flex-col justify-center my-auto">
             <LabeledInput text={"Nombre de Usuario"} name="nombre" />
-            <LabeledInput text={"Contraseña"} name="contrasena" />
-            <LabeledInput text={"Repetir Contraseña"} name="contrasena_repetida" />
+            <LabeledInput type={"password"} text={"Contraseña"} name="contrasena" />
+            <LabeledInput type={"password"} text={"Repetir Contraseña"} name="contrasena_repetida" />
             <TransparentButton text="Enviar" />
         </form>
     );

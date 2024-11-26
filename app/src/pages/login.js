@@ -34,8 +34,8 @@ function Content() {
 
     return (
         <form onSubmit={(e)=>loginHandler(e, setSession, navigate)} class="text-xl flex flex-col">
-            <LabeledInput type="text" text="Usuario" name="nombre" />
-            <LabeledInput type="text" text="Contraseña" name="contrasena" />
+            <LabeledInput type={"text"} text="Usuario" name="nombre" />
+            <LabeledInput type={"password"} text="Contraseña" name="contrasena" />
             <button>Iniciar sesión</button>
             <div class="flex flex-col text-nowrap">
                 <TextLink text="¿Olvidó su contraseña?" href={PagePaths["Password Change"]} />

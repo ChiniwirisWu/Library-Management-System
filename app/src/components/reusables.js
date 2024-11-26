@@ -82,7 +82,7 @@ export function Checkbox({ title, onClick = null, is_disabled = false, name, val
 
 export function PrimaryButton({ title, onClick = null, path = null }) {
 
-    const style = "w-[100%] h-[100%] text-blue-600 bg-transparent text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none";
+    const style = "w-[100%] h-[100%] text-blue-600 bg-transparent text-xs sm:text-base rounded cursor-pointer outline outline-1 hover:bg-blue-600 hover:text-white py-2 font-semibold transition-all duration-[0.25s] hover:outline-none";
 
     const button = (
         <button className={style} onClick={onClick}>
@@ -140,8 +140,8 @@ export function TextLink({ text, href }) {
 
 export function IconButton({ src, alt, borderless = true, onClickHandler=function(){}}) {
     let buttonClass = (borderless)
-        ? "my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200"
-        : "my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";
+        ? "flex items-center justify-center content-center my-auto size-[35px] border-none p-1 hover:size-[40px] transition-all duration-200"
+        : "flex items-center justify-center content-center my-auto size-[45px] border-2 p-2 rounded-lg bg-gray-50 active:bg-gray-100 transition-all duration-200";
 
     return (
         <button className={buttonClass} onClick={()=> onClickHandler()} >
@@ -153,7 +153,7 @@ export function IconButton({ src, alt, borderless = true, onClickHandler=functio
 export function IconLink({ src, alt, path, borderless = true, content={}}) {
     const navigate = useNavigate();
     return (
-        <button onClick={()=> navigate(path, {state: content})} className="flex align-middle">
+        <button onClick={()=> navigate(path, {state: content})} className="h-[100%] flex content-center items-center justify-center">
             <IconButton src={src} alt={alt} borderless={borderless} />
         </button>
     );
@@ -171,11 +171,11 @@ export function SearchAndAddBar({ placeholder, AddPath, findMatches, updateVisib
 
 export const Entry = ({ info, icons }) => {
     return (
-        <div className="flex content-center place-content-between w-[100%] mb-5 border-[0.5px] text-left p-4 bg-gray-50">
-            <div className="flex flex-col">
+        <div className="flex space-x-2 content-center place-content-between w-[100%] mb-5 border-[0.5px] text-left p-4 bg-gray-50">
+            <div className="flex flex-col self-center">
                 {info}
             </div>
-            <div className="flex space-x-5">
+            <div className="h-[100%] flex flex-col space-y-2 sm:flex-row items-center content-center justify-center sm:space-x-5">
                 {icons}
             </div>
         </div>
@@ -225,7 +225,7 @@ export function TabButtons({ first_title, second_title, onFirst, onSecond }) {
 
     return (
         <div className="h-[75px] w-[100%] flex place-content-center">
-            <div className="my-4 bg-[#e7e7e7] p-1 rounded-md inline-block self-center">
+            <div className="flex sm:flex-row mb-5 flex-col  bg-[#e7e7e7] p-1 rounded-md self-center">
                 <button class={firstClass} onClick={onFirstClick}>{first_title}</button>
                 <button class={secondClass} onClick={onSecondClick}>{second_title}</button>
             </div>
@@ -241,7 +241,7 @@ export function NavButton({ title, isActive = false, onClickk }) {
     let hover_text_color = "hover:text-white"
 
     return (
-        <button className={`w-[100%] h-[100%] text-lg ${text_color} ${bg_color} cursor-pointer outline-none ${hover_bg_color} ${hover_text_color} py-2 font-semibold transition-all duration-[0.25s]`} onClick={onClickk}>
+        <button className={`text-sm sm:text-lg w-[100%] h-[100%] ${text_color} ${bg_color} cursor-pointer outline-none ${hover_bg_color} ${hover_text_color} py-2 font-semibold transition-all duration-[0.25s]`} onClick={onClickk}>
             {title}
         </button>
     );

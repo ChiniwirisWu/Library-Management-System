@@ -108,7 +108,7 @@ function Content({ record_type }) {
             <PrimaryInput title="Autor(es)" name="autor" value={(book) ? book.autor : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
             
             <FormTitle title="Clasificación" is_required={true} />
-            <Checkbox title="Es Referencia" name="esReferencia" value={(book) ? book.esReferencia : null} is_required={true} has_title={has_title} /> 
+            <Checkbox title="Es Referencia" name="esReferencia" value={(book) ? book.esReferencia : null} is_required={true} has_title={has_title} is_disabled={is_disabled} /> 
             <PrimaryInput title="Dewey" name="dewey" value={(book) ? book.dewey : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
             <PrimaryInput title="Cutter" name="cutter" value={(book) ? book.cutter : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
 

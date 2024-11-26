@@ -14,6 +14,8 @@ import AcceptIcon from "res/accept.svg";
 import DenyIcon from "res/deny.svg";
 import InfoImage from "res/info.svg"
 import {fetchEmptyWithAuth} from "../functions/forms";
+import { RestrictedComponent } from "../functions/permissions";
+import { userRoles } from "../constants/roles";
 
 
 function LoanEntryInfo({ title, reader, phone, days, address }) {
@@ -31,8 +33,8 @@ function LoanEntryInfo({ title, reader, phone, days, address }) {
 function LoanEntryIcons({loan, handlers}) {
     return (
         <>
-            <IconButton src={AcceptIcon} alt="accept" onClickHandler={handlers.acceptHandler} />
-            <IconButton src={DenyIcon} alt="deny" onClickHandler={handlers.declineHandler} />
+            <RestrictedComponent component=<IconButton src={AcceptIcon} alt="accept" onClickHandler={handlers.acceptHandler} /> permissions={userRoles['admin']} />
+            <RestrictedComponent component=<IconButton src={DenyIcon} alt="deny" onClickHandler={handlers.declineHandler} /> permissions={userRoles['admin']} />
             <IconLink src={InfoImage} content={loan} alt="info" path={PagePaths['LoanInfo']} />
         </>
     );
@@ -49,17 +51,22 @@ function LoanEntry({ loan, handlers }) {
 
 function LoansTable({ data, deleteHandler }) {
 
-    const th_style = "py-2 px-4 border-b border-gray-200 text-base font-semibold text-gray-700 text-center";
-    const td_style = "text-sm px-1 py-1 text-black text-center";
+    const th_style = "w-[50px] py-2 px-2 border-b border-gray-200 text-base font-bold text-gray-700 text-center";
+    const td_style = "w-[50px] text-sm px-2 py-1 text-black text-center";
 
-    let columns = ["Título", "Prestatario", "Encargado", "Fecha", "Duración", "Cédula", "Teléfono", "Teléfono Vecino", "Dirección"];
+    let columns = ["Título", "ISBN", "Prestatario", "Encargado", "Fecha", "Duración", "Cédula", "Teléfono", "Teléfono Vecino", "Dirección"];
 
     return (
-        <table className="min-w-full bg-white border border-gray-200 ">
+        <div className="w-[250px] sm:w-[350px] md:w-[500px] lg:w-[750px] overflow-x-auto m-auto">
+        <table className="bg-white border border-gray-200 overflox-x-auto">
             <thead className="bg-gray-100">
                 <tr>
                     {columns.map((column) => (<th className={th_style}>{column}</th>))}
-                    <th className={th_style}>Terminar</th>
+                    <RestrictedComponent permissions={userRoles['admin']} component= 
+                        <th className={th_style}>
+                            Terminar
+                        </th> 
+                    />
                 </tr>
             </thead>
             <tbody>
@@ -67,9 +74,11 @@ function LoansTable({ data, deleteHandler }) {
                     data.map((record) => (
                         <tr className="hover:bg-gray-100 transition-all">
                             {record.map((field) => <td className={td_style}>{field}</td>)}
-                            <td className={td_style}>
-                                <IconButton onClickHandler={()=> deleteHandler(record[9], record[5])} src={DenyIcon} alt="end" />
-                            </td>
+                            <RestrictedComponent permissions={userRoles['admin']} component=
+                                <td className="flex items-center justify-center py-[25%]">
+                                    <IconButton onClickHandler={()=> deleteHandler(record[9], record[5])} src={DenyIcon} alt="end" />
+                                </td>
+                            />
                         </tr>
                     ))
                 }
@@ -78,6 +87,8 @@ function LoansTable({ data, deleteHandler }) {
 
             </tbody>
         </table>
+
+        </div>
     );
 }
 
@@ -98,7 +109,7 @@ function Content() {
         let response = fetchEmptyWithAuth(`${host_ip}/loans/ongoing`, "get", session.token)
         .then(res=>res.json())
         .then(res=>{
-            setOngoingLoans(listFromObject(res, ['titulo', 'nombre', 'fk_trabajador', 'fecha_inicio', 'dias', 'cedula', 'telefono', 'telefonoVecino', 'direccion', 'isbn']))
+            setOngoingLoans(listFromObject(res, ['titulo', 'isbn', 'nombre', 'fk_trabajador', 'fecha_inicio', 'dias', 'cedula', 'telefono', 'telefonoVecino', 'direccion']))
         })
         .catch(err=>console.error(err))
     }   

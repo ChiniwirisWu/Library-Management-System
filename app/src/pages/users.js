@@ -12,6 +12,7 @@ import { host_ip } from "../constants/host_ip";
 import {fetchEmptyWithAuth} from "../functions/forms";
 import sessionContext from "../session/session";
 import { listFromObject, translate_roles } from "../functions/objects";
+import { userRoles } from "../constants/roles";
 
 function RequestEntryInfo({ username, isNewAccount = true, isAdminAccount = false }) {
 
@@ -47,9 +48,9 @@ function RequestEntry({ username, isNewAccount = true, isAdminAccount = false, h
     );
 }
 
-function UserEntry({ username, accountType = 'employee', handlers }) {
+function UserEntry({ username, accountType = userRoles['employee'], handlers }) {
 
-    const type = (accountType === 'employee') ? "Trabajador" : "Administrador";
+    const type = (accountType === userRoles['employee']) ? "Trabajador" : "Administrador";
 
     const info = (
         <>
@@ -58,10 +59,12 @@ function UserEntry({ username, accountType = 'employee', handlers }) {
         </>
     );
 
+    const icons = (accountType === userRoles['admin']) ? null : <IconButton src={EraseIcon} alt="erase" onClickHandler={handlers.deleteHandler} />;
+
     return (
         <Entry
             info={info}
-            icons=<IconButton src={EraseIcon} alt="erase" onClickHandler={handlers.deleteHandler} />
+            icons={icons}
         />
     );
 }

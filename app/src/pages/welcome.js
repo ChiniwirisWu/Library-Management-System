@@ -8,13 +8,10 @@ import { Session } from "../session/session";
 
 export function Title() {
     return (
-        <header className="h-[125px] flex items-end place-content-center">
-            <h1 className="text-3xl text-center font-thin">
+        <h1 className="text-xl sm:text-3xl text-center font-thin">
                 Biblioteca Pública
-                <br></br>
                 Juan Temístocles Maza
-            </h1>
-        </header>
+        </h1>
     );
 }
 
@@ -23,13 +20,13 @@ function ButtonsWrapper() {
     let setSession = useContext(SessionContext).setSession;
 
     return (
-        <section className="h-[175px] w-[100%] flex items-center place-content-evenly">
-            <Link className="w-[25%] h-[30%]" to={PagePaths['Login']}>
-                <PrimaryButton title={"Trabajador"} path=""/>
-            </Link>
-            <Link className="w-[25%] h-[30%]" to={PagePaths['Home']}>
-                <PrimaryButton title={"Lector"} onClick={() => { setSession(new Session()) } } />
-            </Link>
+        <section className="h-[70%] w-[100%] max-x-[500px] flex space-x-10 items-center place-content-center self-center">
+            <div className="h-[35%] w-[50%] sm:w-[35%]">
+                <PrimaryButton title={"Trabajador"} path={PagePaths['Login']}/> 
+            </div>
+            <div className="h-[35%] w-[50%] sm:w-[35%]">
+                <PrimaryButton title={"Lector"} path={PagePaths['Home']} onClick={() => { setSession(new Session()) } } />
+            </div>
         </section>
     );
 }
@@ -44,7 +41,7 @@ const BackgroundLibraryImage = ({ content }) => {
 
 function Content() {
     return (
-        <div className="max-w-[75%] w-[500px] h-[300px] mx-auto flex flex-col bg-white rounded-[12px] ">
+        <div className="px-10 py-10 max-w-[75%] w-[500px] h-[300px] mx-auto flex flex-col bg-white rounded-[12px] ">
             <Title />
             <ButtonsWrapper />
         </div>

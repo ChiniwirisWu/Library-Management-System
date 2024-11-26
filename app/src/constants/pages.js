@@ -34,7 +34,7 @@ export const PagesList = [
     new Page(PagePaths['Home'], <Home />, "Inicio"),
     new Page(PagePaths['Signup'], <Request request_type={request_types['register']} title= "Solicitud de Registro" />),
     new Page(PagePaths['Password Change'], <Request request_type={request_types['change_password']} title= "Solicitud de Cambio de Contraseña" />),
-    new Page(PagePaths['Books'], <Books />, "Ver Libros"),
+    new Page(PagePaths['Books'], <Books />, "Libros"),
     new Page(PagePaths['Users'], <Users />, "Usuarios", userRoles['admin']),
     new Page(PagePaths['Loans'], <Loans />, "Préstamos", libraryRoles),
     new Page(PagePaths['LoanRequest'], <LoanRequest loan_type={ loan_types['new'] } />, "", libraryRoles),
