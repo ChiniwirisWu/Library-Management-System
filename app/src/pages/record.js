@@ -104,7 +104,7 @@ function Content({ record_type }) {
 
             <FormTitle title="Identificación de la Obra" is_required={true} />
             <PrimaryInput title="Título" name="titulo" value={(book) ? book.titulo : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
-            <PrimaryInput title="ISNB" name="isbn" value={(book) ? book.isbn : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
+            <PrimaryInput title="ISBN" name="isbn" value={(book) ? book.isbn : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
             <PrimaryInput title="Autor(es)" name="autor" value={(book) ? book.autor : null} is_required={true} is_disabled={is_disabled} has_title={has_title} />
             
             <FormTitle title="Clasificación" is_required={true} />

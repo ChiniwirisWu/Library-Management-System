@@ -76,7 +76,8 @@ function LoansTable({ data, deleteHandler }) {
                             {record.map((field) => <td className={td_style}>{field}</td>)}
                             <RestrictedComponent permissions={userRoles['admin']} component=
                                 <td className="flex items-center justify-center py-[25%]">
-                                    <IconButton onClickHandler={()=> deleteHandler(record[9], record[5])} src={DenyIcon} alt="end" />
+                                    <IconButton src={DenyIcon} alt="end" onClickHandler={
+                                        () => deleteHandler(record[1], record[6])}  />
                                 </td>
                             />
                         </tr>

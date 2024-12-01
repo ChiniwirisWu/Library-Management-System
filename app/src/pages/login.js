@@ -10,6 +10,7 @@ import { PagePaths } from "../constants/paths";
 import { host_ip } from "../constants/host_ip";
 import { TitleLink } from "../components/reusables";
 import { userRoles } from "../constants/roles";
+import { TransparentButton } from "../components/reusables";
 import {useNavigate} from "react-router-dom";
 
 async function loginHandler(e, setSession, navigate){
@@ -36,8 +37,8 @@ function Content() {
         <form onSubmit={(e)=>loginHandler(e, setSession, navigate)} class="text-xl flex flex-col">
             <LabeledInput type={"text"} text="Usuario" name="nombre" />
             <LabeledInput type={"password"} text="Contraseña" name="contrasena" />
-            <button>Iniciar sesión</button>
-            <div class="flex flex-col text-nowrap">
+            <TransparentButton text="Iniciar Sesión" />
+            <div class="flex flex-col text-nowrap tm-5 space-y-2">
                 <TextLink text="¿Olvidó su contraseña?" href={PagePaths["Password Change"]} />
                 <TextLink text="Solicitud de registro" href={PagePaths["Signup"]} />
             </div>
