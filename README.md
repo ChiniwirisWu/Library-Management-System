@@ -2,10 +2,10 @@
 
 ## Languages / Idiomas
 
-- [🇺🇸 English](#english-documentation)
-- [🇪🇸 Español](#documentacion-en-español)
+- [🇺🇸 English](#english)
+- [🇪🇸 Español](#español)
 
-## 🇺🇸 English Documentation
+## English
 
 This repository hosts a project corresponding to a local library management website that has been proposed as a community service project for the Computer Engineering career. It contains two main folders, ```app``` and ```server```, where the code for both the website design and the server, respectively, can be found.
 
@@ -145,7 +145,7 @@ http://192.168.0.100:3000
 
 Onces hosted, from any device on the same local network, it's possible to connect to the website by using the ```QR``` code created previously or adding the already explained ```URL``` on any web browser.
 
-## 🇪🇸 Documentación en Español
+## Español
 
 Este repositorio aloja un proyecto que corresponde a un sitio web local de gestión bibliotecaria que ha sido propuesto como proyecto de servicio comunitario de la carrera de ingeniería informática. Comprende dos carpetas principales, ```app``` y ```server```, donde se encuentran el código para el diseño de la página web y el del servidor, respectivamente.
 
