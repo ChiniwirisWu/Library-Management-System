@@ -1,9 +1,9 @@
 # Library-Management-System
 
-## Languages
+## Languages / Idiomas
 
-* [🇺🇸 English](🇺🇸-english-documentation)
-* [🇪🇸 Español](🇪🇸-documentacion-en-español)
+- [🇺🇸 English](#🇺🇸-english-documentation)
+- [🇪🇸 Español](#🇪🇸-documentacion-en-español)
 
 ## 🇺🇸 English Documentation
 
