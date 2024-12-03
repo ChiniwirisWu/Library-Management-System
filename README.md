@@ -12,10 +12,10 @@ This repository hosts a project corresponding to a local library management webs
 > [!NOTE]
 > Among the technologies that were used, based on ```JavaScript```:  ```React``` to build the ```UI``` with ```Tailwind``` directly used in the ```JSX``` code, and a mix of ```Node.js```, ```Express.js```,  and ```MySQL2``` to create the server.
 
-Source Code made by:
+Source Code Contributors:
 > @DanielRamirez404 @ChiniwirisWu @guillermosilvam @Vinekko @Kyiroz
 
-### Deployment Requirement
+### Deployment Requirements
 
 * To download ```Node.js``` (includes the ```NPM``` package manager).
 * To download any web browser, such as ```Google Chrome```.
@@ -24,9 +24,9 @@ Source Code made by:
 > [!TIP]
 > XAMPP is suitable for those who have no experience with ```DBMS```, due to its being easy to use.
 
-### How to Deploy
+### Deployment Instructions
 
-Deployment is, fortunately, pretty easy. It can be sorted into the following sections, all of which are executed from the computer that act as the server.
+Deployment is, thankfully, pretty easy. It can be sorted into the following sections, all of which are executed from the computer that act as the server.
 
 #### Source Code Download
 
@@ -44,8 +44,8 @@ The source code may be downloaded directly from its ```GitHub``` repository as a
 #### Local ```IPv4``` Address Identification
 
 > [!IMPORTANT]
-> This step is required so that all server request may be correctly executed.
-> Fortunantely, it's only neccessary to do so once, considering no future changes on the local ```IPv4``` address.
+> This step is required so that all server request can be correctly executed.
+> Fortunantely, it's only necessary to do so once, considering no future changes on the local ```IPv4``` address.
 
 Using any given text editor, the ```[project]/app/src/constants/host_ip.js``` one-line file must be modify. By default, it contains the following line:
 
@@ -70,7 +70,7 @@ export const host_ip = 'http://192.168.0.100:9090';
 
 > [!IMPORTANT]
 > This step is required to enable storage and modification of the website's info.
-> Fortunately, it's only neccessaty to do so once, considering no user-related changes on the used ```DBMS```. 
+> Fortunately, it's only necessary to do so once, considering no user-related changes on the used ```DBMS```. 
 
 First, a new user should be created on the ```DBMS```, considering that this data must match with those shown at the ```[project]/app/server/.env``` file. 
 
@@ -87,12 +87,12 @@ MYSQL_DATABASE = "biblioteca"
 SECRET = "conejosEspaciales"
 ```
 
-Immediately, it's mandatory to import the ```[project]/app/server/.env``` file into the ```DBMS```, so that the database could be created with its full scheme and some default entries. 
+Additionally, it's mandatory to import the ```[project]/app/server/.env``` file into the ```DBMS```, so that the database can be created with its full scheme and some default entries. 
 
 #### Packages' Downloads
 
 > [!IMPORTANT]
-> This step is required to get the packages that lead to a correct file execution when hosting the website.
+> This step is required to get the packages that are necessary for the website to run correctly when hosted.
 > It's only required if they have not been already downloaded.
 
 In order to do so, it's necessary to use the terminal and run the ```npm i``` command on both the ```[project]/app``` and the ```[project]/server``` directories, as follows: 
@@ -152,7 +152,7 @@ Este repositorio aloja un proyecto que corresponde a un sitio web local de gesti
 > [!NOTE]
 > Entre las tecnologías utilizadas, en base a ```JavaScript```:  ```React``` para la interfaz de usuario junto a ```Tailwind``` utilizado directamente en el código ```JSX```, y una combinación de ```Node.js```, ```Express.js```,  y ```MySQL2``` para el servidor.
 
-Participantes en el Código Duente:
+Contribuidores al Código Fuente:
 > @DanielRamirez404 @ChiniwirisWu @guillermosilvam @Vinekko @Kyiroz
 
 ### Requisitos de Implementación
